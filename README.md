@@ -1,6 +1,6 @@
-# IT326-ReggiePlanner
-IT326 ReggiePlanner program
+ReggiePlanner
+IT326 group project
 
-# ReggiePlanner
+Nick, Matt, Dylan, Davion, Tyron, Tim
 
-Group project for IT326
+
