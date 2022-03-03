@@ -23,20 +23,28 @@ public class UserAccount {
         return uuid;
     }
 
-    public String email() {
-        return email;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     public void setEmail(String email) {
         this.email = email;
     }
 
-    public String password() {
-        return password;
+    public String email() {
+        return email;
     }
 
-    public void password(String password) {
+    public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String password() {
+        return password;
     }
 
     /**
@@ -59,7 +67,4 @@ public class UserAccount {
         return "UUID: " + uuid + "\nUsername: " + username + "\nEmail: " + email;
     }
 
-    public String getUsername() {
-        return username;
-    }
 }

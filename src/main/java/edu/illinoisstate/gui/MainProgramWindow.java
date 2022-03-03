@@ -1,44 +1,43 @@
 package edu.illinoisstate.gui;
 
-import edu.illinoisstate.UserAccount;
-import edu.illinoisstate.plan.UserPlan;
+import edu.illinoisstate.database.DatabaseHandler;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class MainProgramWindow extends ProgramWindow {
-    private UserAccount account;
+    private final DatabaseHandler database;
 
     public MainProgramWindow() {
-        window.setSize(800, 800);
+        window.setSize(800, 600);
+        window.setTitle("ReggiePlanner");
+
+        database = new DatabaseHandler();
     }
 
+    @Override
     public void execute() {
-        JLabel label = new JLabel("Create an account");
+        JLabel label = new JLabel("ReggiePlanner");
+        label.setFont(new Font("Impact", Font.PLAIN, 35));
+        label.setPreferredSize(new Dimension(250, 100));
 
-        JTextField emailField = new JTextField("email", 15);
-        panel.add(emailField);
-        JTextField usernameField = new JTextField("username", 15);
-        panel.add(usernameField);
-        JTextField passwordField = new JTextField("password", 15);
-        panel.add(passwordField);
+        JButton createAccountButton = new JButton("Create a new account");
+        createAccountButton.addActionListener(e -> new CreateAccountWindow().execute());
 
-        JButton submitButton = new JButton("Submit");
-        submitButton.addActionListener(e -> {
-            account = new UserAccount(emailField.getText(),
-                    usernameField.getText(),
-                    passwordField.getText());
+        JButton loginButton = new JButton("Login to an existing account");
+        loginButton.addActionListener(e -> new LoginWindow(database).execute());
 
-            String msg = "Successfully created the account " + account.getUsername() + ".";
-            JOptionPane.showMessageDialog(window, msg);
-        });
+        JButton resetPasswordButton = new JButton("Forgot password");
+        //resetPasswordButton.addActionListener(e -> new LoginWindow().execute());
 
         panel.add(label);
-        panel.add(submitButton);
+        panel.add(createAccountButton);
+        panel.add(loginButton);
+        panel.add(resetPasswordButton);
 
         window.add(panel);
         window.setVisible(true);
     }
-
 
 }
 
