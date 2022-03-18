@@ -25,10 +25,13 @@ public class MainProgramWindow extends ProgramWindow {
         createAccountButton.addActionListener(e -> new CreateAccountWindow().execute());
 
         JButton loginButton = new JButton("Login to an existing account");
-        loginButton.addActionListener(e -> new LoginWindow(database).execute());
+        loginButton.addActionListener(e -> {
+            loginButton.setEnabled(false); // todo this doesn't work?
+            new LoginWindow(database).execute();
+        });
 
         JButton resetPasswordButton = new JButton("Forgot password");
-        //resetPasswordButton.addActionListener(e -> new LoginWindow().execute());
+        resetPasswordButton.addActionListener(e -> new ForgotPasswordWindow(database).execute());
 
         panel.add(label);
         panel.add(createAccountButton);

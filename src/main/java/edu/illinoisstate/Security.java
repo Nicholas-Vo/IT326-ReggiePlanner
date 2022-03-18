@@ -2,6 +2,10 @@ package edu.illinoisstate;
 
 public class Security {
 
+    public static boolean validateUsernamePassword(String username, String password) {
+        return true;
+    }
+
     public static boolean isValidUsername(String username) {
         return username.length() > 3 && username.length() < 16;
     }

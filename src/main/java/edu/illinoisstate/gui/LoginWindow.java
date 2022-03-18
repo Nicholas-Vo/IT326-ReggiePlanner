@@ -6,13 +6,12 @@ import edu.illinoisstate.database.DatabaseHandler;
 import javax.swing.*;
 
 public class LoginWindow extends ProgramWindow {
-    private final DatabaseHandler database;
+
 
     public LoginWindow(DatabaseHandler database) {
         window.setSize(600, 600);
         window.setTitle("Welcome back!");
 
-        this.database = database;
     }
 
     @Override
@@ -24,7 +23,7 @@ public class LoginWindow extends ProgramWindow {
 
         JButton loginButton = new JButton("Login");
         loginButton.addActionListener(e -> {
-            if (!database.validateUsernamePassword(username.getText(), password.getText())) {
+            if (!Security.validateUsernamePassword(username.getText(), password.getText())) {
                 JOptionPane.showMessageDialog(window, "Invalid username or password.");
                 return;
             }

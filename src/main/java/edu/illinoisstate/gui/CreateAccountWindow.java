@@ -25,7 +25,6 @@ public class CreateAccountWindow extends ProgramWindow {
 
         JButton submitButton = new JButton("Submit");
         submitButton.addActionListener(e -> {
-
             if (!Security.isValidUsername(usernameField.getText())) {
                 JOptionPane.showMessageDialog(window, "Sorry, that's an invalid username.");
                 return;

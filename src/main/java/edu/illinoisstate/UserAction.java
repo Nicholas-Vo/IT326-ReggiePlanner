@@ -5,6 +5,4 @@ package edu.illinoisstate;
  */
 public abstract class UserAction {
 
-
-
 }
