@@ -8,5 +8,8 @@ public class Email {
     public static void sendForgotPassword(String recipient) {
         System.out.println("Email sent to" + recipient);
     }
+    public static void sendForgotPasswor(String recipient) {
+        System.out.println("Email sent to" + recipient);
+    }
 
 }
