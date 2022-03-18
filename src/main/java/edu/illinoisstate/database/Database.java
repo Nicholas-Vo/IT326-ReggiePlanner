@@ -17,5 +17,11 @@ public class Database {
     public List<Course> getCourseList() {
         return null;
     }
+    //hey
+
+    public List<Course> getCourseDesc() {
+        return null;
+    }
+    //hey
 
 }
