@@ -9,9 +9,13 @@ import java.awt.*;
  * This is the window that first appears when you run the program
  */
 public class MainProgramWindow extends ProgramWindow {
+    private final ReggiePlanner program = ReggiePlanner.getProgram();
+    protected final JFrame window = new JFrame();
+    protected final JPanel panel = new JPanel();
 
-    public MainProgramWindow(ReggiePlanner program) {
-        super(program, 800, 600, "ReggiePlanner");
+    public MainProgramWindow() {
+        window.setSize(800, 600);
+        window.setTitle("ReggiePlanner");
     }
 
     @Override
@@ -21,16 +25,16 @@ public class MainProgramWindow extends ProgramWindow {
         label.setPreferredSize(new Dimension(250, 100));
 
         JButton createAccountButton = new JButton("Create a new account");
-        createAccountButton.addActionListener(e -> new CreateAccountWindow(program).execute());
+        createAccountButton.addActionListener(e -> new CreateAccount().execute());
 
         JButton loginButton = new JButton("Login to an existing account");
         loginButton.addActionListener(e -> {
             loginButton.setEnabled(false); // todo this doesn't work?
-            new LoginWindow(program).execute();
+            new Login().execute();
         });
 
         JButton resetPasswordButton = new JButton("Forgot password");
-        resetPasswordButton.addActionListener(e -> new ForgotPasswordWindow(program).execute());
+        resetPasswordButton.addActionListener(e -> new ForgotPassword().execute());
 
         panel.add(label);
         panel.add(createAccountButton);

@@ -1,15 +1,20 @@
 package edu.illinoisstate.gui;
 
 import edu.illinoisstate.ReggiePlanner;
-import edu.illinoisstate.Security;
+import edu.illinoisstate.SecurityHandler;
 import edu.illinoisstate.UserAccount;
 
 import javax.swing.*;
 
-public class CreateAccountWindow extends ProgramWindow {
+public class CreateAccount extends ProgramWindow {
+    private final ReggiePlanner program = ReggiePlanner.getProgram();
+    private final SecurityHandler security = program.getSecurityHandler();
+    protected final JFrame window = new JFrame();
+    protected final JPanel panel = new JPanel();
 
-    public CreateAccountWindow(ReggiePlanner program) {
-        super(program, 600, 600, "Create a new account");
+    public CreateAccount() {
+        window.setSize(600, 600);
+        window.setTitle("Create a new account");
     }
 
     @Override
@@ -25,17 +30,17 @@ public class CreateAccountWindow extends ProgramWindow {
 
         JButton submitButton = new JButton("Submit");
         submitButton.addActionListener(e -> {
-            if (!Security.isValidUsername(usernameField.getText())) {
+            if (!security.isValidUsername(usernameField.getText())) {
                 JOptionPane.showMessageDialog(window, "Sorry, that's an invalid username.");
                 return;
             }
 
-            if (!Security.isValidPassword(usernameField.getText(), passwordField.getText())) {
+            if (!security.isValidPassword(usernameField.getText(), passwordField.getText())) {
                 JOptionPane.showMessageDialog(window, "Sorry, that's an invalid password.");
                 return;
             }
 
-            if (!Security.isValidEmail(emailField.getText())) {
+            if (!security.isValidEmail(emailField.getText())) {
                 JOptionPane.showMessageDialog(window, "Sorry, that's an invalid email.");
                 return;
             }

@@ -22,4 +22,8 @@ public class DatabaseHandler {
         return database.get(uuid);
     }
 
+    public UserAccount getUserObject(String username) {
+        return database.get(0);
+    }
+
 }

@@ -9,14 +9,12 @@ public class UserAccount {
     private final UUID uuid;
     private String username;
     private String email;
-    private String password;
     private boolean isActiveAccount;
 
     public UserAccount(String email, String username, String password) {
         this.uuid = UUID.randomUUID();
         this.email = email;
         this.username = username;
-        this.password = password;
     }
 
     public UUID uuid() {
@@ -37,14 +35,6 @@ public class UserAccount {
 
     public String email() {
         return email;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String password() {
-        return password;
     }
 
     /**

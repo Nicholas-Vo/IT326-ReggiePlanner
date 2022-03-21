@@ -1,14 +1,19 @@
 package edu.illinoisstate.gui;
 
 import edu.illinoisstate.ReggiePlanner;
-import edu.illinoisstate.Security;
+import edu.illinoisstate.SecurityHandler;
 
 import javax.swing.*;
 
-public class LoginWindow extends ProgramWindow {
+public class Login extends ProgramWindow {
+    private final ReggiePlanner program = ReggiePlanner.getProgram();
+    private final SecurityHandler security = program.getSecurityHandler();
+    protected final JFrame window = new JFrame();
+    protected final JPanel panel = new JPanel();
 
-    public LoginWindow(ReggiePlanner program) {
-        super(program, 600, 600, "Welcome back!");
+    public Login() {
+        window.setSize(600, 600);
+        window.setTitle("Welcome back!");
     }
 
     @Override
@@ -20,12 +25,12 @@ public class LoginWindow extends ProgramWindow {
 
         JButton loginButton = new JButton("Login");
         loginButton.addActionListener(e -> {
-            if (!Security.validateUsernamePassword(username.getText(), password.getText())) {
+            if (!security.validateUsernamePassword(username.getText(), password.getText())) {
                 JOptionPane.showMessageDialog(window, "Invalid username or password.");
                 return;
             }
 
-            new HomeWindow(program);
+            new Home();
         });
 
         panel.add(username);
