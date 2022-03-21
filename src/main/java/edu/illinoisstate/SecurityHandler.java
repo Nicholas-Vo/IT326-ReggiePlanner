@@ -3,8 +3,11 @@ package edu.illinoisstate;
 import edu.illinoisstate.database.DatabaseHandler;
 
 public class SecurityHandler {
-    private final ReggiePlanner program = ReggiePlanner.getProgram();
-    private final DatabaseHandler database = program.getDatabase();
+    private final DatabaseHandler database;
+
+    public SecurityHandler(DatabaseHandler database) {
+        this.database = database;
+    }
 
     /**
      * Validate username/password from database
@@ -15,19 +18,9 @@ public class SecurityHandler {
     public boolean validateUsernamePassword(String username, String password) {
         UserAccount account = database.getUserObject(username);
 
+        // do validation here
+
         return password.equalsIgnoreCase("asdf"); // make this actually do something
-    }
-
-    public boolean isValidUsername(String username) {
-        return username.length() > 3 && username.length() < 16;
-    }
-
-    public boolean isValidPassword(String username, String password) {
-        if (username.equalsIgnoreCase(password)) {
-            return false;
-        }
-
-        return password.length() > 3 && password.length() < 16;
     }
 
     public boolean isValidEmail(String email) {

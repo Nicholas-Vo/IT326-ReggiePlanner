@@ -15,10 +15,11 @@ public class Home extends ProgramWindow {
     public Home() {
         window.setSize(600, 600);
         window.setTitle("ReggiePlanner v" + program.VERSION);
+
+        createWindow();
     }
 
-    @Override
-    public void execute() {
+    public void createWindow() {
 
     }
 

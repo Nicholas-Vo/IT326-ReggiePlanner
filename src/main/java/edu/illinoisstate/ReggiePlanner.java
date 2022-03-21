@@ -15,6 +15,9 @@ public class ReggiePlanner {
 
     public ReggiePlanner() {
         database = new DatabaseHandler();
+        security = new SecurityHandler(database);
+
+        program = this;
     }
 
     /**
@@ -43,8 +46,7 @@ public class ReggiePlanner {
      * Start the program!
      */
     public void execute() {
-        MainProgramWindow program = new MainProgramWindow();
-        program.execute();
+        new MainProgramWindow();
     }
 
 }

@@ -15,10 +15,11 @@ public class CreateAccount extends ProgramWindow {
     public CreateAccount() {
         window.setSize(600, 600);
         window.setTitle("Create a new account");
+
+        createWindow();
     }
 
-    @Override
-    public void execute() {
+    public void createWindow() {
         JLabel label = new JLabel("Create an account");
 
         JTextField emailField = new JTextField("email", 15);
@@ -30,12 +31,12 @@ public class CreateAccount extends ProgramWindow {
 
         JButton submitButton = new JButton("Submit");
         submitButton.addActionListener(e -> {
-            if (!security.isValidUsername(usernameField.getText())) {
+            if (!isValidUsername(usernameField.getText())) {
                 JOptionPane.showMessageDialog(window, "Sorry, that's an invalid username.");
                 return;
             }
 
-            if (!security.isValidPassword(usernameField.getText(), passwordField.getText())) {
+            if (!isValidPassword(usernameField.getText(), passwordField.getText())) {
                 JOptionPane.showMessageDialog(window, "Sorry, that's an invalid password.");
                 return;
             }
@@ -57,6 +58,23 @@ public class CreateAccount extends ProgramWindow {
 
         window.add(panel);
         window.setVisible(true);
+    }
+
+    /**
+     * Determine if the username should be rejected or not.
+     * @param username the input username
+     * @return boolean value
+     */
+    public boolean isValidUsername(String username) {
+        return username.length() > 3 && username.length() < 16;
+    }
+
+    public boolean isValidPassword(String username, String password) {
+        if (username.equalsIgnoreCase(password)) {
+            return false;
+        }
+
+        return password.length() > 3 && password.length() < 16;
     }
 
 }

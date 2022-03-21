@@ -14,10 +14,11 @@ public class Login extends ProgramWindow {
     public Login() {
         window.setSize(600, 600);
         window.setTitle("Welcome back!");
+
+        createWindow();
     }
 
-    @Override
-    public void execute() {
+    public void createWindow() {
         JTextField username = new JTextField("username", 15);
         panel.add(username);
         JTextField password = new JTextField("password", 15);

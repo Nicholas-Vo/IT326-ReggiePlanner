@@ -16,25 +16,27 @@ public class MainProgramWindow extends ProgramWindow {
     public MainProgramWindow() {
         window.setSize(800, 600);
         window.setTitle("ReggiePlanner");
+
+        createWindow();
     }
 
-    @Override
-    public void execute() {
+    public void createWindow() {
         JLabel label = new JLabel("ReggiePlanner");
         label.setFont(new Font("Impact", Font.PLAIN, 35));
         label.setPreferredSize(new Dimension(250, 100));
 
         JButton createAccountButton = new JButton("Create a new account");
-        createAccountButton.addActionListener(e -> new CreateAccount().execute());
+        createAccountButton.addActionListener(e -> new CreateAccount());
 
         JButton loginButton = new JButton("Login to an existing account");
         loginButton.addActionListener(e -> {
             loginButton.setEnabled(false); // todo this doesn't work?
-            new Login().execute();
+
+            new Login();
         });
 
         JButton resetPasswordButton = new JButton("Forgot password");
-        resetPasswordButton.addActionListener(e -> new ForgotPassword().execute());
+        resetPasswordButton.addActionListener(e -> new ForgotPassword());
 
         panel.add(label);
         panel.add(createAccountButton);

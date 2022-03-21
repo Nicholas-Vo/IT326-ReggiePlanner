@@ -20,10 +20,11 @@ public class ForgotPassword extends ProgramWindow {
     public ForgotPassword() {
         window.setSize(600, 600);
         window.setTitle("Recover password");
+
+        createWindow();
     }
 
-    @Override
-    public void execute() {
+    public void createWindow() {
         JTextField username = new JTextField("username", 15);
         panel.add(username);
 
