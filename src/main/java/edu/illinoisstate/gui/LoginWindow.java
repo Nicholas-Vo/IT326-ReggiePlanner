@@ -1,17 +1,14 @@
 package edu.illinoisstate.gui;
 
+import edu.illinoisstate.ReggiePlanner;
 import edu.illinoisstate.Security;
-import edu.illinoisstate.database.DatabaseHandler;
 
 import javax.swing.*;
 
 public class LoginWindow extends ProgramWindow {
 
-
-    public LoginWindow(DatabaseHandler database) {
-        window.setSize(600, 600);
-        window.setTitle("Welcome back!");
-
+    public LoginWindow(ReggiePlanner program) {
+        super(program, 600, 600, "Welcome back!");
     }
 
     @Override
@@ -28,7 +25,7 @@ public class LoginWindow extends ProgramWindow {
                 return;
             }
 
-            new CreateAccountWindow().execute();
+            new HomeWindow(program);
         });
 
         panel.add(username);

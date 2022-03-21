@@ -1,6 +1,7 @@
 package edu.illinoisstate.gui;
 
 import edu.illinoisstate.Email;
+import edu.illinoisstate.ReggiePlanner;
 import edu.illinoisstate.Security;
 import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.database.DatabaseHandler;
@@ -12,13 +13,11 @@ import java.awt.event.WindowEvent;
  * This window appears when the user selects the "Forgot password" button on the main window.
  */
 public class ForgotPasswordWindow extends ProgramWindow {
-    private final DatabaseHandler database;
 
-    public ForgotPasswordWindow(DatabaseHandler database) {
+    public ForgotPasswordWindow(ReggiePlanner program) {
+        super(program, 600, 600, "Recover password");
         window.setSize(600, 600);
         window.setTitle("Recover password");
-
-        this.database = database;
     }
 
     @Override
@@ -29,6 +28,7 @@ public class ForgotPasswordWindow extends ProgramWindow {
         JButton resetButton = new JButton("Recover");
 
         resetButton.addActionListener(e -> {
+            DatabaseHandler database = program.getDatabase();
 
             if (database.getUserByUsername(username.getText()) == null) {
                 JOptionPane.showMessageDialog(window, "Invalid username. Try again?");

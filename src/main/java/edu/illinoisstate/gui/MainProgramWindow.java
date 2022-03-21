@@ -1,18 +1,17 @@
 package edu.illinoisstate.gui;
 
-import edu.illinoisstate.database.DatabaseHandler;
+import edu.illinoisstate.ReggiePlanner;
 
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * This is the window that first appears when you run the program
+ */
 public class MainProgramWindow extends ProgramWindow {
-    private final DatabaseHandler database;
 
-    public MainProgramWindow() {
-        window.setSize(800, 600);
-        window.setTitle("ReggiePlanner");
-
-        database = new DatabaseHandler();
+    public MainProgramWindow(ReggiePlanner program) {
+        super(program, 800, 600, "ReggiePlanner");
     }
 
     @Override
@@ -22,16 +21,16 @@ public class MainProgramWindow extends ProgramWindow {
         label.setPreferredSize(new Dimension(250, 100));
 
         JButton createAccountButton = new JButton("Create a new account");
-        createAccountButton.addActionListener(e -> new CreateAccountWindow().execute());
+        createAccountButton.addActionListener(e -> new CreateAccountWindow(program).execute());
 
         JButton loginButton = new JButton("Login to an existing account");
         loginButton.addActionListener(e -> {
             loginButton.setEnabled(false); // todo this doesn't work?
-            new LoginWindow(database).execute();
+            new LoginWindow(program).execute();
         });
 
         JButton resetPasswordButton = new JButton("Forgot password");
-        resetPasswordButton.addActionListener(e -> new ForgotPasswordWindow(database).execute());
+        resetPasswordButton.addActionListener(e -> new ForgotPasswordWindow(program).execute());
 
         panel.add(label);
         panel.add(createAccountButton);

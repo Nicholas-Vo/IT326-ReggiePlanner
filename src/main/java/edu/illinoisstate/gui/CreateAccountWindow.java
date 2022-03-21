@@ -1,5 +1,6 @@
 package edu.illinoisstate.gui;
 
+import edu.illinoisstate.ReggiePlanner;
 import edu.illinoisstate.Security;
 import edu.illinoisstate.UserAccount;
 
@@ -7,9 +8,8 @@ import javax.swing.*;
 
 public class CreateAccountWindow extends ProgramWindow {
 
-    public CreateAccountWindow() {
-        window.setSize(600, 600);
-        window.setTitle("Create a new account");
+    public CreateAccountWindow(ReggiePlanner program) {
+        super(program, 600, 600, "Create a new account");
     }
 
     @Override
