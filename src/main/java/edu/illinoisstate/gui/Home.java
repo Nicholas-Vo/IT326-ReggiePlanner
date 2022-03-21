@@ -20,7 +20,15 @@ public class Home extends ProgramWindow {
     }
 
     public void createWindow() {
+        JButton generatePlanBtn = new JButton("Generate new plan");
 
+        for (int i = 0; i< 21342; i++) {
+            System.out.println(i);
+        }
+        panel.add(generatePlanBtn);
+
+        window.add(panel);
+        window.setVisible(true);
     }
 
 }

@@ -8,9 +8,23 @@
     <artifactId>IT326-ReggiePlanner</artifactId>
     <version>1.0</version>
 
+    <repositories>
+        <repository>
+            <id>tmate</id>
+            <url>http://maven.tmatesoft.com/content/repositories/releases</url>
+        </repository>
+    </repositories>
+
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
-    
+
+    <dependencies>
+        <dependency>
+            <groupId>org.tmatesoft.sqljet</groupId>
+            <artifactId>sqljet</artifactId>
+            <version>1.1.14</version>
+        </dependency>
+    </dependencies>
 </project>

@@ -5,6 +5,7 @@ import edu.illinoisstate.SecurityHandler;
 import edu.illinoisstate.UserAccount;
 
 import javax.swing.*;
+import java.awt.event.WindowEvent;
 
 public class CreateAccount extends ProgramWindow {
     private final ReggiePlanner program = ReggiePlanner.getProgram();
@@ -51,6 +52,7 @@ public class CreateAccount extends ProgramWindow {
 
             String msg = "Successfully created the account " + account.getUsername() + ".";
             JOptionPane.showMessageDialog(window, msg);
+            window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
         });
 
         panel.add(label);
