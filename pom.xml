@@ -8,9 +8,14 @@
     <artifactId>IT326-ReggiePlanner</artifactId>
     <version>1.0</version>
 
+    <repositories>
+    </repositories>
+
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
-    
+
+    <dependencies>
+    </dependencies>
 </project>

@@ -4,6 +4,7 @@ import edu.illinoisstate.ReggiePlanner;
 import edu.illinoisstate.SecurityHandler;
 
 import javax.swing.*;
+import java.awt.event.WindowEvent;
 
 public class Login extends ProgramWindow {
     private final ReggiePlanner program = ReggiePlanner.getProgram();
@@ -12,8 +13,8 @@ public class Login extends ProgramWindow {
     protected final JPanel panel = new JPanel();
 
     public Login() {
-        window.setSize(600, 600);
-        window.setTitle("Welcome back!");
+        window.setSize(500, 300);
+        window.setTitle("Login");
 
         createWindow();
     }
@@ -31,6 +32,7 @@ public class Login extends ProgramWindow {
                 return;
             }
 
+            window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
             new Home();
         });
 

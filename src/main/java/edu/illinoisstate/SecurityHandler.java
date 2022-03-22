@@ -20,7 +20,7 @@ public class SecurityHandler {
 
         // do validation here
 
-        return password.equalsIgnoreCase("asdf"); // make this actually do something
+        return password.equalsIgnoreCase("test"); // make this actually do something
     }
 
     public boolean isValidEmail(String email) {
