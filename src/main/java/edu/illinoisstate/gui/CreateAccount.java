@@ -1,19 +1,26 @@
 package edu.illinoisstate.gui;
 
-import edu.illinoisstate.Security;
+import edu.illinoisstate.ReggiePlanner;
+import edu.illinoisstate.SecurityHandler;
 import edu.illinoisstate.UserAccount;
 
 import javax.swing.*;
+import java.awt.event.WindowEvent;
 
-public class CreateAccountWindow extends ProgramWindow {
+public class CreateAccount extends ProgramWindow {
+    private final ReggiePlanner program = ReggiePlanner.getProgram();
+    private final SecurityHandler security = program.getSecurityHandler();
+    protected final JFrame window = new JFrame();
+    protected final JPanel panel = new JPanel();
 
-    public CreateAccountWindow() {
+    public CreateAccount() {
         window.setSize(600, 600);
         window.setTitle("Create a new account");
+
+        createWindow();
     }
 
-    @Override
-    public void execute() {
+    public void createWindow() {
         JLabel label = new JLabel("Create an account");
 
         JTextField emailField = new JTextField("email", 15);
@@ -25,17 +32,17 @@ public class CreateAccountWindow extends ProgramWindow {
 
         JButton submitButton = new JButton("Submit");
         submitButton.addActionListener(e -> {
-            if (!Security.isValidUsername(usernameField.getText())) {
+            if (!isValidUsername(usernameField.getText())) {
                 JOptionPane.showMessageDialog(window, "Sorry, that's an invalid username.");
                 return;
             }
 
-            if (!Security.isValidPassword(usernameField.getText(), passwordField.getText())) {
+            if (!isValidPassword(usernameField.getText(), passwordField.getText())) {
                 JOptionPane.showMessageDialog(window, "Sorry, that's an invalid password.");
                 return;
             }
 
-            if (!Security.isValidEmail(emailField.getText())) {
+            if (!security.isValidEmail(emailField.getText())) {
                 JOptionPane.showMessageDialog(window, "Sorry, that's an invalid email.");
                 return;
             }
@@ -45,6 +52,7 @@ public class CreateAccountWindow extends ProgramWindow {
 
             String msg = "Successfully created the account " + account.getUsername() + ".";
             JOptionPane.showMessageDialog(window, msg);
+            window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
         });
 
         panel.add(label);
@@ -52,6 +60,23 @@ public class CreateAccountWindow extends ProgramWindow {
 
         window.add(panel);
         window.setVisible(true);
+    }
+
+    /**
+     * Determine if the username should be rejected or not.
+     * @param username the input username
+     * @return boolean value
+     */
+    public boolean isValidUsername(String username) {
+        return username.length() > 3 && username.length() < 16;
+    }
+
+    public boolean isValidPassword(String username, String password) {
+        if (username.equalsIgnoreCase(password)) {
+            return false;
+        }
+
+        return password.length() > 3 && password.length() < 16;
     }
 
 }

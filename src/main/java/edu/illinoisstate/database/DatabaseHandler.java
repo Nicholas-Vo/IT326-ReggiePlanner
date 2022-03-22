@@ -7,11 +7,21 @@ import java.util.Map;
 import java.util.UUID;
 
 public class DatabaseHandler {
-    private final Map<UUID, UserAccount> database = new HashMap<>(); // todo: replace this with a real DB
+    private static DatabaseHandler database;
+
+    public DatabaseHandler() {
+        database = this;
+    }
+
+    public static DatabaseHandler getInstance() {
+        return database;
+    }
 
     public UserAccount getUserByUsername(String username) {
         return new UserAccount("email", username, "pw");
     }
+
+    private final Map<UUID, UserAccount> map = new HashMap<>();
 
     /**
      * Get a user Object given a UUID
@@ -19,7 +29,11 @@ public class DatabaseHandler {
      * @return the user Object, null if non-existent
      */
     public UserAccount getUser(UUID uuid) {
-        return database.get(uuid);
+        return map.get(uuid);
+    }
+
+    public UserAccount getUserObject(String username) {
+        return map.get(0);
     }
 
 }
