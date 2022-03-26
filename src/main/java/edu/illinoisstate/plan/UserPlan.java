@@ -7,11 +7,10 @@ import edu.illinoisstate.database.Database;
 import java.util.List;
 
 public class UserPlan {
-    private final UserAccount user;
+    private final UserAccount user = null;
     private final List<Course> courseList;
 
     public UserPlan(Database database) {
-        this.user = database.getUser();
         this.courseList = database.getCourseList();
     }
 

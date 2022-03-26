@@ -1,20 +1,30 @@
 package edu.illinoisstate;
 
+import javax.persistence.*;
 import java.util.UUID;
 
 /**
  * Represents a user account
  */
+@Entity
 public class UserAccount {
-    private final UUID uuid;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+    private Long databaseID;
+    private UUID uuid;
     private String username;
     private String email;
     private boolean isActiveAccount;
 
-    public UserAccount(String email, String username, String password) {
-        this.uuid = UUID.randomUUID();
+    public UserAccount(UUID uuid, String email, String username, String password) {
+        this.uuid = uuid;
         this.email = email;
         this.username = username;
+    }
+
+    public UserAccount() {
+
     }
 
     public UUID uuid() {

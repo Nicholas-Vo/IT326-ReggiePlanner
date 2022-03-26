@@ -1,15 +1,13 @@
 package edu.illinoisstate.gui;
 
-import edu.illinoisstate.ReggiePlanner;
 import edu.illinoisstate.SecurityHandler;
 import edu.illinoisstate.UserAccount;
 
 import javax.swing.*;
 import java.awt.event.WindowEvent;
+import java.util.UUID;
 
 public class CreateAccount extends ProgramWindow {
-    private final ReggiePlanner program = ReggiePlanner.getProgram();
-    private final SecurityHandler security = program.getSecurityHandler();
     protected final JFrame window = new JFrame();
     protected final JPanel panel = new JPanel();
 
@@ -42,12 +40,12 @@ public class CreateAccount extends ProgramWindow {
                 return;
             }
 
-            if (!security.isValidEmail(emailField.getText())) {
+            if (!SecurityHandler.getInstanace().isValidEmail(emailField.getText())) {
                 JOptionPane.showMessageDialog(window, "Sorry, that's an invalid email.");
                 return;
             }
 
-            UserAccount account = new UserAccount(emailField.getText(),
+            UserAccount account = new UserAccount(UUID.randomUUID(), emailField.getText(),
                     usernameField.getText(), passwordField.getText());
 
             String msg = "Successfully created the account " + account.getUsername() + ".";

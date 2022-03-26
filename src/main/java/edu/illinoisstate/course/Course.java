@@ -1,11 +1,18 @@
 package edu.illinoisstate.course;
 
 
+import javax.persistence.*;
+
 /**
  * Represents a course at Illinois State University.
  */
+@Entity
 public class Course {
-    private String id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+    private Long id;
+    private String courseID;
     private String name;
     private double gpaRequirement;
     private double credits;
@@ -13,11 +20,17 @@ public class Course {
     /**
      * Creates a new Course with the given name, courseID, and credit hours.
      */
-    public Course(String name, String id, double credits, double gpaRequirement) {
+    public Course(String courseID, String name, double credits, double gpaRequirement) {
         this.name = name;
-        this.id = id;
+        this.courseID = courseID;
         this.credits = credits;
         this.gpaRequirement = gpaRequirement;
+    }
+
+    /*
+    empty constructor required for hsqldb
+     */
+    public Course() {
     }
 
     /**
@@ -38,12 +51,12 @@ public class Course {
      *
      * @return this Course's course ID.
      */
-    public String getID() {
-        return id;
+    public String getCourseID() {
+        return courseID;
     }
 
     public void setID(String id) {
-        this.id = id;
+        this.courseID = courseID;
     }
 
     /**

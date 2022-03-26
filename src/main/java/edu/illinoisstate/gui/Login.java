@@ -1,14 +1,11 @@
 package edu.illinoisstate.gui;
 
-import edu.illinoisstate.ReggiePlanner;
 import edu.illinoisstate.SecurityHandler;
 
 import javax.swing.*;
 import java.awt.event.WindowEvent;
 
 public class Login extends ProgramWindow {
-    private final ReggiePlanner program = ReggiePlanner.getProgram();
-    private final SecurityHandler security = program.getSecurityHandler();
     protected final JFrame window = new JFrame();
     protected final JPanel panel = new JPanel();
 
@@ -27,7 +24,7 @@ public class Login extends ProgramWindow {
 
         JButton loginButton = new JButton("Login");
         loginButton.addActionListener(e -> {
-            if (!security.validateUsernamePassword(username.getText(), password.getText())) {
+            if (!SecurityHandler.getInstanace().validateUsernamePassword(username.getText(), password.getText())) {
                 JOptionPane.showMessageDialog(window, "Invalid username or password.");
                 return;
             }

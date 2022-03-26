@@ -1,12 +1,16 @@
 package edu.illinoisstate;
 
-import edu.illinoisstate.database.DatabaseHandler;
+import edu.illinoisstate.database.Database;
 
 public class SecurityHandler {
-    private final DatabaseHandler database;
+    private static SecurityHandler securityHandler;
 
-    public SecurityHandler(DatabaseHandler database) {
-        this.database = database;
+    public SecurityHandler() {
+        securityHandler = this;
+    }
+
+    public static SecurityHandler getInstanace() {
+        return securityHandler;
     }
 
     /**
@@ -16,7 +20,7 @@ public class SecurityHandler {
      * @return bool value
      */
     public boolean validateUsernamePassword(String username, String password) {
-        UserAccount account = database.getUserObject(username);
+        UserAccount account = Database.getInstance().getUser(username);
 
         // do validation here
 

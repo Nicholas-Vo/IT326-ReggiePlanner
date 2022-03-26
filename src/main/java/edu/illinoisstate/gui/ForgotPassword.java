@@ -1,9 +1,9 @@
 package edu.illinoisstate.gui;
 
 import edu.illinoisstate.Email;
-import edu.illinoisstate.ReggiePlanner;
+import edu.illinoisstate.SecurityHandler;
 import edu.illinoisstate.UserAccount;
-import edu.illinoisstate.database.DatabaseHandler;
+import edu.illinoisstate.database.Database;
 
 import javax.swing.*;
 import java.awt.event.WindowEvent;
@@ -12,8 +12,6 @@ import java.awt.event.WindowEvent;
  * This window appears when the user selects the "Forgot password" button on the main window.
  */
 public class ForgotPassword extends ProgramWindow {
-    private final ReggiePlanner program = ReggiePlanner.getProgram();
-    private final UserAccount user = program.getUser();
     protected final JFrame window = new JFrame();
     protected final JPanel panel = new JPanel();
 
@@ -31,14 +29,14 @@ public class ForgotPassword extends ProgramWindow {
         JButton resetButton = new JButton("Recover");
 
         resetButton.addActionListener(e -> {
-            DatabaseHandler database = program.getDatabase();
-
-            if (database.getUserByUsername(username.getText()) == null) {
+            if (Database.getInstance().getUser(username.getText()) == null) {
                 JOptionPane.showMessageDialog(window, "Invalid username. Try again?");
                 return;
             }
 
-            if (!program.getSecurityHandler().isValidEmail(user.email())) {
+            UserAccount user = Database.getInstance().getUser(username.getText());
+
+            if (!SecurityHandler.getInstanace().isValidEmail(user.email())) {
                 JOptionPane.showMessageDialog(window, "No email associated with that account.");
                 return;
             }
