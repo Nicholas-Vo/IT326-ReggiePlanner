@@ -28,7 +28,7 @@ public class SecurityHandler {
     }
 
     public boolean isValidEmail(String email) {
-        return email.length() >= 4 && email.length() <= 16;
+        return email.length() >= 4 && email.length() <= 24;
     }
 
     public boolean validateUsername(String username) {

@@ -14,11 +14,12 @@ import java.util.UUID;
 import static org.hsqldb.DatabaseManager.getSession;
 
 /**
- * This will eventually be the database class
+ * Handles the program database
+ * Makes use of Hibernate/JPA & HSQLDB
  */
+@SuppressWarnings("unchecked") // suppress unchecked cast warnings
 public class Database {
     private static Database database;
-    private final Set<Course> courseList = new HashSet<>();
     private final EntityManager entityManager;
 
     public Database() {
@@ -26,9 +27,9 @@ public class Database {
 
         var factory = Persistence.createEntityManagerFactory("default");
         entityManager = factory.createEntityManager();
-
         entityManager.getTransaction().begin();
 
+        Set<Course> courseList = new HashSet<>();
         courseList.add(new Course("IT297", "Data Structures & Algorithms", 3, 3));
         courseList.add(new Course("IT355", "Secure Software Development", 3, 3));
         courseList.add(new Course("IT327", "Concepts Of Programming Languages", 3, 3));
@@ -52,8 +53,34 @@ public class Database {
         return database;
     }
 
-    private boolean containsCourse(Course course) {
-        Query query = entityManager.createQuery("from Course");
+    public void saveUserAccount(UserAccount account) {
+        entityManager.getTransaction().begin();
+
+        if (containsUser(account)) {
+            entityManager.merge(account);
+        } else {
+            entityManager.persist(account);
+        }
+
+        System.out.println("Saved account " + account.getUsername() + " to database.");
+        entityManager.getTransaction().commit();
+    }
+
+    public boolean containsUser(UserAccount toSearch) {
+        Query query = entityManager.createQuery("FROM UserAccount");
+
+        for (UserAccount aUser : (List<UserAccount>) query.getResultList()) {
+            if (aUser.equals(toSearch)) {
+                System.out.println("User " + toSearch.getUsername() + "exists in database.");
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean containsCourse(Course course) {
+        Query query = entityManager.createQuery("FROM Course");
         List<Course> courses = query.getResultList();
 
         for (Course c : courses) {
@@ -65,8 +92,14 @@ public class Database {
         return false;
     }
 
+    public List<String> getUsernamesList() {
+        Query query = entityManager.createQuery("SELECT username FROM UserAccount");
+
+        return (List<String>) query.getResultList();
+    }
+
     public UserAccount getUser(String username) {
-        return new UserAccount(UUID.randomUUID(),"", "", "");
+        return new UserAccount(UUID.randomUUID(), "", "", "");
     }
 
     public List<Course> getCourseList() {

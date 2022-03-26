@@ -2,6 +2,7 @@ package edu.illinoisstate.gui;
 
 import edu.illinoisstate.SecurityHandler;
 import edu.illinoisstate.UserAccount;
+import edu.illinoisstate.database.Database;
 
 import javax.swing.*;
 import java.awt.event.WindowEvent;
@@ -45,8 +46,16 @@ public class CreateAccount extends ProgramWindow {
                 return;
             }
 
+            Database db = Database.getInstance();
+            if (db.getUsernamesList().contains(usernameField.getText())) {
+                JOptionPane.showMessageDialog(window, "Sorry, that username already exists.");
+                return;
+            }
+
             UserAccount account = new UserAccount(UUID.randomUUID(), emailField.getText(),
                     usernameField.getText(), passwordField.getText());
+
+            db.saveUserAccount(account);
 
             String msg = "Successfully created the account " + account.getUsername() + ".";
             JOptionPane.showMessageDialog(window, msg);

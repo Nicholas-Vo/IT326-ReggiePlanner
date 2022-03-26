@@ -67,4 +67,15 @@ public class UserAccount {
         return "UUID: " + uuid + "\nUsername: " + username + "\nEmail: " + email;
     }
 
+    @Override
+    public boolean equals(Object otherUser) {
+        if (!(otherUser instanceof UserAccount)) {
+            return false;
+        }
+
+        UserAccount account = (UserAccount) otherUser;
+
+        return account.uuid.equals(uuid);
+    }
+
 }
