@@ -31,8 +31,9 @@ public class CreateAccount extends ProgramWindow {
 
         JButton submitButton = new JButton("Submit");
         submitButton.addActionListener(e -> {
-            if (!isValidUsername(usernameField.getText())) {
-                JOptionPane.showMessageDialog(window, "Sorry, that's an invalid username.");
+            String username = usernameField.getText();
+            if (username.length() < 4 || username.length() > 16) {
+                JOptionPane.showMessageDialog(window, "Sorry, that's an invalid username length.");
                 return;
             }
 
@@ -41,13 +42,14 @@ public class CreateAccount extends ProgramWindow {
                 return;
             }
 
-            if (!SecurityHandler.getInstanace().isValidEmail(emailField.getText())) {
+            String email = emailField.getText();
+            if (email.length() >= 4 && email.length() <= 24) {
                 JOptionPane.showMessageDialog(window, "Sorry, that's an invalid email.");
                 return;
             }
 
-            Database db = Database.getInstance();
-            if (db.getUsernamesList().contains(usernameField.getText())) {
+            Database database = Database.getInstance();
+            if (database.getUsernamesList().contains(usernameField.getText())) {
                 JOptionPane.showMessageDialog(window, "Sorry, that username already exists.");
                 return;
             }
@@ -55,11 +57,11 @@ public class CreateAccount extends ProgramWindow {
             UserAccount account = new UserAccount(UUID.randomUUID(), emailField.getText(),
                     usernameField.getText(), passwordField.getText());
 
-            db.saveUserAccount(account);
+            database.saveUserAccount(account);
 
-            String msg = "Successfully created the account " + account.getUsername() + ".";
-            JOptionPane.showMessageDialog(window, msg);
+            JOptionPane.showMessageDialog(window, "Account created! You may now log in.");
             window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
+            System.out.println("Created new user account \"" + account.getUsername() + "\".");
         });
 
         panel.add(label);
@@ -70,15 +72,12 @@ public class CreateAccount extends ProgramWindow {
     }
 
     /**
-     * Determine if the username should be rejected or not.
+     * Determine whether to reject input password
      * @param username the input username
-     * @return boolean value
+     * @param password the input password
+     * @return bool value
      */
-    public boolean isValidUsername(String username) {
-        return username.length() > 3 && username.length() < 16;
-    }
-
-    public boolean isValidPassword(String username, String password) {
+    private boolean isValidPassword(String username, String password) {
         if (username.equalsIgnoreCase(password)) {
             return false;
         }

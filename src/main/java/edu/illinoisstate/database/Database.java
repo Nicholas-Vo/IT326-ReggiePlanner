@@ -62,7 +62,6 @@ public class Database {
             entityManager.persist(account);
         }
 
-        System.out.println("Saved account " + account.getUsername() + " to database.");
         entityManager.getTransaction().commit();
     }
 

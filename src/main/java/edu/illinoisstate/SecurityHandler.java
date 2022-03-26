@@ -27,10 +27,6 @@ public class SecurityHandler {
         return password.equalsIgnoreCase("test"); // make this actually do something
     }
 
-    public boolean isValidEmail(String email) {
-        return email.length() >= 4 && email.length() <= 24;
-    }
-
     public boolean validateUsername(String username) {
         return true;
     }
