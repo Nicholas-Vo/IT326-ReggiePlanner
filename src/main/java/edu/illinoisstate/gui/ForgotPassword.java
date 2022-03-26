@@ -1,7 +1,6 @@
 package edu.illinoisstate.gui;
 
 import edu.illinoisstate.Email;
-import edu.illinoisstate.SecurityHandler;
 import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.database.Database;
 
@@ -29,21 +28,15 @@ public class ForgotPassword extends ProgramWindow {
         JButton resetButton = new JButton("Recover");
 
         resetButton.addActionListener(e -> {
-            if (Database.getInstance().getUser(username.getText()) == null) {
+            Database database = Database.getInstance();
+
+            if (!database.getUsernamesList().contains(username.getText())) {
                 JOptionPane.showMessageDialog(window, "Invalid username. Try again?");
                 return;
             }
 
-            UserAccount user = Database.getInstance().getUser(username.getText());
+            UserAccount user = database.getUserAccount(username.getText());
 
-            if (!SecurityHandler.getInstanace().isValidEmail(user.email())) {
-                JOptionPane.showMessageDialog(window, "No email associated with that account.");
-                return;
-            }
-
-            /*
-            todo: placeholder make this email class better
-             */
             Email.sendForgotPassword(user.email());
             JOptionPane.showMessageDialog(window,
                     "A password recovery message has been sent to the email associated with this account.");

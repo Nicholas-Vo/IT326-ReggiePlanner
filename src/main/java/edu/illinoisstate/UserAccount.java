@@ -14,21 +14,30 @@ public class UserAccount {
     private Long databaseID;
     private UUID uuid;
     private String username;
+    private String passwordHash;
     private String email;
-    private boolean isActiveAccount;
+    private boolean isActiveAccount = true;
 
-    public UserAccount(UUID uuid, String email, String username, String password) {
+    public UserAccount(UUID uuid, String email, String username, String passwordHash) {
         this.uuid = uuid;
         this.email = email;
         this.username = username;
+        this.passwordHash = passwordHash;
     }
 
     public UserAccount() {
-
     }
 
     public UUID uuid() {
         return uuid;
+    }
+
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
     }
 
     public void setUsername(String username) {

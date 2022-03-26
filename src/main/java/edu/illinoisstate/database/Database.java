@@ -1,5 +1,6 @@
 package edu.illinoisstate.database;
 
+import com.sun.istack.Nullable;
 import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.course.Course;
 
@@ -70,7 +71,6 @@ public class Database {
 
         for (UserAccount aUser : (List<UserAccount>) query.getResultList()) {
             if (aUser.equals(toSearch)) {
-                System.out.println("User " + toSearch.getUsername() + "exists in database.");
                 return true;
             }
         }
@@ -91,14 +91,25 @@ public class Database {
         return false;
     }
 
+    /**
+     * Retrieve a UserAccount from the database
+     */
+    @Nullable
+    public UserAccount getUserAccount(String username) {
+        Query query = entityManager.createQuery("FROM UserAccount");
+
+        for (UserAccount aUser : (List<UserAccount>) query.getResultList()) {
+            if (aUser.getUsername().equalsIgnoreCase(username)) {
+                return aUser;
+            }
+        }
+        return null;
+    }
+
     public List<String> getUsernamesList() {
         Query query = entityManager.createQuery("SELECT username FROM UserAccount");
 
         return (List<String>) query.getResultList();
-    }
-
-    public UserAccount getUser(String username) {
-        return new UserAccount(UUID.randomUUID(), "", "", "");
     }
 
     public List<Course> getCourseList() {

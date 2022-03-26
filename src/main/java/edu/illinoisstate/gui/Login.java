@@ -1,9 +1,12 @@
 package edu.illinoisstate.gui;
 
-import edu.illinoisstate.SecurityHandler;
+import edu.illinoisstate.UserAccount;
+import edu.illinoisstate.database.Database;
 
 import javax.swing.*;
 import java.awt.event.WindowEvent;
+
+import static edu.illinoisstate.Utils.hash;
 
 public class Login extends ProgramWindow {
     protected final JFrame window = new JFrame();
@@ -24,8 +27,20 @@ public class Login extends ProgramWindow {
 
         JButton loginButton = new JButton("Login");
         loginButton.addActionListener(e -> {
-            if (!SecurityHandler.getInstanace().validateUsernamePassword(username.getText(), password.getText())) {
+            Database database = Database.getInstance();
+
+            if (!database.getUsernamesList().contains(username.getText())) {
                 JOptionPane.showMessageDialog(window, "Invalid username or password.");
+                return;
+            }
+
+            UserAccount user = database.getUserAccount(username.getText());
+
+            String storedHash = user.getPasswordHash();
+            String generatedHash = hash(password.getText());
+
+            if (!storedHash.equalsIgnoreCase(generatedHash)) {
+                JOptionPane.showMessageDialog(window, "Sorry, that's not the right password.");
                 return;
             }
 

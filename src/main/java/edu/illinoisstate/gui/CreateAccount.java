@@ -1,12 +1,17 @@
 package edu.illinoisstate.gui;
 
-import edu.illinoisstate.SecurityHandler;
 import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.database.Database;
 
 import javax.swing.*;
 import java.awt.event.WindowEvent;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
+
+import static edu.illinoisstate.Utils.hash;
 
 public class CreateAccount extends ProgramWindow {
     protected final JFrame window = new JFrame();
@@ -43,7 +48,7 @@ public class CreateAccount extends ProgramWindow {
             }
 
             String email = emailField.getText();
-            if (email.length() >= 4 && email.length() <= 24) {
+            if (email.length() < 4 || email.length() > 24) {
                 JOptionPane.showMessageDialog(window, "Sorry, that's an invalid email.");
                 return;
             }
@@ -54,8 +59,10 @@ public class CreateAccount extends ProgramWindow {
                 return;
             }
 
-            UserAccount account = new UserAccount(UUID.randomUUID(), emailField.getText(),
-                    usernameField.getText(), passwordField.getText());
+            UserAccount account = new UserAccount(UUID.randomUUID(),
+                    emailField.getText(),
+                    usernameField.getText(),
+                    hash(passwordField.getText()));
 
             database.saveUserAccount(account);
 
@@ -73,6 +80,7 @@ public class CreateAccount extends ProgramWindow {
 
     /**
      * Determine whether to reject input password
+     *
      * @param username the input username
      * @param password the input password
      * @return bool value
@@ -84,5 +92,5 @@ public class CreateAccount extends ProgramWindow {
 
         return password.length() > 3 && password.length() < 16;
     }
-
 }
+
