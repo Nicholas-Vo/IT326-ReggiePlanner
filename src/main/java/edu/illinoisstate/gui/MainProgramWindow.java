@@ -1,12 +1,14 @@
 package edu.illinoisstate.gui;
 
+import edu.illinoisstate.ReggiePlanner;
+
 import javax.swing.*;
 import java.awt.*;
 
 /**
  * This is the window that first appears when you run the program
  */
-public class MainProgramWindow extends ProgramWindow {
+public class MainProgramWindow {
     protected final JFrame window = new JFrame();
     protected final JPanel panel = new JPanel();
 
@@ -26,7 +28,7 @@ public class MainProgramWindow extends ProgramWindow {
         createAccountButton.addActionListener(e -> new CreateAccount());
 
         JButton loginButton = new JButton("Login to an existing account");
-        loginButton.addActionListener(e -> new Login());
+        loginButton.addActionListener(e -> new Login(window));
 
         JButton resetPasswordButton = new JButton("Forgot password");
         resetPasswordButton.addActionListener(e -> new ForgotPassword());

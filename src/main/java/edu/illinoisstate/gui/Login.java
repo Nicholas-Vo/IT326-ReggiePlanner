@@ -9,13 +9,16 @@ import java.awt.event.WindowEvent;
 
 import static edu.illinoisstate.utils.Utils.hash;
 
-public class Login extends ProgramWindow {
+public class Login {
     protected final JFrame window = new JFrame();
     protected final JPanel panel = new JPanel();
+    private final JFrame mainProgramWindow;
 
-    public Login() {
+    public Login(JFrame mainProgramWindow) {
         window.setSize(500, 300);
         window.setTitle("Login");
+
+        this.mainProgramWindow = mainProgramWindow;
 
         createWindow();
     }
@@ -49,7 +52,11 @@ public class Login extends ProgramWindow {
                 return;
             }
 
+            /*
+            Close this window and the main program window now that we're logged in
+             */
             window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
+            mainProgramWindow.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
             new UserHomePage(user);
         });
 

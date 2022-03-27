@@ -11,12 +11,12 @@ import java.awt.event.WindowEvent;
 /**
  * This window appears when the user selects the "Forgot password" button on the main window.
  */
-public class ForgotPassword extends ProgramWindow {
+public class ForgotPassword {
     protected final JFrame window = new JFrame();
     protected final JPanel panel = new JPanel();
 
     public ForgotPassword() {
-        window.setSize(600, 600);
+        window.setSize(400, 500);
         window.setTitle("Recover password");
 
         createWindow();

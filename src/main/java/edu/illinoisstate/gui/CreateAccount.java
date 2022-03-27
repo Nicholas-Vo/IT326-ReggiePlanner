@@ -10,7 +10,7 @@ import java.util.UUID;
 
 import static edu.illinoisstate.utils.Utils.hash;
 
-public class CreateAccount extends ProgramWindow {
+public class CreateAccount {
     protected final JFrame window = new JFrame();
     protected final JPanel panel = new JPanel();
 

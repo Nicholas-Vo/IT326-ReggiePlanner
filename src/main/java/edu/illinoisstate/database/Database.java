@@ -7,16 +7,11 @@ import edu.illinoisstate.course.Course;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.UUID;
-
-import static org.hsqldb.DatabaseManager.getSession;
 
 /**
- * Handles the program database
- * Makes use of Hibernate/JPA & HSQLDB
+ * All database logic goes here
  */
 @SuppressWarnings("unchecked") // suppress unchecked cast warnings
 public class Database {
@@ -29,8 +24,6 @@ public class Database {
         loadCourses();
     }
 
-
-
     public static Database getInstance() {
         return database;
     }
@@ -39,9 +32,9 @@ public class Database {
         entityManager.getTransaction().begin();
 
         if (containsUser(account)) {
-            entityManager.merge(account);
+            entityManager.merge(account); // merge() updates existing record
         } else {
-            entityManager.persist(account);
+            entityManager.persist(account); // add new
         }
 
         entityManager.getTransaction().commit();
@@ -97,30 +90,27 @@ public class Database {
         return null;
     }
 
-    /**
-     * attempts to load courses into DB. todo: put these in txt file?
-     */
     private void loadCourses() {
         var factory = Persistence.createEntityManagerFactory("default");
         entityManager = factory.createEntityManager();
         entityManager.getTransaction().begin();
 
-        Set<Course> courseList = new HashSet<>();
-        courseList.add(new Course("IT297", "Data Structures & Algorithms", 3, 3));
-        courseList.add(new Course("IT355", "Secure Software Development", 3, 3));
-        courseList.add(new Course("IT327", "Concepts Of Programming Languages", 3, 3));
-        courseList.add(new Course("IT388", "Introduction To Parallel Processing", 3, 3));
-        courseList.add(new Course("IT340", "Introduction To Artificial Intelligence", 3, 3));
-        courseList.add(new Course("IT168", "Structured Problem Solving Using The Computer", 4, 3));
+        List<Course> list = new ArrayList<>();
+        list.add(new Course("IT297", "Data Structures & Algorithms", 3, 3));
+        list.add(new Course("IT355", "Secure Software Development", 3, 3));
+        list.add(new Course("IT327", "Concepts Of Programming Languages", 3, 3));
+        list.add(new Course("IT388", "Introduction To Parallel Processing", 3, 3));
+        list.add(new Course("IT340", "Introduction To Artificial Intelligence", 3, 3));
+        list.add(new Course("IT168", "Structured Problem Solving Using The Computer", 4, 3));
 
         /*
         Only add the course to the database if it doesn't already exist
          */
-        for (Course course : courseList) {
+        list.forEach(course -> {
             if (!containsCourse(course)) {
                 entityManager.persist(course);
             }
-        }
+        });
 
         entityManager.getTransaction().commit();
     }
