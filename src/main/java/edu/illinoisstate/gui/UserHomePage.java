@@ -5,7 +5,7 @@ import edu.illinoisstate.UserAccount;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowEvent;
+import java.util.concurrent.TimeUnit;
 
 /**
  * This class is executed when a user successfully signs in
@@ -18,6 +18,7 @@ public class UserHomePage extends LoginWindow {
 
     public UserHomePage(UserAccount user) {
         window.setSize(600, 600);
+        window.setLocationRelativeTo(null); // Center the window on the screen
         window.setTitle("ReggiePlanner v" + ReggiePlanner.VERSION);
         addToActiveWindows(window);
 
@@ -29,11 +30,17 @@ public class UserHomePage extends LoginWindow {
     public void createWindow() {
         JLabel label = new JLabel(user.getUsername() + "'s homepage", SwingConstants.CENTER);
         label.setFont(new Font("Impact", Font.BOLD, 20));
-        label.setPreferredSize(new Dimension(250, 100));
+        label.setPreferredSize(new Dimension(800, 100));
 
         JButton generatePlanBtn = new JButton("Generate new class plan");
         generatePlanBtn.addActionListener(e -> {
-
+            JOptionPane.showMessageDialog(window, "Calculating...");
+            try {
+                TimeUnit.SECONDS.sleep(2);
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
+            }
+            JOptionPane.showMessageDialog(window, "You should drop out.");
         });
 
         JButton editPlanBtn = new JButton("Edit existing plan");
@@ -41,10 +48,13 @@ public class UserHomePage extends LoginWindow {
 
         });
 
-        JButton settingButton = new JButton("Settings");
-        settingButton.addActionListener(e -> {
+        JButton createNoteBtn = new JButton("Create user note");
+        createNoteBtn.addActionListener(e -> {
 
         });
+
+        JButton settingButton = new JButton("Settings");
+        settingButton.addActionListener(e -> new Settings());
 
         JButton logoutButton = new JButton("Logout");
         logoutButton.addActionListener(e -> {
@@ -52,11 +62,12 @@ public class UserHomePage extends LoginWindow {
             new MainProgramWindow(); // re-open main program window
         });
 
+        panel.add(label);
         panel.add(generatePlanBtn);
         panel.add(editPlanBtn);
+        panel.add(createNoteBtn);
         panel.add(settingButton);
         panel.add(logoutButton);
-        panel.add(label);
 
         window.add(panel);
         window.setVisible(true);

@@ -1,8 +1,8 @@
 package edu.illinoisstate.gui;
 
-import edu.illinoisstate.utils.Email;
 import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.database.Database;
+import edu.illinoisstate.utils.Email;
 import edu.illinoisstate.utils.HintTextBox;
 
 import javax.swing.*;
@@ -12,12 +12,14 @@ import java.awt.event.WindowEvent;
  * This window appears when the user selects the "Forgot password" button on the main window.
  */
 public class ForgotPassword {
-    protected final JFrame window = new JFrame();
+    protected final JDialog window = new JDialog();
     protected final JPanel panel = new JPanel();
 
     public ForgotPassword() {
         window.setSize(400, 500);
+        window.setLocationRelativeTo(null); // Center the window on the screen
         window.setTitle("Recover password");
+        window.setModal(true); // this prevents use of other windows
 
         createWindow();
     }

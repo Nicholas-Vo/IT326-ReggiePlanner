@@ -9,7 +9,6 @@ public class Utils {
 
     /**
      * Hash a given string
-     *
      * @param theString: The string to hash
      * @return a hashed String
      */

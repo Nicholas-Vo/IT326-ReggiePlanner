@@ -2,21 +2,23 @@ package edu.illinoisstate.gui;
 
 import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.database.Database;
+import edu.illinoisstate.utils.HintPasswordTextBox;
 import edu.illinoisstate.utils.HintTextBox;
+import edu.illinoisstate.utils.Utils;
 
 import javax.swing.*;
 import java.awt.event.WindowEvent;
 
-import static edu.illinoisstate.utils.Utils.hash;
-
-public class Login {
-    protected final JFrame window = new JFrame();
+public class Login extends LoginWindow {
+    protected final JDialog window = new JDialog();
     protected final JPanel panel = new JPanel();
     private final JFrame mainProgramWindow;
 
     public Login(JFrame mainProgramWindow) {
         window.setSize(500, 300);
-        window.setTitle("Login");
+        window.setLocationRelativeTo(null); // Center the window on the screen
+        window.setTitle("Welcome back!");
+        window.setModal(true); // this prevents use of other windows
 
         this.mainProgramWindow = mainProgramWindow;
 
@@ -26,7 +28,7 @@ public class Login {
     public void createWindow() {
         JTextField username = new HintTextBox("username", 15);
         panel.add(username);
-        JTextField password = new JPasswordField("", 15);
+        JTextField password = new HintPasswordTextBox("password", 15);
         panel.add(password);
 
         JButton loginButton = new JButton("Login");
@@ -44,8 +46,8 @@ public class Login {
 
             UserAccount user = database.getUserAccount(username.getText());
 
-            String storedHash = user.getPasswordHash();
-            String generatedHash = hash(password.getText());
+            String storedHash = user.getPasswordHash(); // Stored hash from DB
+            String generatedHash = Utils.hash(password.getText()); // Hash user input to check against DB
 
             if (!storedHash.equalsIgnoreCase(generatedHash)) {
                 JOptionPane.showMessageDialog(window, INCORRECT_MSG);
@@ -56,7 +58,7 @@ public class Login {
             Close this window and the main program window now that we're logged in
              */
             window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
-            mainProgramWindow.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
+            mainProgramWindow.dispatchEvent(new WindowEvent(mainProgramWindow, WindowEvent.WINDOW_CLOSING));
             new UserHomePage(user);
         });
 

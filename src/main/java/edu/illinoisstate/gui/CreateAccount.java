@@ -2,21 +2,23 @@ package edu.illinoisstate.gui;
 
 import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.database.Database;
+import edu.illinoisstate.utils.HintPasswordTextBox;
 import edu.illinoisstate.utils.HintTextBox;
+import edu.illinoisstate.utils.Utils;
 
 import javax.swing.*;
 import java.awt.event.WindowEvent;
 import java.util.UUID;
 
-import static edu.illinoisstate.utils.Utils.hash;
-
 public class CreateAccount {
-    protected final JFrame window = new JFrame();
+    protected final JDialog window = new JDialog();
     protected final JPanel panel = new JPanel();
 
     public CreateAccount() {
-        window.setSize(600, 600);
+        window.setSize(450, 300);
+        window.setLocationRelativeTo(null); // Center the window on the screen
         window.setTitle("Create a new account");
+        window.setModal(true); // this prevents use of other windows
 
         createWindow();
     }
@@ -28,7 +30,7 @@ public class CreateAccount {
         panel.add(emailField);
         JTextField usernameField = new HintTextBox("username", 15);
         panel.add(usernameField);
-        JTextField passwordField = new JPasswordField("", 15);
+        JTextField passwordField = new HintPasswordTextBox("password", 15);
         panel.add(passwordField);
 
         JButton submitButton = new JButton("Submit");
@@ -59,7 +61,7 @@ public class CreateAccount {
             }
 
             UserAccount account = new UserAccount(UUID.randomUUID(), emailField.getText(), usernameField.getText(),
-                    hash(passwordField.getText()));
+                    Utils.hash(passwordField.getText()));
 
             database.saveUserAccount(account);
 
