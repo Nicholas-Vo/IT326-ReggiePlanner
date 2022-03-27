@@ -55,6 +55,11 @@ public class CreateAccount {
                 return;
             }
 
+            if (!email.contains("@")) {
+                JOptionPane.showMessageDialog(window, "Sorry, that's an invalid email provider.");
+                return;
+            }
+
             Database database = Database.getInstance();
             if (database.getUsernamesList().contains(usernameField.getText())) {
                 JOptionPane.showMessageDialog(window, "Sorry, that username already exists.");
@@ -65,9 +70,8 @@ public class CreateAccount {
                     Utils.hash(passwordField.getText()));
 
             database.saveUserAccount(account);
-
-            JOptionPane.showMessageDialog(window, "Account created! You may now log in." +
-                    "\nA confirmation email has been sent to " + emailField.getText() + ".");
+            JOptionPane.showMessageDialog(window,
+                    "A confirmation email has been sent to " + emailField.getText() + ".");
             window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
             System.out.println("Created new user account \"" + account.getUsername() + "\".");
         });
