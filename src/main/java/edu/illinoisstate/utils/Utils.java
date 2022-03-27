@@ -28,10 +28,20 @@ public class Utils {
         return new String(digest.digest(theString.getBytes(charSet)), charSet);
     }
 
+    /**
+     * add white space to GUI
+     * @param panel the panel
+     * @param size amount of space to add
+     */
     public static void addWhiteSpace(JPanel panel, int size) {
         panel.add(new JToolBar.Separator(new Dimension(20, size)));
     }
 
+    /**
+     * Get an image from file
+     * @param name name of the image
+     * @return the Image object
+     */
     public static Image getImage(String name) {
         ClassLoader classloader = Thread.currentThread().getContextClassLoader();
         URL url = classloader.getResource("images/" + name);

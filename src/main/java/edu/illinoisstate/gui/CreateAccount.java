@@ -66,8 +66,8 @@ public class CreateAccount {
                 return;
             }
 
-            UserAccount account = new UserAccount(UUID.randomUUID(), emailField.getText(), usernameField.getText(),
-                    Utils.hash(passwordField.getText()));
+            UserAccount account = new UserAccount(UUID.randomUUID(), emailField.getText(),
+                    usernameField.getText(), Utils.hash(passwordField.getText()));
 
             database.saveUserAccount(account);
             JOptionPane.showMessageDialog(window,
