@@ -3,6 +3,8 @@ package edu.illinoisstate;
 import edu.illinoisstate.database.Database;
 import edu.illinoisstate.gui.MainProgramWindow;
 
+import javax.swing.*;
+
 /**
  * Authors: Nick Voss
  */

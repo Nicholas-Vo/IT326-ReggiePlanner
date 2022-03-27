@@ -1,5 +1,6 @@
 package edu.illinoisstate.gui;
 
+import edu.illinoisstate.ReggiePlanner;
 import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.database.Database;
 import edu.illinoisstate.utils.HintPasswordTextBox;
@@ -7,18 +8,20 @@ import edu.illinoisstate.utils.HintTextBox;
 import edu.illinoisstate.utils.Utils;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.WindowEvent;
 
 public class Login extends LoginWindow {
-    protected final JDialog window = new JDialog();
-    protected final JPanel panel = new JPanel();
+    private final JDialog window = new JDialog();
+    private final JPanel panel = new JPanel();
     private final JFrame mainProgramWindow;
 
     public Login(JFrame mainProgramWindow) {
-        window.setSize(500, 300);
+        window.setSize(500, 225);
         window.setLocationRelativeTo(null); // Center the window on the screen
         window.setTitle("Welcome back!");
         window.setModal(true); // this prevents use of other windows
+        window.setIconImage(Utils.getReggieImage());;
 
         this.mainProgramWindow = mainProgramWindow;
 
@@ -27,11 +30,17 @@ public class Login extends LoginWindow {
 
     public void createWindow() {
         JTextField username = new HintTextBox("username", 15);
+        username.setAlignmentX(Component.CENTER_ALIGNMENT);
         panel.add(username);
+
         JTextField password = new HintPasswordTextBox("password", 15);
+        password.setAlignmentX(Component.CENTER_ALIGNMENT);
         panel.add(password);
 
         JButton loginButton = new JButton("Login");
+        loginButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panel.add(loginButton);
+
         window.getRootPane().setDefaultButton(loginButton); // Allows Enter key to submit
 
         String INCORRECT_MSG = "Incorrect username or password.";
@@ -61,10 +70,6 @@ public class Login extends LoginWindow {
             mainProgramWindow.dispatchEvent(new WindowEvent(mainProgramWindow, WindowEvent.WINDOW_CLOSING));
             new UserHomePage(user);
         });
-
-        panel.add(username);
-        panel.add(password);
-        panel.add(loginButton);
 
         window.add(panel);
         window.setVisible(true);

@@ -16,6 +16,10 @@ public class HintTextBox extends JTextField {
         super.setColumns(columns);
     }
 
+    public HintTextBox(String hint) {
+        hintMessage = hint;
+    }
+
     @Override
     public void paint(Graphics g) {
         super.paint(g);

@@ -40,6 +40,15 @@ public class Database {
         entityManager.getTransaction().commit();
     }
 
+    public void deleteUserAccount(UserAccount account) {
+        entityManager.getTransaction().begin();
+
+        entityManager.remove(account);
+        System.out.println("Account " + account.getUsername() + " has been deleted.");
+
+        entityManager.getTransaction().commit();
+    }
+
     public boolean containsUser(UserAccount toSearch) {
         Query query = entityManager.createQuery("FROM UserAccount");
 

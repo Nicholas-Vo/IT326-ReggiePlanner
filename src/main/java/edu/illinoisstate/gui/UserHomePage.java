@@ -2,6 +2,7 @@ package edu.illinoisstate.gui;
 
 import edu.illinoisstate.ReggiePlanner;
 import edu.illinoisstate.UserAccount;
+import edu.illinoisstate.utils.Utils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,8 +12,8 @@ import java.util.concurrent.TimeUnit;
  * This class is executed when a user successfully signs in
  */
 public class UserHomePage extends LoginWindow {
-    protected final JFrame window = new JFrame();
-    protected final JPanel panel = new JPanel();
+    private final JFrame window = new JFrame();
+    private final JPanel panel = new JPanel();
 
     private final UserAccount user;
 
@@ -20,6 +21,7 @@ public class UserHomePage extends LoginWindow {
         window.setSize(600, 600);
         window.setLocationRelativeTo(null); // Center the window on the screen
         window.setTitle("ReggiePlanner v" + ReggiePlanner.VERSION);
+        window.setIconImage(Utils.getReggieImage());
         addToActiveWindows(window);
 
         this.user = user;
@@ -54,7 +56,7 @@ public class UserHomePage extends LoginWindow {
         });
 
         JButton settingButton = new JButton("Settings");
-        settingButton.addActionListener(e -> new Settings());
+        settingButton.addActionListener(e -> new Settings(user));
 
         JButton logoutButton = new JButton("Logout");
         logoutButton.addActionListener(e -> {

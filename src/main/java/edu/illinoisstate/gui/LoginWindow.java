@@ -1,14 +1,15 @@
 package edu.illinoisstate.gui;
 
-import javax.swing.*;
+
+import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.util.HashSet;
 import java.util.Set;
 
 public abstract class LoginWindow {
-    private final Set<JFrame> activeWindows = new HashSet<>();
+    private final Set<Window> activeWindows = new HashSet<>();
 
-    public void addToActiveWindows(JFrame window) {
+    public void addToActiveWindows(Window window) {
         activeWindows.add(window);
     }
 

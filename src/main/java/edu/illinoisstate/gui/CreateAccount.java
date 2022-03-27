@@ -11,14 +11,15 @@ import java.awt.event.WindowEvent;
 import java.util.UUID;
 
 public class CreateAccount {
-    protected final JDialog window = new JDialog();
-    protected final JPanel panel = new JPanel();
+    private final JDialog window = new JDialog();
+    private final JPanel panel = new JPanel();
 
     public CreateAccount() {
         window.setSize(450, 300);
         window.setLocationRelativeTo(null); // Center the window on the screen
         window.setTitle("Create a new account");
         window.setModal(true); // this prevents use of other windows
+        window.setIconImage(Utils.getReggieImage());
 
         createWindow();
     }
