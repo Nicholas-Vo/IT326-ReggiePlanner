@@ -32,9 +32,9 @@ public class Utils {
         panel.add(new JToolBar.Separator(new Dimension(20, size)));
     }
 
-    public static Image getReggieImage() {
+    public static Image getImage(String name) {
         ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-        URL url = classloader.getResource("reggie.png");
+        URL url = classloader.getResource("images/" + name);
         return new ImageIcon(Objects.requireNonNull(url)).getImage();
     }
 

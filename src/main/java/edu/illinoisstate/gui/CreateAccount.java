@@ -19,7 +19,7 @@ public class CreateAccount {
         window.setLocationRelativeTo(null); // Center the window on the screen
         window.setTitle("Create a new account");
         window.setModal(true); // this prevents use of other windows
-        window.setIconImage(Utils.getReggieImage());
+        window.setIconImage(Utils.getImage("reggie.png"));
 
         createWindow();
     }

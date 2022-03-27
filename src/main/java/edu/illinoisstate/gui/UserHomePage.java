@@ -21,7 +21,7 @@ public class UserHomePage extends LoginWindow {
         window.setSize(600, 600);
         window.setLocationRelativeTo(null); // Center the window on the screen
         window.setTitle("ReggiePlanner v" + ReggiePlanner.VERSION);
-        window.setIconImage(Utils.getReggieImage());
+        window.setIconImage(Utils.getImage("reggie.png"));
         addToActiveWindows(window);
 
         this.user = user;

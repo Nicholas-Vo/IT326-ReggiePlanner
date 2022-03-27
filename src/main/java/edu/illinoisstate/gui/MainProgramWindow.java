@@ -20,7 +20,7 @@ public class MainProgramWindow {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setAlignmentX(Component.CENTER_ALIGNMENT);
         window.getContentPane().setLayout(new BoxLayout(window.getContentPane(), BoxLayout.Y_AXIS));
-        window.setIconImage(Utils.getReggieImage());
+        window.setIconImage(Utils.getImage("reggie.png"));
 
         createWindow();
     }
@@ -45,7 +45,7 @@ public class MainProgramWindow {
 
         panel.add(label);
         Utils.addWhiteSpace(panel,5);
-        JLabel reggieLogo = new JLabel(new ImageIcon(Utils.getReggieImage()));
+        JLabel reggieLogo = new JLabel(new ImageIcon(Utils.getImage("reggie.png")));
         reggieLogo.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         panel.add(reggieLogo);

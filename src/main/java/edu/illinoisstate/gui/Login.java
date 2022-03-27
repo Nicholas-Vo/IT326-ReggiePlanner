@@ -1,6 +1,5 @@
 package edu.illinoisstate.gui;
 
-import edu.illinoisstate.ReggiePlanner;
 import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.database.Database;
 import edu.illinoisstate.utils.HintPasswordTextBox;
@@ -21,7 +20,7 @@ public class Login extends LoginWindow {
         window.setLocationRelativeTo(null); // Center the window on the screen
         window.setTitle("Welcome back!");
         window.setModal(true); // this prevents use of other windows
-        window.setIconImage(Utils.getReggieImage());;
+        window.setIconImage(Utils.getImage("reggie.png"));;
 
         this.mainProgramWindow = mainProgramWindow;
 

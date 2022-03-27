@@ -17,11 +17,11 @@ public class ForgotPassword {
     private final JPanel panel = new JPanel();
 
     public ForgotPassword() {
-        window.setSize(400, 450);
+        window.setSize(400, 300);
         window.setLocationRelativeTo(null); // Center the window on the screen
         window.setTitle("Recover password");
         window.setModal(true); // this prevents use of other windows
-        window.setIconImage(Utils.getReggieImage());
+        window.setIconImage(Utils.getImage("qmark.png"));
 
         createWindow();
     }

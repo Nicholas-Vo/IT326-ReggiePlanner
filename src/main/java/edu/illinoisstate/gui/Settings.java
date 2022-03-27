@@ -15,7 +15,7 @@ public class Settings extends LoginWindow {
         window.setLocationRelativeTo(null); // Center the window on the screen
         window.setTitle("Settings");
         window.setModal(true); // this prevents use of other windows
-        window.setIconImage(Utils.getReggieImage());
+        window.setIconImage(Utils.getImage("settings.png"));
 
         this.user = user;
         addToActiveWindows(window);
