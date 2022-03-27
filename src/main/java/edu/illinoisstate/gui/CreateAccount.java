@@ -58,14 +58,13 @@ public class CreateAccount extends ProgramWindow {
                 return;
             }
 
-            UserAccount account = new UserAccount(UUID.randomUUID(),
-                    emailField.getText(),
-                    usernameField.getText(),
+            UserAccount account = new UserAccount(UUID.randomUUID(), emailField.getText(), usernameField.getText(),
                     hash(passwordField.getText()));
 
             database.saveUserAccount(account);
 
-            JOptionPane.showMessageDialog(window, "Account created! You may now log in.");
+            JOptionPane.showMessageDialog(window, "Account created! You may now log in." +
+                    "\nA confirmation email has been sent to " + emailField.getText() + ".");
             window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
             System.out.println("Created new user account \"" + account.getUsername() + "\".");
         });

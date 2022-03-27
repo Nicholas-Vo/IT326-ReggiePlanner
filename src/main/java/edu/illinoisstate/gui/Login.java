@@ -29,11 +29,13 @@ public class Login extends ProgramWindow {
         JButton loginButton = new JButton("Login");
         window.getRootPane().setDefaultButton(loginButton); // Allows Enter key to submit
 
+        String INCORRECT_MSG = "Incorrect username or password.";
+
         loginButton.addActionListener(e -> {
             Database database = Database.getInstance();
 
             if (!database.getUsernamesList().contains(username.getText())) {
-                JOptionPane.showMessageDialog(window, "Invalid username or password.");
+                JOptionPane.showMessageDialog(window, INCORRECT_MSG);
                 return;
             }
 
@@ -43,12 +45,12 @@ public class Login extends ProgramWindow {
             String generatedHash = hash(password.getText());
 
             if (!storedHash.equalsIgnoreCase(generatedHash)) {
-                JOptionPane.showMessageDialog(window, "Sorry, that's not the right password.");
+                JOptionPane.showMessageDialog(window, INCORRECT_MSG);
                 return;
             }
 
             window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
-            new Home();
+            new UserHomePage(user);
         });
 
         panel.add(username);

@@ -21,34 +21,15 @@ import static org.hsqldb.DatabaseManager.getSession;
 @SuppressWarnings("unchecked") // suppress unchecked cast warnings
 public class Database {
     private static Database database;
-    private final EntityManager entityManager;
+    private EntityManager entityManager;
 
     public Database() {
         database = this;
 
-        var factory = Persistence.createEntityManagerFactory("default");
-        entityManager = factory.createEntityManager();
-        entityManager.getTransaction().begin();
-
-        Set<Course> courseList = new HashSet<>();
-        courseList.add(new Course("IT297", "Data Structures & Algorithms", 3, 3));
-        courseList.add(new Course("IT355", "Secure Software Development", 3, 3));
-        courseList.add(new Course("IT327", "Concepts Of Programming Languages", 3, 3));
-        courseList.add(new Course("IT388", "Introduction To Parallel Processing", 3, 3));
-        courseList.add(new Course("IT340", "Introduction To Artificial Intelligence", 3, 3));
-        courseList.add(new Course("IT168", "Structured Problem Solving Using The Computer", 4, 3));
-
-        /*
-        Only add the course to the database if it doesn't already exist
-         */
-        for (Course course : courseList) {
-            if (!containsCourse(course)) {
-                entityManager.persist(course);
-            }
-        }
-
-        entityManager.getTransaction().commit();
+        loadCourses();
     }
+
+
 
     public static Database getInstance() {
         return database;
@@ -114,6 +95,34 @@ public class Database {
 
     public List<Course> getCourseList() {
         return null;
+    }
+
+    /**
+     * attempts to load courses into DB. todo: put these in txt file?
+     */
+    private void loadCourses() {
+        var factory = Persistence.createEntityManagerFactory("default");
+        entityManager = factory.createEntityManager();
+        entityManager.getTransaction().begin();
+
+        Set<Course> courseList = new HashSet<>();
+        courseList.add(new Course("IT297", "Data Structures & Algorithms", 3, 3));
+        courseList.add(new Course("IT355", "Secure Software Development", 3, 3));
+        courseList.add(new Course("IT327", "Concepts Of Programming Languages", 3, 3));
+        courseList.add(new Course("IT388", "Introduction To Parallel Processing", 3, 3));
+        courseList.add(new Course("IT340", "Introduction To Artificial Intelligence", 3, 3));
+        courseList.add(new Course("IT168", "Structured Problem Solving Using The Computer", 4, 3));
+
+        /*
+        Only add the course to the database if it doesn't already exist
+         */
+        for (Course course : courseList) {
+            if (!containsCourse(course)) {
+                entityManager.persist(course);
+            }
+        }
+
+        entityManager.getTransaction().commit();
     }
 
 }

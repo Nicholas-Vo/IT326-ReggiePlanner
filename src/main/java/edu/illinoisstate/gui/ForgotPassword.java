@@ -40,8 +40,12 @@ public class ForgotPassword extends ProgramWindow {
             UserAccount user = database.getUserAccount(username.getText());
 
             Email.sendForgotPassword(user.email());
+
+            String provider = user.email().substring(user.email().indexOf("@"));
+
             JOptionPane.showMessageDialog(window,
-                    "A password recovery message has been sent to the email associated with this account.");
+                    "A password recovery message has been sent to the email associated with this account: "
+                            + "*******" + provider);
 
             /*
             Close this window after success

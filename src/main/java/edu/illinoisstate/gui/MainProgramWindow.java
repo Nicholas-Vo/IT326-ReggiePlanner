@@ -19,7 +19,7 @@ public class MainProgramWindow extends ProgramWindow {
 
     public void createWindow() {
         JLabel label = new JLabel("ReggiePlanner");
-        label.setFont(new Font("Impact", Font.PLAIN, 35));
+        label.setFont(new Font("Impact", Font.BOLD, 35));
         label.setPreferredSize(new Dimension(250, 100));
 
         JButton createAccountButton = new JButton("Create a new account");
