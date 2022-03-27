@@ -1,4 +1,4 @@
-package edu.illinoisstate;
+package edu.illinoisstate.utils;
 
 public class Email {
 

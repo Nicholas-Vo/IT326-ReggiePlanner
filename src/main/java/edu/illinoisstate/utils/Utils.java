@@ -1,4 +1,4 @@
-package edu.illinoisstate;
+package edu.illinoisstate.utils;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;

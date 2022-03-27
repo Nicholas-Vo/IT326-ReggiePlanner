@@ -1,8 +1,9 @@
 package edu.illinoisstate.gui;
 
-import edu.illinoisstate.Email;
+import edu.illinoisstate.utils.Email;
 import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.database.Database;
+import edu.illinoisstate.utils.HintTextBox;
 
 import javax.swing.*;
 import java.awt.event.WindowEvent;
@@ -22,10 +23,11 @@ public class ForgotPassword extends ProgramWindow {
     }
 
     public void createWindow() {
-        JTextField username = new JTextField("username", 15);
+        JTextField username = new HintTextBox("username", 15);
         panel.add(username);
 
         JButton resetButton = new JButton("Recover");
+        window.getRootPane().setDefaultButton(resetButton); // Allows Enter key to submit
 
         resetButton.addActionListener(e -> {
             Database database = Database.getInstance();

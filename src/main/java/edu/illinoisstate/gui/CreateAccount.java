@@ -2,16 +2,13 @@ package edu.illinoisstate.gui;
 
 import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.database.Database;
+import edu.illinoisstate.utils.HintTextBox;
 
 import javax.swing.*;
 import java.awt.event.WindowEvent;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
 
-import static edu.illinoisstate.Utils.hash;
+import static edu.illinoisstate.utils.Utils.hash;
 
 public class CreateAccount extends ProgramWindow {
     protected final JFrame window = new JFrame();
@@ -27,14 +24,16 @@ public class CreateAccount extends ProgramWindow {
     public void createWindow() {
         JLabel label = new JLabel("Create an account");
 
-        JTextField emailField = new JTextField("email", 15);
+        JTextField emailField = new HintTextBox("email", 15);
         panel.add(emailField);
-        JTextField usernameField = new JTextField("username", 15);
+        JTextField usernameField = new HintTextBox("username", 15);
         panel.add(usernameField);
-        JTextField passwordField = new JTextField("password", 15);
+        JTextField passwordField = new JPasswordField("", 15);
         panel.add(passwordField);
 
         JButton submitButton = new JButton("Submit");
+        window.getRootPane().setDefaultButton(submitButton); // Allows Enter key to submit
+
         submitButton.addActionListener(e -> {
             String username = usernameField.getText();
             if (username.length() < 4 || username.length() > 16) {
