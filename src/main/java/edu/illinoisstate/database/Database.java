@@ -16,12 +16,33 @@ import java.util.List;
 @SuppressWarnings("unchecked") // suppress unchecked cast warnings
 public class Database {
     private static Database database;
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
 
     public Database() {
         database = this;
 
-        loadCourses();
+        var factory = Persistence.createEntityManagerFactory("default");
+        entityManager = factory.createEntityManager();
+        entityManager.getTransaction().begin();
+
+        List<Course> list = new ArrayList<>();
+        list.add(new Course("IT297", "Data Structures & Algorithms", 3, 3));
+        list.add(new Course("IT355", "Secure Software Development", 3, 3));
+        list.add(new Course("IT327", "Concepts Of Programming Languages", 3, 3));
+        list.add(new Course("IT388", "Introduction To Parallel Processing", 3, 3));
+        list.add(new Course("IT340", "Introduction To Artificial Intelligence", 3, 3));
+        list.add(new Course("IT168", "Structured Problem Solving Using The Computer", 4, 3));
+
+        /*
+        Only add the course to the database if it doesn't already exist
+         */
+        list.forEach(course -> {
+            if (!containsCourse(course)) {
+                entityManager.persist(course);
+            }
+        });
+
+        entityManager.getTransaction().commit();
     }
 
     public static Database getInstance() {
@@ -34,7 +55,7 @@ public class Database {
         if (containsUser(account)) {
             entityManager.merge(account); // merge() updates existing record
         } else {
-            entityManager.persist(account); // add new
+            entityManager.persist(account); // add new record
         }
 
         entityManager.getTransaction().commit();
@@ -97,31 +118,6 @@ public class Database {
 
     public List<Course> getCourseList() {
         return null;
-    }
-
-    private void loadCourses() {
-        var factory = Persistence.createEntityManagerFactory("default");
-        entityManager = factory.createEntityManager();
-        entityManager.getTransaction().begin();
-
-        List<Course> list = new ArrayList<>();
-        list.add(new Course("IT297", "Data Structures & Algorithms", 3, 3));
-        list.add(new Course("IT355", "Secure Software Development", 3, 3));
-        list.add(new Course("IT327", "Concepts Of Programming Languages", 3, 3));
-        list.add(new Course("IT388", "Introduction To Parallel Processing", 3, 3));
-        list.add(new Course("IT340", "Introduction To Artificial Intelligence", 3, 3));
-        list.add(new Course("IT168", "Structured Problem Solving Using The Computer", 4, 3));
-
-        /*
-        Only add the course to the database if it doesn't already exist
-         */
-        list.forEach(course -> {
-            if (!containsCourse(course)) {
-                entityManager.persist(course);
-            }
-        });
-
-        entityManager.getTransaction().commit();
     }
 
 }

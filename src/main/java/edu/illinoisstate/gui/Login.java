@@ -10,7 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 
-public class Login extends LoginWindow {
+public class Login {
     private final JDialog window = new JDialog();
     private final JPanel panel = new JPanel();
     private final JFrame mainProgramWindow;

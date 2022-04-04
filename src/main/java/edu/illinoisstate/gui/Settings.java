@@ -2,10 +2,11 @@ package edu.illinoisstate.gui;
 
 import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.utils.Utils;
+import edu.illinoisstate.utils.WindowTracker;
 
 import javax.swing.*;
 
-public class Settings extends LoginWindow {
+public class Settings {
     private final JDialog window = new JDialog();
     private final JPanel panel = new JPanel();
     private final UserAccount user;
@@ -18,7 +19,7 @@ public class Settings extends LoginWindow {
         window.setIconImage(Utils.getImage("settings.png"));
 
         this.user = user;
-        addToActiveWindows(window);
+        WindowTracker.addToActiveWindows(window);
         createWindow();
     }
 

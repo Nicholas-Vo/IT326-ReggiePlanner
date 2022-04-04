@@ -43,6 +43,10 @@ public class MainProgramWindow {
         resetPasswordButton.addActionListener(e -> new ForgotPassword());
         resetPasswordButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        JButton exitProgramButton = new JButton("Exit");
+        exitProgramButton.addActionListener(e -> System.exit(0));
+        exitProgramButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         panel.add(label);
         Utils.addWhiteSpace(panel,5);
         JLabel reggieLogo = new JLabel(new ImageIcon(Utils.getImage("reggie.png")));
@@ -55,6 +59,8 @@ public class MainProgramWindow {
         panel.add(createAccountButton);
         Utils.addWhiteSpace(panel,5);
         panel.add(resetPasswordButton);
+        Utils.addWhiteSpace(panel,5);
+        panel.add(exitProgramButton);
 
         JLabel verLabel = new JLabel("Version " + ReggiePlanner.VERSION);
         verLabel.setFont(new Font("Abadi", Font.PLAIN, 12));
