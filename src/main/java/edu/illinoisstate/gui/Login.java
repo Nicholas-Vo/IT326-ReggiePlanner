@@ -63,7 +63,7 @@ public class Login {
             }
 
             /*
-            Close this window and the main program window now that we're logged in
+            Close this window and the main program window now that we're logged in, then open up home page
              */
             window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
             mainProgramWindow.dispatchEvent(new WindowEvent(mainProgramWindow, WindowEvent.WINDOW_CLOSING));

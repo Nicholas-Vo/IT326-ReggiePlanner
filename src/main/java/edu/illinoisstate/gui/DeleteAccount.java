@@ -21,10 +21,9 @@ public class DeleteAccount {
         window.setModal(true); // this prevents use of other windows
         window.setIconImage(Utils.getImage("reggie.png"));
 
-        this.user = user;
+        this.user = user; // set local UserAccount to passed in user
 
         WindowTracker.addToActiveWindows(window);
-
         createWindow();
     }
 

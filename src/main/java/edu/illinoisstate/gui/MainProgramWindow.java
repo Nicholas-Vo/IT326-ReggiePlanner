@@ -26,7 +26,7 @@ public class MainProgramWindow {
     }
 
     public void createWindow() {
-        JLabel label = new JLabel("ReggiePlanner");
+        JLabel label = new JLabel("ReggiePlanner"); // This is the big ReggiePlanner "logo" on the main window
         label.setFont(new Font("Jumble", Font.BOLD, 35));
         label.setPreferredSize(new Dimension(250, 100));
         label.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -47,11 +47,12 @@ public class MainProgramWindow {
         exitProgramButton.addActionListener(e -> System.exit(0));
         exitProgramButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        panel.add(label);
-        Utils.addWhiteSpace(panel,5);
+        // This is the actual image of reggie that appears
         JLabel reggieLogo = new JLabel(new ImageIcon(Utils.getImage("reggie.png")));
         reggieLogo.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        panel.add(label);
+        Utils.addWhiteSpace(panel,5);
         panel.add(reggieLogo);
         Utils.addWhiteSpace(panel,5);
         panel.add(loginButton);
@@ -67,6 +68,7 @@ public class MainProgramWindow {
         verLabel.setPreferredSize(new Dimension(250, 100));
         verLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        // this info JPanel just holds the version, separated for aesthetic
         JPanel infoPanel = new JPanel();
         infoPanel.add(Box.createHorizontalStrut(5)); // Add white space
         infoPanel.add(verLabel);

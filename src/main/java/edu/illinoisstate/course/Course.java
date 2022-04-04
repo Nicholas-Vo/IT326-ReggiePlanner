@@ -27,10 +27,8 @@ public class Course {
         this.gpaRequirement = gpaRequirement;
     }
 
-    /*
-    empty constructor required for hsqldb
-     */
     public Course() {
+        // Empty no-param constructor needed for HSQLDB
     }
 
     /**
@@ -86,9 +84,9 @@ public class Course {
     }
 
     /**
-     * Get the course in String form.
+     * Get the course in String form
      *
-     * @return the course in String form.
+     * @return the course in String form
      */
     public String toString() {
         return id + " - " + name + "\nCredit hours: " + credits;

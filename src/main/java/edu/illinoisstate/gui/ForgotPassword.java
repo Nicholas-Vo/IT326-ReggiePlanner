@@ -28,8 +28,6 @@ public class ForgotPassword {
 
     public void createWindow() {
         JTextField username = new HintTextBox("username", 15);
-        panel.add(username);
-
         JButton resetButton = new JButton("Recover");
         window.getRootPane().setDefaultButton(resetButton); // Allows Enter key to submit
 
@@ -42,19 +40,13 @@ public class ForgotPassword {
             }
 
             UserAccount user = database.getUserAccount(username.getText());
-
             Email.sendForgotPassword(user.email());
-
-            String provider = user.email().substring(user.email().indexOf("@"));
 
             JOptionPane.showMessageDialog(window,
                     "A password recovery message has been sent to the email associated with this account: "
-                            + "*******" + provider);
+                            + "*******" + user.email().substring(user.email().indexOf("@")));
 
-            /*
-            Close this window after success
-             */
-            window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
+            window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING)); // Close this window after success
         });
 
         panel.add(username);

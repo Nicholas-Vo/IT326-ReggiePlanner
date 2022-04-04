@@ -37,13 +37,7 @@ public class UserHomePage {
 
         JButton generatePlanBtn = new JButton("Generate new class plan");
         generatePlanBtn.addActionListener(e -> {
-            JOptionPane.showMessageDialog(window, "Calculating...");
-            try {
-                TimeUnit.SECONDS.sleep(2);
-            } catch (InterruptedException ex) {
-                ex.printStackTrace();
-            }
-            JOptionPane.showMessageDialog(window, "You should drop out.");
+
         });
 
         JButton editPlanBtn = new JButton("Edit existing plan");

@@ -26,6 +26,7 @@ public class UserAccount {
     }
 
     public UserAccount() {
+        // Empty no-param constructor needed for HSQLDB
     }
 
     public UUID uuid() {
@@ -72,17 +73,25 @@ public class UserAccount {
         return isActiveAccount;
     }
 
+    /**
+     * Print out the student as a string representation
+     * @return a String representation
+     */
     public String toString() {
         return "UUID: " + uuid + "\nUsername: " + username + "\nEmail: " + email;
     }
 
+    /**
+     * Determine if one UserAccount is equal to another by checking UUID.
+     * @param otherUser the user to compare
+     * @return boolean value
+     */
     @Override
     public boolean equals(Object otherUser) {
-        if (!(otherUser instanceof UserAccount)) {
+        // If the Object isn't a UserAccount, the answer is no
+        if (!(otherUser instanceof UserAccount account)) {
             return false;
         }
-
-        UserAccount account = (UserAccount) otherUser;
 
         return account.uuid.equals(uuid);
     }

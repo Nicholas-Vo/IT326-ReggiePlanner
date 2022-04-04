@@ -15,8 +15,8 @@ import java.util.List;
  */
 @SuppressWarnings("unchecked") // suppress unchecked cast warnings
 public class Database {
-    private static Database database;
-    private final EntityManager entityManager;
+    private static Database database; // the single instance of this class
+    private final EntityManager entityManager; // the database EntityManager
 
     public Database() {
         database = this;
@@ -45,10 +45,18 @@ public class Database {
         entityManager.getTransaction().commit();
     }
 
+    /**
+     * obtain an instance of the Database singleton class
+     * @return the class instance
+     */
     public static Database getInstance() {
         return database;
     }
 
+    /**
+     * save a user account to the database
+     * @param account the account to save
+     */
     public void saveUserAccount(UserAccount account) {
         entityManager.getTransaction().begin();
 
@@ -61,6 +69,10 @@ public class Database {
         entityManager.getTransaction().commit();
     }
 
+    /**
+     * delete a user account from the database
+     * @param account the account to delete
+     */
     public void deleteUserAccount(UserAccount account) {
         entityManager.getTransaction().begin();
 
@@ -70,6 +82,11 @@ public class Database {
         entityManager.getTransaction().commit();
     }
 
+    /**
+     * determine if a user exists in the database
+     * @param toSearch the user to check
+     * @return boolean value
+     */
     public boolean containsUser(UserAccount toSearch) {
         Query query = entityManager.createQuery("FROM UserAccount");
 
@@ -82,6 +99,11 @@ public class Database {
         return false;
     }
 
+    /**
+     * determine if a course exists in the database
+     * @param course: the course to check
+     * @return boolean value
+     */
     public boolean containsCourse(Course course) {
         Query query = entityManager.createQuery("FROM Course");
         List<Course> courses = query.getResultList();
@@ -96,7 +118,7 @@ public class Database {
     }
 
     /**
-     * Retrieve a UserAccount from the database
+     * Retrieve a UserAccount from the database; this may return null
      */
     @Nullable
     public UserAccount getUserAccount(String username) {

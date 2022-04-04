@@ -28,11 +28,8 @@ public class CreateAccount {
         JLabel label = new JLabel("Create an account");
 
         JTextField emailField = new HintTextBox("email", 15);
-        panel.add(emailField);
         JTextField usernameField = new HintTextBox("username", 15);
-        panel.add(usernameField);
         JTextField passwordField = new HintPasswordTextBox("password", 15);
-        panel.add(passwordField);
 
         JButton submitButton = new JButton("Submit");
         window.getRootPane().setDefaultButton(submitButton); // Allows Enter key to submit
@@ -76,6 +73,10 @@ public class CreateAccount {
             System.out.println("Created new user account \"" + account.getUsername() + "\".");
         });
 
+
+        panel.add(emailField);
+        panel.add(usernameField);
+        panel.add(passwordField);
         panel.add(label);
         panel.add(submitButton);
 
