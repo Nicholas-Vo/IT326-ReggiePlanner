@@ -21,7 +21,9 @@ public class ForgotPassword {
         window.setLocationRelativeTo(null); // Center the window on the screen
         window.setTitle("Recover password");
         window.setModal(true); // this prevents use of other windows
+        window.setResizable(false);
         window.setIconImage(Utils.getImage("qmark.png"));
+        Utils.allowEscapeToClose(window, panel);
 
         createWindow();
     }

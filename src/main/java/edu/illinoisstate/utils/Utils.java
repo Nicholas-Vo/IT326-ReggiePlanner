@@ -2,6 +2,8 @@ package edu.illinoisstate.utils;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowEvent;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -38,6 +40,16 @@ public class Utils {
      */
     public static void addWhiteSpace(JPanel panel, int size) {
         panel.add(new JToolBar.Separator(new Dimension(20, size)));
+    }
+
+    /**
+     * Set a window to close when the Esc key is pressed
+     * @param window: The window to close
+     */
+    public static void allowEscapeToClose(Window window, JPanel panel) {
+        panel.registerKeyboardAction(e -> {
+            window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
+        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
     /**

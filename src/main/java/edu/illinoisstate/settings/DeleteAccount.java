@@ -1,7 +1,8 @@
-package edu.illinoisstate.gui;
+package edu.illinoisstate.settings;
 
 import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.database.Database;
+import edu.illinoisstate.gui.MainProgramWindow;
 import edu.illinoisstate.utils.HintTextBox;
 import edu.illinoisstate.utils.Utils;
 import edu.illinoisstate.utils.WindowTracker;
@@ -19,11 +20,13 @@ public class DeleteAccount {
         window.setLocationRelativeTo(null); // Center the window on the screen
         window.setTitle("Are you sure?");
         window.setModal(true); // this prevents use of other windows
+        window.setResizable(false);
         window.setIconImage(Utils.getImage("reggie.png"));
 
         this.user = user; // set local UserAccount to passed in user
 
         WindowTracker.addToActiveWindows(window);
+        Utils.allowEscapeToClose(window, panel);
         createWindow();
     }
 

@@ -15,11 +15,13 @@ public class CreateAccount {
     private final JPanel panel = new JPanel();
 
     public CreateAccount() {
-        window.setSize(450, 300);
+        window.setSize(500, 300);
         window.setLocationRelativeTo(null); // Center the window on the screen
         window.setTitle("Create a new account");
         window.setModal(true); // this prevents use of other windows
+        window.setResizable(false);
         window.setIconImage(Utils.getImage("reggie.png"));
+        Utils.allowEscapeToClose(window, panel);
 
         createWindow();
     }

@@ -9,6 +9,12 @@ import java.awt.*;
 public class HintPasswordTextBox extends JPasswordField {
     private final String hintMessage;
 
+    public HintPasswordTextBox(String hint, int columns, float alignment) {
+        hintMessage = hint;
+        super.setAlignmentX(alignment);
+        super.setColumns(columns);
+    }
+
     public HintPasswordTextBox(String hint, int columns) {
         hintMessage = hint;
         super.setColumns(columns);

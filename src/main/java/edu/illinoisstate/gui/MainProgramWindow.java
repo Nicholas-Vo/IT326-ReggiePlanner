@@ -17,6 +17,7 @@ public class MainProgramWindow {
         window.setSize(500, 450);
         window.setLocationRelativeTo(null); // Center the window on the screen
         window.setTitle("ReggiePlanner");
+        window.setResizable(false);
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setAlignmentX(Component.CENTER_ALIGNMENT);
         window.getContentPane().setLayout(new BoxLayout(window.getContentPane(), BoxLayout.Y_AXIS));

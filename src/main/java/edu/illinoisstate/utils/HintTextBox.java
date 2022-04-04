@@ -11,6 +11,12 @@ import java.awt.*;
 public class HintTextBox extends JTextField {
     private final String hintMessage;
 
+    public HintTextBox(String hint, int columns, float alignment) {
+        hintMessage = hint;
+        super.setAlignmentX(alignment);
+        super.setColumns(columns);
+    }
+
     public HintTextBox(String hint, int columns) {
         hintMessage = hint;
         super.setColumns(columns);
