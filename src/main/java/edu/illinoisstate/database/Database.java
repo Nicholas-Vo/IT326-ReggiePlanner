@@ -19,10 +19,5 @@ public class Database {
     }
     //hey
 
-    public List<Course> getCourseDesc() {
-        return null;
-    }
-    //hey
-
 
 }

@@ -25,7 +25,7 @@ public class ForgotPassword extends ProgramWindow {
     }
 
     public void createWindow() {
-        JTextField username = new JTextField("username", 15);
+        JTextField username = new JTextField("Enter username", 15);
         panel.add(username);
 
         JButton resetButton = new JButton("Recover");
@@ -61,6 +61,7 @@ public class ForgotPassword extends ProgramWindow {
 
         window.add(panel);
         window.setVisible(true);
-    }
 
+
+    }
 }
