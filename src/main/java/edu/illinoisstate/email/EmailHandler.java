@@ -65,7 +65,7 @@ public class EmailHandler {
              */
             new Thread(() -> {
                 EmailAuthentication authentication = new EmailAuthentication();
-                Session session = authentication.getAuthenticator(); // new session for authentication
+                Session session = authentication.getSession(); // new session for authentication
                 Message theEmail = new MimeMessage(session); // creates a new message template to send email to user
 
                 try {
