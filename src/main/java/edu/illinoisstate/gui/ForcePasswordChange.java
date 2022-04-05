@@ -38,8 +38,8 @@ public class ForcePasswordChange {
             }
 
             user.setPassword(password.getText());
-            user.setTempPassword(null);
-            user.setForcePasswordChangeValue(false);
+            user.setTempPassword(null); // Remove temp password now that it's been used
+            user.setForcePasswordChangeValue(false); // Update user force PW state
             JOptionPane.showMessageDialog(window, "Password changed. You may now sign in.");
 
             /*

@@ -2,10 +2,8 @@ package edu.illinoisstate;
 
 import edu.illinoisstate.database.Database;
 import edu.illinoisstate.utils.Security;
-import edu.illinoisstate.utils.Utils;
 
 import javax.persistence.*;
-import javax.swing.*;
 import java.util.UUID;
 
 /**
@@ -53,12 +51,15 @@ public class UserAccount {
         return temporaryPasswordHash;
     }
 
-    public void setTempPassword(String passwordHash) {
-        if (passwordHash == null) {
-            temporaryPasswordHash = null;
-        } else {
-            this.temporaryPasswordHash = Security.hash(passwordHash);
-        }
+    /**
+     * Set a temp password to be hashed. If input is null, temp. pw is set to null
+     * @param input: String input to be hashed, or null
+     */
+    public void setTempPassword(String input) {
+        /*
+        If the input is null, set temp. hash to null - otherwise hash it
+         */
+        temporaryPasswordHash = (input == null) ? null : Security.hash(input);
         save();
     }
 
@@ -76,7 +77,9 @@ public class UserAccount {
         save();
     }
 
-    public boolean mustChangePassword() { return mustChangePassword; }
+    public boolean mustChangePassword() {
+        return mustChangePassword;
+    }
 
     public void setForcePasswordChangeValue(boolean newValue) {
         mustChangePassword = newValue;
@@ -89,6 +92,7 @@ public class UserAccount {
 
     /**
      * Set the user account active or inactive.
+     *
      * @param active: boolean value; true for active, false for inactive
      */
     public void setActive(boolean active) {
@@ -98,6 +102,7 @@ public class UserAccount {
 
     /**
      * Is the account currently active?
+     *
      * @return a boolean value: true for active, false for inactive
      */
     public boolean isActiveAccount() {
@@ -106,6 +111,7 @@ public class UserAccount {
 
     /**
      * Print out the student as a string representation
+     *
      * @return a String representation
      */
     public String toString() {
@@ -114,6 +120,7 @@ public class UserAccount {
 
     /**
      * Authenticate user password
+     *
      * @param passwordInput: the password the user entered
      * @return boolean value
      */
@@ -138,6 +145,7 @@ public class UserAccount {
 
     /**
      * Determine if one UserAccount is equal to another by checking UUID.
+     *
      * @param otherUser the user to compare
      * @return boolean value
      */
