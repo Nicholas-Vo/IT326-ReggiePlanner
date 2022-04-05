@@ -6,8 +6,11 @@ import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.database.Database;
 import edu.illinoisstate.utils.HintPasswordTextBox;
 import edu.illinoisstate.utils.HintTextBox;
+import edu.illinoisstate.utils.Utils;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import java.awt.event.WindowEvent;
 
 public class Login {
@@ -17,6 +20,7 @@ public class Login {
     public Login(JFrame mainProgramWindow) {
         window.setSize(400, 225);
         window.setLocationRelativeTo(null);
+        Utils.allowEscapeToClose(window, window.getPanel());
         this.mainProgramWindow = mainProgramWindow;
 
         createWindow();

@@ -47,12 +47,17 @@ public class CreateAccount {
                 return;
             }
 
+            Database database = Database.getInstance();
+            if (database.getExistingEmailList().contains(emailField.getText())) {
+                JOptionPane.showMessageDialog(window, "That email is already registered within our system.");
+                return;
+            }
+
             if (!email.contains("@")) {
                 JOptionPane.showMessageDialog(window, "Sorry, that's an invalid email provider.");
                 return;
             }
 
-            Database database = Database.getInstance();
             if (database.getUsernamesList().contains(usernameField.getText())) {
                 JOptionPane.showMessageDialog(window, "Sorry, that username already exists.");
                 return;

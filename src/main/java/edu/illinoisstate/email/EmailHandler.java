@@ -2,7 +2,6 @@ package edu.illinoisstate.email;
 
 import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.utils.Security;
-import edu.illinoisstate.utils.Utils;
 
 import javax.mail.Message;
 import javax.mail.Session;
@@ -70,9 +69,8 @@ public class EmailHandler {
                 Message theEmail = new MimeMessage(session); // creates a new message template to send email to user
 
                 try {
-                    InternetAddress programEmail = new InternetAddress(authentication.getProgramEmail());
-                    theEmail.setFrom(programEmail);
                     theEmail.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
+                    theEmail.setFrom(authentication.getProgramEmail());
                     theEmail.setSubject(subject);
                     theEmail.setText(body);
                     theEmail.setSentDate(new Date());

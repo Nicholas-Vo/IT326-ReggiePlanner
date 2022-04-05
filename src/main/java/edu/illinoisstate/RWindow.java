@@ -3,8 +3,9 @@ package edu.illinoisstate;
 import edu.illinoisstate.utils.Utils;
 import edu.illinoisstate.utils.WindowTracker;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JDialog;
+import javax.swing.JPanel;
+import java.awt.Component;
 import java.util.List;
 
 public class RWindow extends JDialog {

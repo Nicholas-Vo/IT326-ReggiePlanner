@@ -8,7 +8,8 @@ import edu.illinoisstate.email.EmailHandler;
 import edu.illinoisstate.utils.HintTextBox;
 import edu.illinoisstate.utils.Utils;
 
-import javax.swing.*;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import java.awt.event.WindowEvent;
 
 /**

@@ -3,9 +3,6 @@ package edu.illinoisstate.gui;
 import edu.illinoisstate.RButton;
 import edu.illinoisstate.RWindow;
 import edu.illinoisstate.UserAccount;
-import edu.illinoisstate.settings.ContactDevelopers;
-import edu.illinoisstate.settings.DeleteAccount;
-import edu.illinoisstate.settings.EditUserProfile;
 import edu.illinoisstate.utils.HintPasswordTextBox;
 import edu.illinoisstate.utils.Security;
 import edu.illinoisstate.utils.Utils;
@@ -49,6 +46,7 @@ public class ForcePasswordChange {
             previousWindow.dispatchEvent(new WindowEvent(previousWindow, WindowEvent.WINDOW_CLOSING));
         });
 
+        window.getRootPane().setDefaultButton(submit); // Allows Enter key to submit
         window.addComponents(password, submit);
     }
 

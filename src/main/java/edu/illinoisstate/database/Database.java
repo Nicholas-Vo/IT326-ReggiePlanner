@@ -138,6 +138,12 @@ public class Database {
         return (List<String>) query.getResultList();
     }
 
+    public List<String> getExistingEmailList() {
+        Query query = entityManager.createQuery("SELECT email FROM UserAccount");
+
+        return (List<String>) query.getResultList();
+    }
+
     public List<Course> getCourseList() {
         return null;
     }
