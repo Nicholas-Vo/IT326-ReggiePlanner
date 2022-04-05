@@ -1,7 +1,7 @@
 package edu.illinoisstate.gui;
 
 import edu.illinoisstate.RButton;
-import edu.illinoisstate.ReggieWindow;
+import edu.illinoisstate.RWindow;
 import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.database.Database;
 import edu.illinoisstate.utils.HintPasswordTextBox;
@@ -10,15 +10,14 @@ import edu.illinoisstate.utils.Utils;
 
 import javax.swing.*;
 import java.awt.event.WindowEvent;
-import java.util.Arrays;
 import java.util.UUID;
 
 public class CreateAccount {
-    private final ReggieWindow window = new ReggieWindow("Create a new account");
-    private final JPanel panel = new JPanel();
+    private final RWindow window = new RWindow("Create a new account");
 
     public CreateAccount() {
         window.setSize(500, 300);
+        window.setLocationRelativeTo(null);
 
         createWindow();
     }

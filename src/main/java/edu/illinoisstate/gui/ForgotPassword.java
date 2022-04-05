@@ -1,25 +1,25 @@
 package edu.illinoisstate.gui;
 
 import edu.illinoisstate.RButton;
-import edu.illinoisstate.ReggieWindow;
+import edu.illinoisstate.RWindow;
 import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.database.Database;
-import edu.illinoisstate.utils.Email;
+import edu.illinoisstate.email.EmailHandler;
 import edu.illinoisstate.utils.HintTextBox;
 import edu.illinoisstate.utils.Utils;
 
 import javax.swing.*;
 import java.awt.event.WindowEvent;
-import java.util.Arrays;
 
 /**
  * This window appears when the user selects the "Forgot password" button on the main window.
  */
 public class ForgotPassword {
-    private final ReggieWindow window = new ReggieWindow("Recover password");
+    private final RWindow window = new RWindow("Recover password");
 
     public ForgotPassword() {
         window.setSize(400, 300);
+        window.setLocationRelativeTo(null);
         window.setIconImage(Utils.getImage("qmark.png"));
 
         createWindow();
@@ -36,7 +36,13 @@ public class ForgotPassword {
             }
 
             UserAccount user = database.getUserAccount(username.getText());
-            Email.sendForgotPassword(user.email());
+            EmailHandler emailHandler = new EmailHandler();
+
+            if (!emailHandler.sendPasswordReset(user.email())) {
+                JOptionPane.showMessageDialog(window,
+                        "We ran into an error reaching your email address! Please contact support.");
+                return;
+            }
 
             JOptionPane.showMessageDialog(window,
                     "A password recovery message has been sent to the email associated with this account: "

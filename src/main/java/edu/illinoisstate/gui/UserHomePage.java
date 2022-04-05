@@ -2,7 +2,7 @@ package edu.illinoisstate.gui;
 
 import edu.illinoisstate.RButton;
 import edu.illinoisstate.ReggiePlanner;
-import edu.illinoisstate.ReggieWindow;
+import edu.illinoisstate.RWindow;
 import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.settings.Settings;
 import edu.illinoisstate.utils.Utils;
@@ -16,14 +16,12 @@ import java.util.Arrays;
  * This class is executed when a user successfully signs in
  */
 public class UserHomePage {
-    private final ReggieWindow window = new ReggieWindow("ReggiePlanner v" + ReggiePlanner.VERSION);
-    private final JPanel panel = new JPanel();
-
+    private final RWindow window = new RWindow("ReggiePlanner v" + ReggiePlanner.VERSION);
     private final UserAccount user;
 
     public UserHomePage(UserAccount user) {
         window.setSize(600, 600);
-        window.setModal(false);
+        window.setLocationRelativeTo(null);
         WindowTracker.addToActiveWindows(window);
 
         this.user = user;

@@ -1,7 +1,7 @@
 package edu.illinoisstate.settings;
 
 import edu.illinoisstate.RButton;
-import edu.illinoisstate.ReggieWindow;
+import edu.illinoisstate.RWindow;
 import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.database.Database;
 import edu.illinoisstate.gui.MainProgramWindow;
@@ -13,12 +13,13 @@ import javax.swing.*;
 import java.awt.*;
 
 public class DeleteAccount {
-    private final ReggieWindow window = new ReggieWindow("Are you sure?");
+    private final RWindow window = new RWindow("Are you sure?");
     private final JPanel panel = new JPanel();
     private final UserAccount user;
 
     public DeleteAccount(UserAccount user) {
         window.setSize(500, 300);
+        window.setLocationRelativeTo(null);
 
         this.user = user; // set local UserAccount to passed in user
 

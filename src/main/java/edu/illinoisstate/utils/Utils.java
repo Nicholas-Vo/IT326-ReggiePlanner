@@ -1,5 +1,7 @@
 package edu.illinoisstate.utils;
 
+import net.bytebuddy.utility.RandomString;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -31,6 +33,14 @@ public class Utils {
         }
         Charset charSet = StandardCharsets.UTF_8;
         return new String(digest.digest(theString.getBytes(charSet)), charSet);
+    }
+
+    /**
+     * Generate a random password String
+     * @return a String password
+     */
+    public static String generateRandomPassword() {
+        return RandomString.make(16);
     }
 
     /**

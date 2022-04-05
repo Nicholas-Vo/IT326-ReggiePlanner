@@ -1,21 +1,20 @@
 package edu.illinoisstate.settings;
 
 import edu.illinoisstate.RButton;
+import edu.illinoisstate.RWindow;
 import edu.illinoisstate.UserAccount;
-import edu.illinoisstate.ReggieWindow;
 import edu.illinoisstate.utils.Utils;
 
-import javax.swing.*;
 import java.awt.event.WindowEvent;
-import java.util.Arrays;
 
 public class Settings {
-    private final ReggieWindow window = new ReggieWindow("Settings");
+    private final RWindow window = new RWindow("Settings");
     private final UserAccount user;
 
     public Settings(UserAccount user) {
         window.setSize(500, 300);
         window.setIconImage(Utils.getImage("settings.png"));
+        window.setLocationRelativeTo(null); // Centers the window on the screen
 
         this.user = user;
         createWindow();

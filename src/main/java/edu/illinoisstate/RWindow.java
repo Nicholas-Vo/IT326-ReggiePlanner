@@ -9,12 +9,11 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.util.List;
 
-public class ReggieWindow extends JDialog {
+public class RWindow extends JDialog {
     private final JPanel panel = new JPanel();
 
-    public ReggieWindow(String title) {
+    public RWindow(String title) {
         super.setTitle(title);
-        super.setLocationRelativeTo(null); // Set window to center of screen
         super.setResizable(false); // Don't allow user to change window size
         super.setModal(true); // Don't allow user to click off of window
         super.setIconImage(Utils.getImage("reggie.png")); // Set default icon to Reggie

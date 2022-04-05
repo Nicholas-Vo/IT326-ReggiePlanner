@@ -1,6 +1,9 @@
 package edu.illinoisstate;
 
+import edu.illinoisstate.utils.Utils;
+
 import javax.persistence.*;
+import javax.swing.*;
 import java.util.UUID;
 
 /**
@@ -79,6 +82,17 @@ public class UserAccount {
      */
     public String toString() {
         return "UUID: " + uuid + "\nUsername: " + username + "\nEmail: " + email;
+    }
+
+    /**
+     * Authenticate user password
+     * @param passwordInput: the password the user entered
+     * @return boolean value
+     */
+    public boolean authenticate(String passwordInput) {
+        String generatedHash = Utils.hash(passwordInput); // Hash user input to check against DB
+
+        return passwordHash.equalsIgnoreCase(generatedHash);
     }
 
     /**
