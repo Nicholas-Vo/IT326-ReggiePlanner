@@ -1,5 +1,7 @@
 package edu.illinoisstate.settings;
 
+import edu.illinoisstate.RButton;
+import edu.illinoisstate.ReggieWindow;
 import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.database.Database;
 import edu.illinoisstate.gui.MainProgramWindow;
@@ -11,22 +13,16 @@ import javax.swing.*;
 import java.awt.*;
 
 public class DeleteAccount {
-    private final JDialog window = new JDialog();
+    private final ReggieWindow window = new ReggieWindow("Are you sure?");
     private final JPanel panel = new JPanel();
     private final UserAccount user;
 
     public DeleteAccount(UserAccount user) {
         window.setSize(500, 300);
-        window.setLocationRelativeTo(null); // Center the window on the screen
-        window.setTitle("Are you sure?");
-        window.setModal(true); // this prevents use of other windows
-        window.setResizable(false);
-        window.setIconImage(Utils.getImage("reggie.png"));
 
         this.user = user; // set local UserAccount to passed in user
 
         WindowTracker.addToActiveWindows(window);
-        Utils.allowEscapeToClose(window, panel);
         createWindow();
     }
 
@@ -42,8 +38,7 @@ public class DeleteAccount {
         JLabel incorrectLabel = new JLabel("Incorrect username.");
         incorrectLabel.setVisible(false);
 
-        JButton confirmBtn = new JButton("Delete");
-        confirmBtn.addActionListener(e -> {
+        RButton confirmBtn = new RButton("Delete", () -> {
             String input = usernameTxtField.getText();
 
             if (!input.equalsIgnoreCase(user.getUsername())) {

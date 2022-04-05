@@ -2,15 +2,15 @@ package edu.illinoisstate;
 
 import javax.swing.*;
 
-public class ReggieButton extends JButton {
+public class RButton extends JButton {
 
-    public ReggieButton(String text, Runnable runnable) {
+    public RButton(String text, Runnable runnable) {
         super.setText(text);
 
         super.addActionListener(e -> runnable.run());
     }
 
-    public ReggieButton(String text, Runnable runnable, float alignment) {
+    public RButton(String text, Runnable runnable, float alignment) {
         super.setText(text);
         super.setAlignmentX(alignment);
 
@@ -20,7 +20,7 @@ public class ReggieButton extends JButton {
     /*
      * Overloaded constructor to allow button w/o runnable
      */
-    public ReggieButton(String text) {
+    public RButton(String text) {
         super.setText(text);
     }
 

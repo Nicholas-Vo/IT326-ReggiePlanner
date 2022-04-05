@@ -1,6 +1,6 @@
 package edu.illinoisstate.gui;
 
-import edu.illinoisstate.ReggieButton;
+import edu.illinoisstate.RButton;
 import edu.illinoisstate.ReggieWindow;
 import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.database.Database;
@@ -25,42 +25,35 @@ public class Login {
     }
 
     public void createWindow() {
-        JTextField username = new HintTextBox("username", 15, Component.CENTER_ALIGNMENT);
-        JTextField password = new HintPasswordTextBox("password", 15, Component.CENTER_ALIGNMENT);
+        JTextField username = new HintTextBox("username", 15, .5f);
+        JTextField password = new HintPasswordTextBox("password", 15, .5f);
 
-        ReggieButton loginButton = new ReggieButton("Login",
-                () -> verifyLogin(username.getText()), Component.CENTER_ALIGNMENT);
+        RButton loginButton = new RButton("Login", () -> {
+            Database database = Database.getInstance();
+
+            if (!database.getUsernamesList().contains(username.getText())) {
+                JOptionPane.showMessageDialog(window, "Incorrect username or password.");
+                return;
+            }
+
+            UserAccount user = database.getUserAccount(username.getText());
+
+            String storedHash = user.getPasswordHash(); // Stored hash from DB
+            String generatedHash = Utils.hash(username.getText()); // Hash user input to check against DB
+
+            if (!storedHash.equalsIgnoreCase(generatedHash)) {
+                JOptionPane.showMessageDialog(window, "Incorrect username or password.");
+                return;
+            }
+
+            // Close this window and the main program window now that we're logged in, then open up home page
+            window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
+            mainProgramWindow.dispatchEvent(new WindowEvent(mainProgramWindow, WindowEvent.WINDOW_CLOSING));
+            new UserHomePage(user);
+        }, .5f);
 
         window.getRootPane().setDefaultButton(loginButton); // Allows Enter key to submit
-        window.addComponents(Arrays.asList(username, password, loginButton));
+        window.addComponents(username, password, loginButton);
     }
-
-    /*
-    The logic for verifying the login
-     */
-    private void verifyLogin(String username) {
-        Database database = Database.getInstance();
-
-        if (!database.getUsernamesList().contains(username)) {
-            JOptionPane.showMessageDialog(window, "Incorrect username or password.");
-            return;
-        }
-
-        UserAccount user = database.getUserAccount(username);
-
-        String storedHash = user.getPasswordHash(); // Stored hash from DB
-        String generatedHash = Utils.hash(username); // Hash user input to check against DB
-
-        if (!storedHash.equalsIgnoreCase(generatedHash)) {
-            JOptionPane.showMessageDialog(window, "Incorrect username or password.");
-            return;
-        }
-
-        // Close this window and the main program window now that we're logged in, then open up home page
-        window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
-        mainProgramWindow.dispatchEvent(new WindowEvent(mainProgramWindow, WindowEvent.WINDOW_CLOSING));
-        new UserHomePage(user);
-    }
-
 
 }

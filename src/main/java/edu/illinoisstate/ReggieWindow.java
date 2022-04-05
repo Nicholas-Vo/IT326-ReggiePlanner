@@ -4,7 +4,7 @@ import edu.illinoisstate.utils.Utils;
 import edu.illinoisstate.utils.WindowTracker;
 
 import javax.swing.*;
-import java.awt.*;
+import java.awt.Component;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.util.List;
@@ -24,26 +24,19 @@ public class ReggieWindow extends JDialog {
         /*
         register keyboard action for Esc key; Sets it to close window
          */
-        panel.registerKeyboardAction(e -> {
+        this.panel.registerKeyboardAction(e -> {
             dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
     /**
      * Takes in a list of components to add to the panel
-     * @param components List of components
+     * @param component 0-* components
      */
-    public void addComponents(List<Component> components) {
-        components.forEach(panel::add);
-        display(); // After adding everything, display the window
-    }
-
-    /**
-     * Add the panel and set the window visible
-     */
-    public void display() {
-        add(panel);
-        setVisible(true);
+    public void addComponents(Component ... component) {
+        List.of(component).forEach(panel::add);
+        this.add(panel); // add panel to window
+        this.setVisible(true);
     }
 
     public JPanel getPanel() {

@@ -1,5 +1,6 @@
 package edu.illinoisstate.gui;
 
+import edu.illinoisstate.RButton;
 import edu.illinoisstate.ReggiePlanner;
 import edu.illinoisstate.utils.Utils;
 
@@ -32,36 +33,20 @@ public class MainProgramWindow {
         label.setPreferredSize(new Dimension(250, 100));
         label.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JButton createAccountButton = new JButton("Create a new account");
-        createAccountButton.addActionListener(e -> new CreateAccount());
-        createAccountButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        JButton loginButton = new JButton("Login");
-        loginButton.addActionListener(e -> new Login(window));
-        loginButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        JButton resetPasswordButton = new JButton("Forgot password");
-        resetPasswordButton.addActionListener(e -> new ForgotPassword());
-        resetPasswordButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        JButton exitProgramButton = new JButton("Exit");
-        exitProgramButton.addActionListener(e -> System.exit(0));
-        exitProgramButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        RButton createAccountButton = new RButton("Create a new account", CreateAccount::new, .5f);
+        RButton loginButton = new RButton("Login", () -> new Login(window), .5f);
+        RButton resetPasswordButton = new RButton("Forgot password", ForgotPassword::new, .5f);
+        RButton exitProgramButton = new RButton("Exit", () -> System.exit(0), .5f);
 
         // This is the actual image of reggie that appears
         JLabel reggieLogo = new JLabel(new ImageIcon(Utils.getImage("reggie.png")));
         reggieLogo.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         panel.add(label);
-        Utils.addWhiteSpace(panel,5);
         panel.add(reggieLogo);
-        Utils.addWhiteSpace(panel,5);
         panel.add(loginButton);
-        Utils.addWhiteSpace(panel,5);
         panel.add(createAccountButton);
-        Utils.addWhiteSpace(panel,5);
         panel.add(resetPasswordButton);
-        Utils.addWhiteSpace(panel,5);
         panel.add(exitProgramButton);
 
         JLabel verLabel = new JLabel("Version " + ReggiePlanner.VERSION);

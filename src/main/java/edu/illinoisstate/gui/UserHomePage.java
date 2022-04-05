@@ -1,6 +1,8 @@
 package edu.illinoisstate.gui;
 
+import edu.illinoisstate.RButton;
 import edu.illinoisstate.ReggiePlanner;
+import edu.illinoisstate.ReggieWindow;
 import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.settings.Settings;
 import edu.illinoisstate.utils.Utils;
@@ -8,22 +10,20 @@ import edu.illinoisstate.utils.WindowTracker;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
 
 /**
  * This class is executed when a user successfully signs in
  */
 public class UserHomePage {
-    private final JFrame window = new JFrame();
+    private final ReggieWindow window = new ReggieWindow("ReggiePlanner v" + ReggiePlanner.VERSION);
     private final JPanel panel = new JPanel();
 
     private final UserAccount user;
 
     public UserHomePage(UserAccount user) {
         window.setSize(600, 600);
-        window.setLocationRelativeTo(null); // Center the window on the screen
-        window.setResizable(false);
-        window.setTitle("ReggiePlanner v" + ReggiePlanner.VERSION);
-        window.setIconImage(Utils.getImage("reggie.png"));
+        window.setModal(false);
         WindowTracker.addToActiveWindows(window);
 
         this.user = user;
@@ -36,39 +36,29 @@ public class UserHomePage {
         label.setFont(new Font("Impact", Font.BOLD, 20));
         label.setPreferredSize(new Dimension(800, 100));
 
-        JButton generatePlanBtn = new JButton("Generate new class plan");
+        RButton generatePlanBtn = new RButton("Generate new class plan");
         generatePlanBtn.addActionListener(e -> {
 
         });
 
-        JButton editPlanBtn = new JButton("Edit existing plan");
+        RButton editPlanBtn = new RButton("Edit existing plan");
         editPlanBtn.addActionListener(e -> {
 
         });
 
-        JButton createNoteBtn = new JButton("Create user note");
+        RButton createNoteBtn = new RButton("Create user note");
         createNoteBtn.addActionListener(e -> {
 
         });
 
-        JButton settingButton = new JButton("Settings");
-        settingButton.addActionListener(e -> new Settings(user));
+        RButton settingButton = new RButton("Settings", () -> new Settings(user));
 
-        JButton logoutButton = new JButton("Logout");
-        logoutButton.addActionListener(e -> {
+        RButton logoutButton = new RButton("Logout", () -> {
             WindowTracker.closeAllActiveWindows();
             new MainProgramWindow(); // re-open main program window
         });
 
-        panel.add(label);
-        panel.add(generatePlanBtn);
-        panel.add(editPlanBtn);
-        panel.add(createNoteBtn);
-        panel.add(settingButton);
-        panel.add(logoutButton);
-
-        window.add(panel);
-        window.setVisible(true);
+        window.addComponents(label, generatePlanBtn, editPlanBtn, createNoteBtn, settingButton, logoutButton);
     }
 
 }

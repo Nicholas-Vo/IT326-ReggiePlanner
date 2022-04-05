@@ -1,6 +1,6 @@
 package edu.illinoisstate.settings;
 
-import edu.illinoisstate.ReggieButton;
+import edu.illinoisstate.RButton;
 import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.ReggieWindow;
 import edu.illinoisstate.utils.Utils;
@@ -22,12 +22,12 @@ public class Settings {
     }
 
     public void createWindow() {
-        var editProfileBtn = new ReggieButton("Edit user profile", () -> new EditUserProfile(user));
-        var contactBtn = new ReggieButton("Contact the developers", () -> new ContactDevelopers(user));
-        var deleteBtn = new ReggieButton("Delete account", () -> new DeleteAccount(user));
-        var closeBtn = new ReggieButton("Close", () -> window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING)));
+        var editProfileBtn = new RButton("Edit user profile", () -> new EditUserProfile(user));
+        var contactBtn = new RButton("Contact the developers", () -> new ContactDevelopers(user));
+        var deleteBtn = new RButton("Delete account", () -> new DeleteAccount(user));
+        var closeBtn = new RButton("Close", () -> window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING)));
 
-        window.addComponents(Arrays.asList(editProfileBtn, contactBtn, deleteBtn, closeBtn));
+        window.addComponents(editProfileBtn, contactBtn, deleteBtn, closeBtn);
     }
 
 }
