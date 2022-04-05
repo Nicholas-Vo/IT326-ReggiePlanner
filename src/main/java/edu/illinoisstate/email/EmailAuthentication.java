@@ -39,20 +39,31 @@ public class EmailAuthentication {
 
     /**
      * Set up email session
+     *
      * @return Created Session object
      */
     public Session getSession() {
         Properties properties = new Properties();
+        String password = getPasswordFromFile();
         properties.put("mail.smtp.host", "smtp.gmail.com");
         properties.put("mail.smtp.port", 587);
         properties.put("mail.smtp.auth", true); // authentication
         properties.put("mail.smtp.starttls.enable", true); // encryption
-        properties.put("mail.smtp.password", getPasswordFromFile());
+        properties.put("mail.smtp.password", password);
 
-        return Session.getInstance(properties, new Authenticator() {
+        return Session.getInstance(properties, getAuthenticator(password));
+    }
+
+    /**
+     * Get Authenticator object
+     * @param password: email PW
+     * @return Authenticator object
+     */
+    private Authenticator getAuthenticator(String password) {
+        return new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(USERNAME, getPasswordFromFile());
+                return new PasswordAuthentication(USERNAME, password);
             }
-        });
+        };
     }
 }
