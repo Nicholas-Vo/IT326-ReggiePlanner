@@ -6,6 +6,7 @@ import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.database.Database;
 import edu.illinoisstate.utils.HintPasswordTextBox;
 import edu.illinoisstate.utils.HintTextBox;
+import edu.illinoisstate.utils.Security;
 import edu.illinoisstate.utils.Utils;
 
 import javax.swing.*;
@@ -35,7 +36,7 @@ public class CreateAccount {
                 return;
             }
 
-            if (!isValidPassword(usernameField.getText(), passwordField.getText())) {
+            if (!Security.isValidPassword(usernameField.getText(), passwordField.getText())) {
                 JOptionPane.showMessageDialog(window, "Sorry, that's an invalid password.");
                 return;
             }
@@ -58,11 +59,10 @@ public class CreateAccount {
             }
 
             UserAccount account = new UserAccount(UUID.randomUUID(), emailField.getText(),
-                    usernameField.getText(), Utils.hash(passwordField.getText()));
+                    usernameField.getText(), Security.hash(passwordField.getText()));
 
             database.saveUserAccount(account);
-            JOptionPane.showMessageDialog(window,
-                    "A confirmation email has been sent to " + emailField.getText() + ".");
+            JOptionPane.showMessageDialog(window, "Account created: You may now log in!");
             window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
             System.out.println("Created new user account \"" + account.getUsername() + "\".");
         });
@@ -71,19 +71,5 @@ public class CreateAccount {
         window.addComponents(emailField, usernameField, passwordField, label, submitButton);
     }
 
-    /**
-     * Determine whether to reject input password
-     *
-     * @param username the input username
-     * @param password the input password
-     * @return bool value
-     */
-    private boolean isValidPassword(String username, String password) {
-        if (username.equalsIgnoreCase(password)) {
-            return false;
-        }
-
-        return password.length() > 3 && password.length() < 16;
-    }
 }
 

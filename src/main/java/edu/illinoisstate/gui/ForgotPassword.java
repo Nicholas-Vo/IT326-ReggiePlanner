@@ -38,11 +38,8 @@ public class ForgotPassword {
             UserAccount user = database.getUserAccount(username.getText());
             EmailHandler emailHandler = new EmailHandler();
 
-            if (!emailHandler.sendPasswordReset(user.email())) {
-                JOptionPane.showMessageDialog(window,
-                        "We ran into an error reaching your email address! Please contact support.");
-                return;
-            }
+            emailHandler.sendPasswordReset(user);
+            user.setForcePasswordChangeValue(true);
 
             JOptionPane.showMessageDialog(window,
                     "A password recovery message has been sent to the email associated with this account: "

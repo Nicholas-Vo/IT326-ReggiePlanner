@@ -1,5 +1,7 @@
 package edu.illinoisstate;
 
+import edu.illinoisstate.database.Database;
+import edu.illinoisstate.utils.Security;
 import edu.illinoisstate.utils.Utils;
 
 import javax.persistence.*;
@@ -18,8 +20,10 @@ public class UserAccount {
     private UUID uuid;
     private String username;
     private String passwordHash;
+    private String temporaryPasswordHash;
     private String email;
     private boolean isActiveAccount = true;
+    private boolean mustChangePassword = false;
 
     public UserAccount(UUID uuid, String email, String username, String passwordHash) {
         this.uuid = uuid;
@@ -40,12 +44,27 @@ public class UserAccount {
         return passwordHash;
     }
 
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
+    public void setPassword(String passwordHash) {
+        this.passwordHash = Security.hash(passwordHash);
+        save();
+    }
+
+    public String getTemporaryPasswordHash() {
+        return temporaryPasswordHash;
+    }
+
+    public void setTempPassword(String passwordHash) {
+        if (passwordHash == null) {
+            temporaryPasswordHash = null;
+        } else {
+            this.temporaryPasswordHash = Security.hash(passwordHash);
+        }
+        save();
     }
 
     public void setUsername(String username) {
         this.username = username;
+        save();
     }
 
     public String getUsername() {
@@ -54,6 +73,14 @@ public class UserAccount {
 
     public void setEmail(String email) {
         this.email = email;
+        save();
+    }
+
+    public boolean mustChangePassword() { return mustChangePassword; }
+
+    public void setForcePasswordChangeValue(boolean newValue) {
+        mustChangePassword = newValue;
+        save();
     }
 
     public String email() {
@@ -66,6 +93,7 @@ public class UserAccount {
      */
     public void setActive(boolean active) {
         isActiveAccount = active;
+        save();
     }
 
     /**
@@ -90,9 +118,22 @@ public class UserAccount {
      * @return boolean value
      */
     public boolean authenticate(String passwordInput) {
-        String generatedHash = Utils.hash(passwordInput); // Hash user input to check against DB
+        String generatedHash = Security.hash(passwordInput); // Hash user input to check against DB
+
+        if (temporaryPasswordHash != null) {
+            mustChangePassword = true; // Force user to change PW at next login
+            return temporaryPasswordHash.equalsIgnoreCase(generatedHash);
+
+        }
 
         return passwordHash.equalsIgnoreCase(generatedHash);
+    }
+
+    /**
+     * Save all user data to database
+     */
+    public void save() {
+        Database.getInstance().saveUserAccount(this);
     }
 
     /**

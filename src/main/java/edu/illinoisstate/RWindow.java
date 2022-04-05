@@ -4,9 +4,7 @@ import edu.illinoisstate.utils.Utils;
 import edu.illinoisstate.utils.WindowTracker;
 
 import javax.swing.*;
-import java.awt.Component;
-import java.awt.event.KeyEvent;
-import java.awt.event.WindowEvent;
+import java.awt.*;
 import java.util.List;
 
 public class RWindow extends JDialog {
@@ -19,13 +17,6 @@ public class RWindow extends JDialog {
         super.setIconImage(Utils.getImage("reggie.png")); // Set default icon to Reggie
 
         WindowTracker.addToActiveWindows(this); // Add to list of "active" windows
-
-        /*
-        register keyboard action for Esc key; Sets it to close window
-         */
-        this.panel.registerKeyboardAction(e -> {
-            dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
     /**
