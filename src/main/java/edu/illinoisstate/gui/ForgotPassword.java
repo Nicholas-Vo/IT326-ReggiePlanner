@@ -40,7 +40,6 @@ public class ForgotPassword {
             EmailHandler emailHandler = new EmailHandler();
 
             emailHandler.sendPasswordReset(user);
-            user.setForcePasswordChangeValue(true);
 
             JOptionPane.showMessageDialog(window,
                     "A password recovery message has been sent to the email associated with this account: "

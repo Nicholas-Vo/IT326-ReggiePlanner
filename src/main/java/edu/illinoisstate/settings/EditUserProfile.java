@@ -2,12 +2,6 @@ package edu.illinoisstate.settings;
 
 import edu.illinoisstate.RWindow;
 import edu.illinoisstate.UserAccount;
-import edu.illinoisstate.utils.Utils;
-import edu.illinoisstate.utils.WindowTracker;
-
-import javax.swing.*;
-import javax.swing.border.LineBorder;
-import java.awt.*;
 
 public class EditUserProfile {
     private final RWindow window = new RWindow("Edit profile");
@@ -22,6 +16,7 @@ public class EditUserProfile {
     }
 
     public void createWindow() {
+
     }
 
 }

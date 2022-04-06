@@ -34,8 +34,9 @@ public class Security {
             return false;
         }
 
-        if (Database.getInstance().getUsernamesList().contains(username)) {
-            UserAccount user = Database.getInstance().getUserAccount(username);
+        Database db = Database.getInstance();
+        if (db.getUsernamesList().contains(username)) {
+            UserAccount user = db.getUserAccount(username);
 
             String currentPW = hash(user.getPasswordHash());
             String tempPW = hash(user.getTemporaryPasswordHash());
@@ -43,7 +44,8 @@ public class Security {
         /*
         don't allow new password to be similar to old password
          */
-            if (input.equalsIgnoreCase(currentPW) || input.equalsIgnoreCase(tempPW)) {
+            String hashedInput = hash(input);
+            if (hashedInput.equalsIgnoreCase(currentPW) || hashedInput.equalsIgnoreCase(tempPW)) {
                 return false;
             }
         }

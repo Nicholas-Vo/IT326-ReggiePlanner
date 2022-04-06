@@ -67,7 +67,7 @@ public class CreateAccount {
                     usernameField.getText(), Security.hash(passwordField.getText()));
 
             database.saveUserAccount(account);
-            JOptionPane.showMessageDialog(window, "Account created: You may now log in!");
+            JOptionPane.showMessageDialog(window, "Account created: You may now log in.");
             window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
             System.out.println("Created new user account \"" + account.getUsername() + "\".");
         });

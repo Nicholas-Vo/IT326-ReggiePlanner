@@ -32,6 +32,7 @@ public class EmailHandler {
                 + "\n\nIf you didn't request this, you can safely ignore this email.";
 
         EmailSender.send(user.email(), "Password reset link from ReggiePlanner", body);
+        System.out.println("Sent password reset email to " + user.getUsername() + " .");
     }
 
     /**
@@ -61,7 +62,7 @@ public class EmailHandler {
 
         public static void send(String recipient, String subject, String body) {
             /*
-            using runnable to avoid hanging entire program when sending email
+            runnable used to avoid hanging entire program when sending email
              */
             new Thread(() -> {
                 EmailAuthentication authentication = new EmailAuthentication();

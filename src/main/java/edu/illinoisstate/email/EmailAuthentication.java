@@ -45,6 +45,7 @@ public class EmailAuthentication {
     public Session getSession() {
         Properties properties = new Properties();
         String password = getPasswordFromFile();
+
         properties.put("mail.smtp.host", "smtp.gmail.com");
         properties.put("mail.smtp.port", 587);
         properties.put("mail.smtp.auth", true); // authentication

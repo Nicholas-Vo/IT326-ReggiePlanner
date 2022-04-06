@@ -6,6 +6,7 @@ import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.database.Database;
 import edu.illinoisstate.utils.HintPasswordTextBox;
 import edu.illinoisstate.utils.HintTextBox;
+import edu.illinoisstate.utils.Security;
 import edu.illinoisstate.utils.Utils;
 
 import javax.swing.JFrame;
@@ -35,21 +36,28 @@ public class Login {
             Database database = Database.getInstance();
 
             if (!database.getUsernamesList().contains(username.getText())) {
-                JOptionPane.showMessageDialog(window, "Incorrect username or password. (User doesn't exist)");
+                JOptionPane.showMessageDialog(window, "Incorrect username or password.");
                 return;
             }
 
             UserAccount user = database.getUserAccount(username.getText());
+
+            if (user.getTemporaryPasswordHash() != null) {
+                if (user.getTemporaryPasswordHash().equalsIgnoreCase(Security.hash(password.getText()))) {
+                    new ForcePasswordChange(user, window);
+                    return;
+                }
+            }
 
             if (!user.authenticate(password.getText())) {
                 JOptionPane.showMessageDialog(window, "Incorrect username or password.");
                 return;
             }
 
-            if (user.mustChangePassword()) {
-                new ForcePasswordChange(user, window);
-                return;
-            }
+//            if (user.mustChangePassword()) {
+//                new ForcePasswordChange(user, window);
+//                return;
+//            }
 
             // Close this window and the main program window now that we're logged in, then open up home page
             window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
