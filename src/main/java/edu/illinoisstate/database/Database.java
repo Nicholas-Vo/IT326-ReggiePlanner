@@ -88,7 +88,7 @@ public class Database {
      * @return boolean value
      */
     public boolean containsUser(UserAccount toSearch) {
-        Query query = entityManager.createQuery("FROM UserAccount");
+        Query query = query("FROM UserAccount");
 
         for (UserAccount aUser : (List<UserAccount>) query.getResultList()) {
             if (aUser.equals(toSearch)) {
@@ -105,7 +105,7 @@ public class Database {
      * @return boolean value
      */
     public boolean containsCourse(Course course) {
-        Query query = entityManager.createQuery("FROM Course");
+        Query query = query("FROM Course");
         List<Course> courses = query.getResultList();
 
         for (Course c : courses) {
@@ -122,7 +122,7 @@ public class Database {
      */
     @Nullable
     public UserAccount getUserAccount(String username) {
-        Query query = entityManager.createQuery("FROM UserAccount");
+        Query query = query("FROM UserAccount");
 
         for (UserAccount aUser : (List<UserAccount>) query.getResultList()) {
             if (aUser.getUsername().equalsIgnoreCase(username)) {
@@ -132,22 +132,24 @@ public class Database {
         return null;
     }
 
-    public List<String> getUsernamesList() {
-        Query query = entityManager.createQuery("SELECT username FROM UserAccount");
+    /*
+    Query methods
+     */
 
-        return (List<String>) query.getResultList();
+    public List<String> getUsernamesList() {
+        return (List<String>) query("SELECT username FROM UserAccount").getResultList();
     }
 
     public List<String> getExistingEmailList() {
-        Query query = entityManager.createQuery("SELECT email FROM UserAccount");
-
-        return (List<String>) query.getResultList();
+        return (List<String>) query("SELECT email FROM UserAccount").getResultList();
     }
 
     public List<Course> getCourseList() {
-        Query query = entityManager.createQuery("FROM Course");
+        return (List<Course>) query("FROM Course").getResultList();
+    }
 
-        return (List<Course>) query.getResultList();
+    private Query query(String query) {
+        return entityManager.createQuery(query);
     }
 
 }
