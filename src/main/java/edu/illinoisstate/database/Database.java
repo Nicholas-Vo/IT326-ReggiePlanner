@@ -145,7 +145,9 @@ public class Database {
     }
 
     public List<Course> getCourseList() {
-        return null;
+        Query query = entityManager.createQuery("FROM Course");
+
+        return (List<Course>) query.getResultList();
     }
 
 }
