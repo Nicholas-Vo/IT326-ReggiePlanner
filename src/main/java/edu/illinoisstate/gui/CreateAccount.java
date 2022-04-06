@@ -1,82 +1,80 @@
 package edu.illinoisstate.gui;
 
-import edu.illinoisstate.ReggiePlanner;
-import edu.illinoisstate.SecurityHandler;
+import edu.illinoisstate.RButton;
+import edu.illinoisstate.RWindow;
 import edu.illinoisstate.UserAccount;
+import edu.illinoisstate.database.Database;
+import edu.illinoisstate.utils.HintPasswordTextBox;
+import edu.illinoisstate.utils.HintTextBox;
+import edu.illinoisstate.utils.Security;
+import edu.illinoisstate.utils.Utils;
 
 import javax.swing.*;
 import java.awt.event.WindowEvent;
+import java.util.UUID;
 
-public class CreateAccount extends ProgramWindow {
-    private final ReggiePlanner program = ReggiePlanner.getProgram();
-    private final SecurityHandler security = program.getSecurityHandler();
-    protected final JFrame window = new JFrame();
-    protected final JPanel panel = new JPanel();
+public class CreateAccount {
+    private final RWindow window = new RWindow("Create a new account");
 
     public CreateAccount() {
-        window.setSize(600, 600);
-        window.setTitle("Create a new account");
+        window.setSize(500, 300);
+        window.setLocationRelativeTo(null);
 
         createWindow();
     }
 
     public void createWindow() {
         JLabel label = new JLabel("Create an account");
+        JTextField emailField = new HintTextBox("email", 15);
+        JTextField usernameField = new HintTextBox("username", 15);
+        JTextField passwordField = new HintPasswordTextBox("password", 15);
 
-        JTextField emailField = new JTextField("email", 15);
-        panel.add(emailField);
-        JTextField usernameField = new JTextField("username", 15);
-        panel.add(usernameField);
-        JTextField passwordField = new JTextField("password", 15);
-        panel.add(passwordField);
-
-        JButton submitButton = new JButton("Submit");
-        submitButton.addActionListener(e -> {
-            if (!isValidUsername(usernameField.getText())) {
-                JOptionPane.showMessageDialog(window, "Sorry, that's an invalid username.");
+        RButton submitButton = new RButton("Submit", () -> {
+            String username = usernameField.getText();
+            if (username.length() < 4 || username.length() > 16) {
+                JOptionPane.showMessageDialog(window, "Sorry, that's an invalid username length.");
                 return;
             }
 
-            if (!isValidPassword(usernameField.getText(), passwordField.getText())) {
+            if (!Security.isValidPassword(usernameField.getText(), passwordField.getText())) {
                 JOptionPane.showMessageDialog(window, "Sorry, that's an invalid password.");
                 return;
             }
 
-            if (!security.isValidEmail(emailField.getText())) {
+            String email = emailField.getText();
+            if (email.length() < 4 || email.length() > 24) {
                 JOptionPane.showMessageDialog(window, "Sorry, that's an invalid email.");
                 return;
             }
 
-            UserAccount account = new UserAccount(emailField.getText(),
-                    usernameField.getText(), passwordField.getText());
+            Database database = Database.getInstance();
+            if (database.getExistingEmailList().contains(emailField.getText())) {
+                JOptionPane.showMessageDialog(window, "That email is already registered within our system.");
+                return;
+            }
 
-            String msg = "Successfully created the account " + account.getUsername() + ".";
-            JOptionPane.showMessageDialog(window, msg);
+            if (!email.contains("@")) {
+                JOptionPane.showMessageDialog(window, "Sorry, that's an invalid email provider.");
+                return;
+            }
+
+            if (database.getUsernamesList().contains(usernameField.getText())) {
+                JOptionPane.showMessageDialog(window, "Sorry, that username already exists.");
+                return;
+            }
+
+            UserAccount account = new UserAccount(UUID.randomUUID(), emailField.getText(),
+                    usernameField.getText(), Security.hash(passwordField.getText()));
+
+            database.saveUserAccount(account);
+            JOptionPane.showMessageDialog(window, "Account created: You may now log in.");
             window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
+            System.out.println("Created new user account \"" + account.getUsername() + "\".");
         });
 
-        panel.add(label);
-        panel.add(submitButton);
-
-        window.add(panel);
-        window.setVisible(true);
-    }
-
-    /**
-     * Determine if the username should be rejected or not.
-     * @param username the input username
-     * @return boolean value
-     */
-    public boolean isValidUsername(String username) {
-        return username.length() > 3 && username.length() < 16;
-    }
-
-    public boolean isValidPassword(String username, String password) {
-        if (username.equalsIgnoreCase(password)) {
-            return false;
-        }
-
-        return password.length() > 3 && password.length() < 16;
+        window.getRootPane().setDefaultButton(submitButton); // Allows Enter key to submit
+        window.addComponents(emailField, usernameField, passwordField, label, submitButton);
     }
 
 }
+

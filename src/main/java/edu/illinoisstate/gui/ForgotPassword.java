@@ -1,67 +1,55 @@
 package edu.illinoisstate.gui;
 
-import edu.illinoisstate.Email;
-import edu.illinoisstate.ReggiePlanner;
+import edu.illinoisstate.RButton;
+import edu.illinoisstate.RWindow;
 import edu.illinoisstate.UserAccount;
-import edu.illinoisstate.database.DatabaseHandler;
+import edu.illinoisstate.database.Database;
+import edu.illinoisstate.email.EmailHandler;
+import edu.illinoisstate.utils.HintTextBox;
+import edu.illinoisstate.utils.Utils;
 
-import javax.swing.*;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import java.awt.event.WindowEvent;
 
 /**
  * This window appears when the user selects the "Forgot password" button on the main window.
  */
-public class ForgotPassword extends ProgramWindow {
-    private final ReggiePlanner program = ReggiePlanner.getProgram();
-    private final UserAccount user = program.getUser();
-    protected final JFrame window = new JFrame();
-    protected final JPanel panel = new JPanel();
+public class ForgotPassword {
+    private final RWindow window = new RWindow("Recover password");
 
     public ForgotPassword() {
-        window.setSize(600, 600);
-        window.setTitle("Recover password");
+        window.setSize(400, 300);
+        window.setLocationRelativeTo(null);
+        window.setIconImage(Utils.getImage("qmark.png"));
 
         createWindow();
     }
 
     public void createWindow() {
-        JTextField username = new JTextField("Enter username", 15);
-        panel.add(username);
+        JTextField username = new HintTextBox("username", 15);
+        RButton resetButton = new RButton("Recover", () -> {
+            Database database = Database.getInstance();
 
-        JButton resetButton = new JButton("Recover");
-
-        resetButton.addActionListener(e -> {
-            DatabaseHandler database = program.getDatabase();
-
-            if (database.getUserByUsername(username.getText()) == null) {
+            if (!database.getUsernamesList().contains(username.getText())) {
                 JOptionPane.showMessageDialog(window, "Invalid username. Try again?");
                 return;
             }
 
-            if (!program.getSecurityHandler().isValidEmail(user.email())) {
-                JOptionPane.showMessageDialog(window, "No email associated with that account.");
-                return;
-            }
+            UserAccount user = database.getUserAccount(username.getText());
+            EmailHandler emailHandler = new EmailHandler();
 
-            /*
-            todo: placeholder make this email class better
-             */
-            Email.sendForgotPassword(user.email());
+            emailHandler.sendPasswordReset(user);
+
             JOptionPane.showMessageDialog(window,
-                    "A password recovery message has been sent to the email associated with this account.");
+                    "A password recovery message has been sent to the email associated with this account: "
+                            + "*******" + user.email().substring(user.email().indexOf("@")));
 
-            /*
-            Close this window after success
-             */
             window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
         });
 
-        panel.add(username);
-        panel.add(resetButton);
-
-        window.add(panel);
-        window.setVisible(true);
-
-
+        window.getRootPane().setDefaultButton(resetButton); // Allows Enter key to submit
+        window.addComponents(username, resetButton);
     }
+
 }
