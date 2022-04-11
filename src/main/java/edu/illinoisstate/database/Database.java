@@ -7,6 +7,8 @@ import edu.illinoisstate.course.Course;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +20,8 @@ public class Database {
     private static Database database; // the single instance of this class
     private final EntityManager entityManager; // the database EntityManager
 
-    public Database() {
+
+    public Database() throws IOException {
         database = this;
 
         var factory = Persistence.createEntityManagerFactory("default");
@@ -97,6 +100,14 @@ public class Database {
         list.add(new Course("IT398", "Professional Practice", 6, 3)); //1-6 credits
 
 
+        FileWriter writer = new FileWriter("StudentClassesTxtFile.txt");
+
+        for (Course str : list) {
+            writer.write(str + System.lineSeparator());
+        }
+        writer.close();
+
+
         /*
         Only add the course to the database if it doesn't already exist
          */
@@ -108,6 +119,7 @@ public class Database {
 
         entityManager.getTransaction().commit();
     }
+
 
     /**
      * obtain an instance of the Database singleton class

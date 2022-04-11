@@ -54,7 +54,7 @@ public class Course {
     }
 
     public void setID(String id) {
-        this.courseID = courseID;
+        this.courseID = id;
     }
 
     /**
@@ -89,6 +89,6 @@ public class Course {
      * @return the course in String form
      */
     public String toString() {
-        return id + " - " + name + "\nCredit hours: " + credits;
+        return courseID + " - " + name + "\nCredit hours: " + credits;
     }
 }
