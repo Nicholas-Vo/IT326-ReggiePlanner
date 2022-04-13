@@ -9,15 +9,20 @@ import edu.illinoisstate.utils.HintTextBox;
 import edu.illinoisstate.utils.Utils;
 import edu.illinoisstate.utils.WindowTracker;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 
-public class DeleteAccount {
+public class DeleteAccountUI {
     private final RWindow window = new RWindow("Are you sure?");
     private final JPanel panel = new JPanel();
     private final UserAccount user;
 
-    public DeleteAccount(UserAccount user) {
+    public DeleteAccountUI(UserAccount user) {
         window.setSize(500, 300);
         window.setLocationRelativeTo(null);
 

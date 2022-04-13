@@ -3,11 +3,11 @@ package edu.illinoisstate.settings;
 import edu.illinoisstate.RWindow;
 import edu.illinoisstate.UserAccount;
 
-public class EditUserProfile {
+public class EditUserProfileUI {
     private final RWindow window = new RWindow("Edit profile");
     private final UserAccount user;
 
-    public EditUserProfile(UserAccount user) {
+    public EditUserProfileUI(UserAccount user) {
         window.setSize(600, 400);
         window.setLocationRelativeTo(null);
 

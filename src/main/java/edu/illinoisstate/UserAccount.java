@@ -20,6 +20,7 @@ public class UserAccount {
     private String passwordHash;
     private String temporaryPasswordHash;
     private String email;
+    private String userNote;
     private boolean isActiveAccount = true;
     private boolean mustChangePassword = false;
 
@@ -32,6 +33,14 @@ public class UserAccount {
 
     public UserAccount() {
         // Empty no-param constructor needed for HSQLDB
+    }
+
+    public void setUserNote(String note) {
+        userNote = note;
+    }
+
+    public String getUserNote() {
+        return userNote;
     }
 
     public UUID uuid() {

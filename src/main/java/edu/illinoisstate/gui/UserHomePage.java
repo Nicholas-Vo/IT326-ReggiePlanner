@@ -4,13 +4,11 @@ import edu.illinoisstate.RButton;
 import edu.illinoisstate.ReggiePlanner;
 import edu.illinoisstate.RWindow;
 import edu.illinoisstate.UserAccount;
-import edu.illinoisstate.settings.Settings;
-import edu.illinoisstate.utils.Utils;
+import edu.illinoisstate.settings.SettingsUI;
 import edu.illinoisstate.utils.WindowTracker;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Arrays;
 
 /**
  * This class is executed when a user successfully signs in
@@ -49,7 +47,7 @@ public class UserHomePage {
 
         });
 
-        RButton settingButton = new RButton("Settings", () -> new Settings(user));
+        RButton settingButton = new RButton("Settings", () -> new SettingsUI(user));
 
         RButton logoutButton = new RButton("Logout", () -> {
             WindowTracker.closeAllActiveWindows();

@@ -1,22 +1,20 @@
 package edu.illinoisstate.settings;
 
 import edu.illinoisstate.UserAccount;
-import edu.illinoisstate.database.Database;
-import edu.illinoisstate.gui.MainProgramWindow;
-import edu.illinoisstate.utils.HintTextBox;
 import edu.illinoisstate.utils.Utils;
 import edu.illinoisstate.utils.WindowTracker;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
 
-public class ContactDevelopers {
+public class ContactDevelopersUI {
     private final JDialog window = new JDialog();
     private final JPanel panel = new JPanel();
     private final UserAccount user;
 
-    public ContactDevelopers(UserAccount user) {
+    public ContactDevelopersUI(UserAccount user) {
         window.setSize(600, 400);
         window.setLocationRelativeTo(null); // Center the window on the screen
         window.setTitle("Contact us");

@@ -8,15 +8,10 @@ import edu.illinoisstate.utils.Utils;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 /**
  * All database logic goes here
@@ -34,6 +29,15 @@ public class Database {
         entityManager = factory.createEntityManager();
         entityManager.getTransaction().begin();
 
+        loadCoursesFromFile();
+
+        entityManager.getTransaction().commit();
+    }
+
+    /**
+     * Grab all courses from the courses.txt file, and persist them to database if they don't exist already
+     */
+    private void loadCoursesFromFile() {
         try {
             // Get course data from courses.txt
             List<String> list = Files.readAllLines(Utils.getFilePath("courses.txt"), StandardCharsets.UTF_8);
@@ -44,14 +48,13 @@ public class Database {
 
                 if (!containsCourse(course)) {
                     entityManager.persist(course);
-                    System.out.println("Saving new course " + course.getCourseID() + " to database.");
+                    System.out.println("Saving new course to database: ");
+                    System.out.println(course);
                 }
             });
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        entityManager.getTransaction().commit();
     }
 
 
