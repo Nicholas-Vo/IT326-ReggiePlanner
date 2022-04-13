@@ -2,6 +2,10 @@ package edu.illinoisstate.course;
 
 
 import javax.persistence.*;
+import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 /**
  * Represents a course at Illinois State University.
@@ -25,6 +29,34 @@ public class Course {
         this.courseID = courseID;
         this.credits = credits;
         this.gpaRequirement = gpaRequirement;
+    }
+
+    /**
+     * Construct a new course given a course String
+     */
+//    public Course(String input) {
+//        String[] arr = input.split(" \"");
+//
+//        this.courseID = arr[0];
+//        arr = arr[1].split("\"");
+//        this.name = arr[0];
+//        arr = arr[1].split(" ");
+//        this.credits = Double.parseDouble(arr[1]);
+//        this.gpaRequirement = Double.parseDouble(arr[2]);
+//    }
+
+    public Course(String input) {
+        String regex = "(IT[0-9]{3}).*(\"(.*?)\").*([0-9]).*([0-9])";
+
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(input);
+
+        if (matcher.find()) {
+            this.courseID = matcher.group(1);
+            this.name = matcher.group(3);
+            this.credits = Integer.parseInt(matcher.group(4));
+            this.gpaRequirement = Integer.parseInt(matcher.group(5));
+        }
     }
 
     public Course() {

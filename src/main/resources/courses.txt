@@ -1,0 +1,66 @@
+IT140 "Interacting in a Digital World" 3 3
+IT150 "Using Microcomputer Productivity Tools" 3 3
+IT164 "Introduction To Problem Solving Using the Computer" 3 3
+IT165 "Computer Programming For Scientists" 4 3
+IT166 "Python Programming For Science and Data Analysis" 4 3
+IT168 "Structured Problem Solving Using The Computer" 4 3
+IT170 "Scripting Languages and Automation" 3 3
+IT175 "Python for Networking and Security" 3 3
+IT178 "Computer Application Programming" 3 3
+IT179 "Intro to Data Structures" 3 3
+IT180 "C++ Programming" 1 3
+IT191 "Intro to IT Professional Practice" 1 3
+IT214 "Social Legal and Ethical Issues In Information Tech" 3 3
+IT225 "Computer Organization" 3 3
+IT226 "Advanced Practical Application Development" 3 3
+IT244 "Introduction To Business Intelligence" 3 3
+IT250 "Fundamentals of Information Assurance and Security" 3 3
+IT254 "Hardware and Software Concepts" 3 3
+IT256 "Linux Administration Fundamentals" 3 3
+IT261 "System Development" 3 3
+IT262 "Information Technology Project Management" 3 3
+IT272 "Cobol As A Second Language" 4 3
+IT275 "Java As A Second Language" 4 3
+IT279 "Algorithms and Data Structures" 3 3
+IT287 "Independent Studies" 1 3 //1-6 credits
+IT291 "Undergraduate Teaching Experiences In Information Technology" 3 3
+IT310 "Cloud Networking" 3 3
+IT311 "Internet of Things" 3 3
+IT326 "Principles of Software Engineering" 3 3
+IT327 "Concepts Of Programming Languages" 3 3
+IT328 "Introduction To The Theory of Computation" 3 3
+IT329 "Compiler Design" 3 3
+IT330 "Introduction To Enterprise Computer Systems" 3 3
+IT340 "Intro to Artificial Intelligence" 3 3
+IT341 "Object Oriented System Development" 3 3
+IT343 "Information Retrieval and Search Engines" 3 3
+IT344 "Applied Data Mining" 3 3
+IT348 "Intro to Machine Learning" 3 3
+IT350 "Operating Systems Concepts and Admin" 3 3
+IT351 "Practical Cryptography and Trusted Systems" 3 3
+IT352 "Data and Information Visualization" 3 3
+IT353 "Web Development Technologies" 3 3
+IT354 "Advanced Web Application Development" 3 3
+IT355 "Secure Software Development" 3 3
+IT356 "Introduction to Computer Graphics" 3 3
+IT357 "Tools and Techniques in Defensive Security" 3 3
+IT358 "Mobile and Cloud Computing" 3 3
+IT359 "Tools And Techniques in Penetration Testing" 3 3
+IT360 "Security Incident And Event Management And Forensics" 3 3
+IT363 "Systems Development II" 4 3
+IT367 "Designing The User Interface" 3 3
+IT368 "Topics In Information Systems" 3 3
+IT369 "Topics In Cybersecurity" 3 3
+IT370 "Server Management" 3 3
+IT372 "External Data Structures" 3 3
+IT373 "Wide Area Network Infrastructure" 3 3
+IT379 "Advanced Computer Networks" 3 3
+IT380 "Wireless Communication Systems" 3 3
+IT381 "Network Design and Analysis" 3 3
+IT382 "Distributed Systems" 3 3
+IT383 "Principles Of Operating Systems" 3 3
+IT385 "Topics In Computer Science" 3 3
+IT388 "Introduction To Parallel Processing" 3 3
+IT391 "Directed Project In Information Systems" 3 3
+IT392 "Enterprise Systems and Integration and Application Development" 3 3
+IT398 "Professional Practice" 6 3

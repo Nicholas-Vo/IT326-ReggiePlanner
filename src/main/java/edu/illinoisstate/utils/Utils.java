@@ -10,7 +10,10 @@ import java.awt.Image;
 import java.awt.Window;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Objects;
 
 /**
@@ -38,6 +41,8 @@ public class Utils {
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
+    private static final ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+
     /**
      * Get an image from file
      *
@@ -45,9 +50,21 @@ public class Utils {
      * @return the Image object
      */
     public static Image getImage(String name) {
-        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
         URL url = classloader.getResource("images/" + name);
+
         return new ImageIcon(Objects.requireNonNull(url)).getImage();
+    }
+
+    /**
+     * Get a filepath via String, from resourcs dir
+     *
+     * @param name: The file name
+     * @return a Path object, or an empty string if one doesn't exist
+     */
+    public static Path getFilePath(String name) {
+        String path = classloader.getResource(name).getPath().replaceFirst("/", "");
+
+        return Paths.get(path);
     }
 
 }

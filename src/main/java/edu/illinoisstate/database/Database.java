@@ -3,14 +3,20 @@ package edu.illinoisstate.database;
 import com.sun.istack.Nullable;
 import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.course.Course;
+import edu.illinoisstate.utils.Utils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * All database logic goes here
@@ -21,37 +27,29 @@ public class Database {
     private final EntityManager entityManager; // the database EntityManager
 
 
-    public Database() throws IOException {
+    public Database() {
         database = this;
 
         var factory = Persistence.createEntityManagerFactory("default");
         entityManager = factory.createEntityManager();
         entityManager.getTransaction().begin();
 
-        List<Course> list = new ArrayList<>();
-        list.add(new Course("IT297", "Data Structures & Algorithms", 3, 3));
-        list.add(new Course("IT355", "Secure Software Development", 3, 3));
-        list.add(new Course("IT327", "Concepts Of Programming Languages", 3, 3));
-        list.add(new Course("IT388", "Introduction To Parallel Processing", 3, 3));
-        list.add(new Course("IT340", "Introduction To Artificial Intelligence", 3, 3));
-        list.add(new Course("IT168", "Structured Problem Solving Using The Computer", 4, 3));
+        try {
+            // Get course data from courses.txt
+            List<String> list = Files.readAllLines(Utils.getFilePath("courses.txt"), StandardCharsets.UTF_8);
 
-        FileWriter writer = new FileWriter("StudentClassesTxtFile.txt");
+            // Create course object and store it in database, if it doesn't already exist
+            list.forEach(data -> {
+                Course course = new Course(data);
 
-        for (Course str : list) {
-            writer.write(str + System.lineSeparator());
+                if (!containsCourse(course)) {
+                    entityManager.persist(course);
+                    System.out.println("Saving new course " + course.getCourseID() + " to database.");
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        writer.close();
-
-
-        /*
-        Only add the course to the database if it doesn't already exist
-         */
-        list.forEach(course -> {
-            if (!containsCourse(course)) {
-                entityManager.persist(course);
-            }
-        });
 
         entityManager.getTransaction().commit();
     }
@@ -59,6 +57,7 @@ public class Database {
 
     /**
      * obtain an instance of the Database singleton class
+     *
      * @return the class instance
      */
     public static Database getInstance() {
@@ -67,6 +66,7 @@ public class Database {
 
     /**
      * save a user account to the database
+     *
      * @param account the account to save
      */
     public void saveUserAccount(UserAccount account) {
@@ -83,6 +83,7 @@ public class Database {
 
     /**
      * delete a user account from the database
+     *
      * @param account the account to delete
      */
     public void deleteUserAccount(UserAccount account) {
@@ -96,6 +97,7 @@ public class Database {
 
     /**
      * determine if a user exists in the database
+     *
      * @param toSearch the user to check
      * @return boolean value
      */
@@ -113,6 +115,7 @@ public class Database {
 
     /**
      * determine if a course exists in the database
+     *
      * @param course: the course to check
      * @return boolean value
      */
