@@ -1,6 +1,8 @@
 package edu.illinoisstate;
 
+import com.sun.istack.Nullable;
 import edu.illinoisstate.database.Database;
+import edu.illinoisstate.plan.UserPlan;
 import edu.illinoisstate.utils.Security;
 
 import javax.persistence.*;
@@ -21,8 +23,10 @@ public class UserAccount {
     private String temporaryPasswordHash;
     private String email;
     private String userNote;
-    private boolean isActiveAccount = true;
     private boolean mustChangePassword = false;
+
+    @Embedded
+    private UserPlan plan;
 
     public UserAccount(UUID uuid, String email, String username, String passwordHash) {
         this.uuid = uuid;
@@ -33,6 +37,11 @@ public class UserAccount {
 
     public UserAccount() {
         // Empty no-param constructor needed for HSQLDB
+    }
+
+    @Nullable
+    public UserPlan getPlan() {
+        return plan;
     }
 
     public void setUserNote(String note) {
@@ -97,25 +106,6 @@ public class UserAccount {
 
     public String email() {
         return email;
-    }
-
-    /**
-     * Set the user account active or inactive.
-     *
-     * @param active: boolean value; true for active, false for inactive
-     */
-    public void setActive(boolean active) {
-        isActiveAccount = active;
-        save();
-    }
-
-    /**
-     * Is the account currently active?
-     *
-     * @return a boolean value: true for active, false for inactive
-     */
-    public boolean isActiveAccount() {
-        return isActiveAccount;
     }
 
     /**

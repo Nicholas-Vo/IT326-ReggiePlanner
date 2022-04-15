@@ -166,6 +166,18 @@ public class Database {
         return (List<Course>) query("FROM Course").getResultList();
     }
 
+    @Nullable
+    public Course getCourseByID(String courseID) {
+        List<Course> courses = getCourseList();
+
+        for (Course course : courses) {
+            if (course.getCourseID().equalsIgnoreCase(courseID)) {
+                return course;
+            }
+        }
+        return null;
+    }
+
     private Query query(String query) {
         return entityManager.createQuery(query);
     }
