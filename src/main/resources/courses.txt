@@ -22,7 +22,7 @@ IT262 "Information Technology Project Management" 3 3
 IT272 "Cobol As A Second Language" 4 3
 IT275 "Java As A Second Language" 4 3
 IT279 "Algorithms and Data Structures" 3 3
-IT287 "Independent Studies" 1 3 //1-6 credits
+IT287 "Independent Studies" 1 3
 IT291 "Undergraduate Teaching Experiences In Information Technology" 3 3
 IT310 "Cloud Networking" 3 3
 IT311 "Internet of Things" 3 3
