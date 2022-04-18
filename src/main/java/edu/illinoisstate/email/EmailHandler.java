@@ -12,6 +12,10 @@ import java.util.Date;
 
 public class EmailHandler {
 
+    public void sendContactDevEmail(UserAccount user, String message) {
+        EmailSender.send("ReggiePlanner@gmail.com", "New message to developers from " + user.getUsername(), message);
+    }
+
     /**
      * Send a password reset email
      *
