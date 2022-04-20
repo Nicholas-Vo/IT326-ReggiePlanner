@@ -64,3 +64,21 @@ IT388 "Introduction To Parallel Processing" 3 3
 IT391 "Directed Project In Information Systems" 3 3
 IT392 "Enterprise Systems and Integration and Application Development" 3 3
 IT398 "Professional Practice" 6 3
+MAT145
+MAT146
+MAT260
+MQM100
+ENG101
+ENG128
+ENG249
+COM101
+COM223
+BSC196
+BSC197
+CHE110
+CHE140
+PHY110
+PHY111
+SOC106
+
+
