@@ -54,10 +54,10 @@ public class Login {
                 return;
             }
 
-//            if (user.mustChangePassword()) {
-//                new ForcePasswordChange(user, window);
-//                return;
-//            }
+            if (user.mustChangePassword()) {
+                new ForcePasswordChange(user, window);
+                return;
+            }
 
             // Close this window and the main program window now that we're logged in, then open up home page
             window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
