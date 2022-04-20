@@ -5,7 +5,13 @@ import edu.illinoisstate.database.Database;
 import edu.illinoisstate.plan.UserPlan;
 import edu.illinoisstate.utils.Security;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.UUID;
 
 /**
