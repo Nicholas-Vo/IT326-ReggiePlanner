@@ -1,25 +1,19 @@
 package edu.illinoisstate.plan;
 
-import edu.illinoisstate.RButton;
 import edu.illinoisstate.RWindow;
 import edu.illinoisstate.UserAccount;
-import edu.illinoisstate.course.Course;
 import edu.illinoisstate.database.Database;
 import edu.illinoisstate.database.DatabaseHandler;
-import edu.illinoisstate.utils.HintTextBox;
 import edu.illinoisstate.utils.Utils;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import java.util.ArrayList;
-import java.util.List;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
 
 public class GeneratePlanUI {
-    private final RWindow window = new RWindow("Create a new plan");
+    private final RWindow window = new RWindow("Generate a new plan");
     private final UserAccount user;
-
     private final Database db = DatabaseHandler.database();
 
     public GeneratePlanUI(UserAccount user) {
@@ -33,37 +27,30 @@ public class GeneratePlanUI {
     }
 
     private void createWindow() {
-        List<Course> courseList = new ArrayList<>();
+        String[] fallData = {"IT279", "IT355", "COM223", "IT378", "IT388"};
+        JPanel fallPanel = new JPanel(new BorderLayout());
+        JLabel fallLabel = new JLabel("Fall");
 
-        RButton addBtn = new RButton("Add course");
-        HintTextBox inputField = new HintTextBox("enter course name here", 15);
+        fallPanel.add(fallLabel, BorderLayout.NORTH);
+        fallPanel.add(new JList<>(fallData), BorderLayout.SOUTH);
 
-        JLabel instructionLabel = new JLabel("");
-        JLabel errorLabel = new JLabel("Error: Class not found.");
-        errorLabel.setVisible(false);
-        JLabel successLabel = new JLabel("Successfully added course.");
-        successLabel.setVisible(false);
-        JLabel currentList = new JLabel("Your current course plan:");
+        String[] sprintData = {"IT330", "IT343", "IT180", "IT360", "IT372"};
+        JPanel springPanel = new JPanel(new BorderLayout());
+        JLabel springLabel = new JLabel("Spring");
 
-        addBtn.addActionListener(e -> {
-            errorLabel.setVisible(false);
-            successLabel.setVisible(false);
+        springPanel.add(springLabel, BorderLayout.NORTH);
+        springPanel.add(new JList<>(sprintData), BorderLayout.SOUTH);
 
-            if (db.getCourseByID(inputField.getText()) == null) {
-                errorLabel.setVisible(true);
-                return;
-            }
+        String[] summerData = {"IT330", "IT343", "IT180", "IT360", "IT372"};
 
-            Course course = db.getCourseByID(inputField.getText());
-            courseList.add(course);
-            System.out.println("Successfully added course " + course.getCourseID() + ": " + course.getName() + ".");
-            successLabel.setVisible(true);
+        JPanel summerPanel = new JPanel(new BorderLayout());
+        JLabel summerLabel = new JLabel("Summer");
 
-            inputField.setText("");
-        });
+        summerPanel.add(summerLabel, BorderLayout.NORTH);
+        summerPanel.add(new JList<>(summerData), BorderLayout.SOUTH);
 
-        window.getRootPane().setDefaultButton(addBtn); // Allows Enter key to submit
-        window.addComponents(inputField, addBtn, errorLabel, successLabel);
+        //window.getRootPane().setDefaultButton(addBtn);
+        window.addComponents(fallPanel, springPanel, summerPanel);
     }
 
 }
