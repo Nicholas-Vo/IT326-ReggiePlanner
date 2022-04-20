@@ -4,11 +4,14 @@ import edu.illinoisstate.RButton;
 import edu.illinoisstate.ReggiePlanner;
 import edu.illinoisstate.RWindow;
 import edu.illinoisstate.UserAccount;
+import edu.illinoisstate.plan.GeneratePlanUI;
 import edu.illinoisstate.settings.SettingsUI;
 import edu.illinoisstate.utils.WindowTracker;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import java.awt.Dimension;
+import java.awt.Font;
 
 /**
  * This class is executed when a user successfully signs in
@@ -33,9 +36,7 @@ public class UserHomePage {
         label.setPreferredSize(new Dimension(800, 100));
 
         RButton generatePlanBtn = new RButton("Generate new class plan");
-        generatePlanBtn.addActionListener(e -> {
-
-        });
+        generatePlanBtn.addActionListener(e -> new GeneratePlanUI(user));
 
         RButton editPlanBtn = new RButton("Edit existing plan");
         editPlanBtn.addActionListener(e -> {

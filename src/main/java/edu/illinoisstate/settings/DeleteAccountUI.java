@@ -4,6 +4,7 @@ import edu.illinoisstate.RButton;
 import edu.illinoisstate.RWindow;
 import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.database.Database;
+import edu.illinoisstate.database.DatabaseHandler;
 import edu.illinoisstate.gui.MainProgramWindow;
 import edu.illinoisstate.utils.HintTextBox;
 import edu.illinoisstate.utils.Utils;
@@ -56,7 +57,7 @@ public class DeleteAccountUI {
 
             if (result == 0) {
                 JOptionPane.showMessageDialog(window, "Account successfully deleted.");
-                Database.getInstance().deleteUserAccount(user);
+                DatabaseHandler.database().deleteUserAccount(user);
                 WindowTracker.closeAllActiveWindows();
                 new MainProgramWindow(); // Create a new main window
             }

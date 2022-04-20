@@ -7,7 +7,8 @@ import edu.illinoisstate.utils.HintPasswordTextBox;
 import edu.illinoisstate.utils.Security;
 import edu.illinoisstate.utils.Utils;
 
-import javax.swing.*;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import java.awt.event.WindowEvent;
 
 public class ForcePasswordChange {

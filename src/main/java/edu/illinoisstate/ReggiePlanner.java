@@ -1,6 +1,6 @@
 package edu.illinoisstate;
 
-import edu.illinoisstate.database.Database;
+import edu.illinoisstate.database.DatabaseHandler;
 import edu.illinoisstate.gui.MainProgramWindow;
 
 /**
@@ -11,7 +11,9 @@ public class ReggiePlanner {
 
     public static void main(String[] args) {
         new MainProgramWindow();
-        new Database();
+        var database = new DatabaseHandler();
+
+        database.loadCoursesFromFile();
     }
 
 }

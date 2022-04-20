@@ -3,14 +3,10 @@ package edu.illinoisstate.database;
 import com.sun.istack.Nullable;
 import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.course.Course;
-import edu.illinoisstate.utils.Utils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.util.List;
 
 /**
@@ -18,67 +14,32 @@ import java.util.List;
  */
 @SuppressWarnings("unchecked") // suppress unchecked cast warnings
 public class Database {
-    private static Database database; // the single instance of this class
     private final EntityManager entityManager; // the database EntityManager
 
-
     public Database() {
-        database = this;
-
         var factory = Persistence.createEntityManagerFactory("default");
         entityManager = factory.createEntityManager();
-        entityManager.getTransaction().begin();
-
-        loadCoursesFromFile();
-
-        entityManager.getTransaction().commit();
     }
 
-    /**
-     * Grab all courses from the courses.txt file, and persist them to database if they don't exist already
-     */
-    private void loadCoursesFromFile() {
-        try {
-            // Get course data from courses.txt
-            List<String> list = Files.readAllLines(Utils.getFilePath("courses.txt"), StandardCharsets.UTF_8);
-
-            // Create course object and store it in database, if it doesn't already exist
-            list.forEach(data -> {
-                Course course = new Course(data);
-
-                if (!containsCourse(course)) {
-                    entityManager.persist(course);
-                    System.out.println("Saving new course to database: ");
-                    System.out.println(course);
-                }
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    /**
-     * obtain an instance of the Database singleton class
-     *
-     * @return the class instance
-     */
-    public static Database getInstance() {
-        return database;
-    }
-
-    /**
-     * save a user account to the database
-     *
-     * @param account the account to save
-     */
-    public void saveUserAccount(UserAccount account) {
+    public void save(UserAccount account) {
         entityManager.getTransaction().begin();
 
         if (containsUser(account)) {
             entityManager.merge(account); // merge() updates existing record
         } else {
             entityManager.persist(account); // add new record
+        }
+
+        entityManager.getTransaction().commit();
+    }
+
+    public void save(Course course) {
+        entityManager.getTransaction().begin();
+
+        if (containsCourse(course)) {
+            entityManager.merge(course); // merge() updates existing record
+        } else {
+            entityManager.persist(course); // add new record
         }
 
         entityManager.getTransaction().commit();

@@ -4,6 +4,7 @@ import edu.illinoisstate.RButton;
 import edu.illinoisstate.RWindow;
 import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.database.Database;
+import edu.illinoisstate.database.DatabaseHandler;
 import edu.illinoisstate.email.EmailHandler;
 import edu.illinoisstate.utils.HintTextBox;
 import edu.illinoisstate.utils.Utils;
@@ -29,7 +30,7 @@ public class ForgotPassword {
     public void createWindow() {
         JTextField username = new HintTextBox("username", 15);
         RButton resetButton = new RButton("Recover", () -> {
-            Database database = Database.getInstance();
+            Database database = DatabaseHandler.database();
 
             if (!database.getUsernamesList().contains(username.getText())) {
                 JOptionPane.showMessageDialog(window, "Invalid username. Try again?");

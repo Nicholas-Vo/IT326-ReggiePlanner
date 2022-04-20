@@ -2,6 +2,7 @@ package edu.illinoisstate.utils;
 
 import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.database.Database;
+import edu.illinoisstate.database.DatabaseHandler;
 import net.bytebuddy.utility.RandomString;
 
 import java.nio.charset.Charset;
@@ -34,7 +35,7 @@ public class Security {
             return false;
         }
 
-        Database db = Database.getInstance();
+        Database db = DatabaseHandler.database();
         if (db.getUsernamesList().contains(username)) {
             UserAccount user = db.getUserAccount(username);
 

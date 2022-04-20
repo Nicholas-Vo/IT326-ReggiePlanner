@@ -4,6 +4,7 @@ import edu.illinoisstate.RButton;
 import edu.illinoisstate.RWindow;
 import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.database.Database;
+import edu.illinoisstate.database.DatabaseHandler;
 import edu.illinoisstate.utils.HintPasswordTextBox;
 import edu.illinoisstate.utils.HintTextBox;
 import edu.illinoisstate.utils.Security;
@@ -33,7 +34,7 @@ public class Login {
 
         RButton loginButton = new RButton("Login");
         loginButton.addActionListener(e -> {
-            Database database = Database.getInstance();
+            Database database = DatabaseHandler.database();
 
             if (!database.getUsernamesList().contains(username.getText())) {
                 JOptionPane.showMessageDialog(window, "Incorrect username or password.");

@@ -4,12 +4,14 @@ import edu.illinoisstate.RButton;
 import edu.illinoisstate.RWindow;
 import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.database.Database;
+import edu.illinoisstate.database.DatabaseHandler;
 import edu.illinoisstate.utils.HintPasswordTextBox;
 import edu.illinoisstate.utils.HintTextBox;
 import edu.illinoisstate.utils.Security;
-import edu.illinoisstate.utils.Utils;
 
-import javax.swing.*;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import java.awt.event.WindowEvent;
 import java.util.UUID;
 
@@ -47,7 +49,7 @@ public class CreateAccount {
                 return;
             }
 
-            Database database = Database.getInstance();
+            Database database = DatabaseHandler.database();
             if (database.getExistingEmailList().contains(emailField.getText())) {
                 JOptionPane.showMessageDialog(window, "That email is already registered within our system.");
                 return;
@@ -66,7 +68,7 @@ public class CreateAccount {
             UserAccount account = new UserAccount(UUID.randomUUID(), emailField.getText(),
                     usernameField.getText(), Security.hash(passwordField.getText()));
 
-            database.saveUserAccount(account);
+            account.save();
             JOptionPane.showMessageDialog(window, "Account created: You may now log in.");
             window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
             System.out.println("Created new user account \"" + account.getUsername() + "\".");
