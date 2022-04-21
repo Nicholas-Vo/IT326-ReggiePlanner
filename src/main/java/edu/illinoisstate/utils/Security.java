@@ -24,7 +24,7 @@ public class Security {
      * Determine whether to reject input password
      *
      * @param username: the username
-     * @param input: the input password
+     * @param input:    the input password
      * @return bool value
      */
     public static boolean verifyPassword(String username, String input) {
@@ -40,13 +40,21 @@ public class Security {
             UserAccount user = db.getUserAccount(username);
 
             String currentPW = hash(user.getPasswordHash());
-            String tempPW = hash(user.getTemporaryPasswordHash());
+
+            if (user.getTemporaryPasswordHash() != null) {
+                String hashedInput = hash(input);
+                String tempPW = hash(user.getTemporaryPasswordHash());
+
+                if (hashedInput.equalsIgnoreCase(tempPW)) {
+                    return false;
+                }
+            }
 
         /*
         don't allow new password to be similar to old password
          */
             String hashedInput = hash(input);
-            if (hashedInput.equalsIgnoreCase(currentPW) || hashedInput.equalsIgnoreCase(tempPW)) {
+            if (hashedInput.equalsIgnoreCase(currentPW)) {
                 return false;
             }
         }

@@ -18,6 +18,7 @@ public class Course {
     private String name;
     private double gpaRequirement;
     private double credits;
+    private int level;
 
     /**
      * Construct a new course given a course String from file
@@ -32,6 +33,8 @@ public class Course {
             credits = Integer.parseInt(matcher.group(4));
             gpaRequirement = Integer.parseInt(matcher.group(5));
         }
+
+        level = courseID.charAt(2);
     }
 
     public Course() {
@@ -49,6 +52,10 @@ public class Course {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getLevel() {
+        return level;
     }
 
     /**

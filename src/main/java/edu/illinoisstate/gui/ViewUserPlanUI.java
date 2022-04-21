@@ -1,19 +1,18 @@
 package edu.illinoisstate.gui;
 
+import edu.illinoisstate.RButton;
 import edu.illinoisstate.RWindow;
 import edu.illinoisstate.UserAccount;
-import edu.illinoisstate.course.Course;
-import edu.illinoisstate.course.CourseHandler;
+import edu.illinoisstate.course.Semester;
 import edu.illinoisstate.database.Database;
 import edu.illinoisstate.database.DatabaseHandler;
+import edu.illinoisstate.plan.UserPlan;
 import edu.illinoisstate.utils.Utils;
 
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ViewUserPlanUI {
     private final RWindow window = new RWindow("Generate a new plan");
@@ -31,12 +30,17 @@ public class ViewUserPlanUI {
     }
 
     private void createWindow() {
-        String[] fallData = {"IT279", "IT355", "COM223", "IT378", "IT388"};
+        UserPlan thePlan = new UserPlan(user);
+
+        thePlan.generate(Semester.FALL, 5);
+
         JPanel fallPanel = new JPanel(new BorderLayout());
         JLabel fallLabel = new JLabel("Fall");
 
+        JList<String> fallList = new JList<>(thePlan.getCourseIDs(Semester.FALL));
+
         fallPanel.add(fallLabel, BorderLayout.NORTH);
-        fallPanel.add(new JList<>(fallData), BorderLayout.SOUTH);
+        fallPanel.add(fallList, BorderLayout.SOUTH);
 
         String[] sprintData = {"IT330", "IT343", "IT180", "IT360", "IT372"};
         JPanel springPanel = new JPanel(new BorderLayout());
@@ -45,7 +49,7 @@ public class ViewUserPlanUI {
         springPanel.add(springLabel, BorderLayout.NORTH);
         springPanel.add(new JList<>(sprintData), BorderLayout.SOUTH);
 
-        String[] summerData = {"IT330", "IT343", "IT180", "IT360", "IT372"};
+        String[] summerData = {"", "", "", "", ""};
 
         JPanel summerPanel = new JPanel(new BorderLayout());
         JLabel summerLabel = new JLabel("Summer");
@@ -53,8 +57,13 @@ public class ViewUserPlanUI {
         summerPanel.add(summerLabel, BorderLayout.NORTH);
         summerPanel.add(new JList<>(summerData), BorderLayout.SOUTH);
 
+        RButton reGenerate = new RButton("Generate", () -> {
+            thePlan.generate(Semester.FALL, 5);
+            fallList.setListData(thePlan.getCourseIDs(Semester.FALL));
+        });
+
         //window.getRootPane().setDefaultButton(addBtn);
-        window.addComponents(fallPanel, springPanel, summerPanel);
+        window.addComponents(fallPanel, springPanel, summerPanel, reGenerate);
     }
 
 }
