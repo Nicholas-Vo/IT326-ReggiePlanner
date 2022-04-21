@@ -7,38 +7,20 @@ import javax.persistence.ElementCollection;
 import java.util.List;
 
 public class UserPlan {
-    private final UserAccount userAccount;
+    private UserAccount userAccount;
     @ElementCollection
-    private final List<Course> courseList;
+    private final List<Course> fallList;
 
-    public UserPlan(PlanBuilder builder) {
-        userAccount = builder.account;
-        courseList = builder.courseList;
+    public UserPlan() {
+
     }
 
-    public List<Course> getCourseList() {
-        return courseList;
+    public List<Course> getFallList() {
+        return fallList;
     }
 
     public UserAccount getUserAccount() {
         return userAccount;
-    }
-
-    public static class PlanBuilder {
-        private UserAccount account;
-        private List<Course> courseList;
-
-        public void setAccount(UserAccount account) {
-            this.account = account;
-        }
-
-        public void setCourseList(List<Course> list) {
-            courseList = list;
-        }
-
-        public UserPlan build() {
-            return new UserPlan(this);
-        }
     }
 
 }

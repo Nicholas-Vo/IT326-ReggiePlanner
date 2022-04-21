@@ -28,9 +28,7 @@ public class DatabaseHandler {
             List<String> list = Files.readAllLines(Utils.getFilePath("courses.txt"), StandardCharsets.UTF_8);
 
             // Create course object and store it in database
-            list.forEach(data -> {
-                db.save(new Course(data));
-            });
+            list.forEach(data -> db.save(new Course(data)));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,7 +1,9 @@
-package edu.illinoisstate.plan;
+package edu.illinoisstate.gui;
 
 import edu.illinoisstate.RWindow;
 import edu.illinoisstate.UserAccount;
+import edu.illinoisstate.course.Course;
+import edu.illinoisstate.course.CourseHandler;
 import edu.illinoisstate.database.Database;
 import edu.illinoisstate.database.DatabaseHandler;
 import edu.illinoisstate.utils.Utils;
@@ -10,13 +12,15 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
+import java.util.ArrayList;
+import java.util.List;
 
-public class GeneratePlanUI {
+public class ViewUserPlanUI {
     private final RWindow window = new RWindow("Generate a new plan");
     private final UserAccount user;
     private final Database db = DatabaseHandler.database();
 
-    public GeneratePlanUI(UserAccount user) {
+    public ViewUserPlanUI(UserAccount user) {
         window.setSize(550, 550);
         window.setLocationRelativeTo(null);
         Utils.allowEscapeToClose(window, window.getPanel());

@@ -1,10 +1,8 @@
 package edu.illinoisstate.gui;
 
 import edu.illinoisstate.RButton;
-import edu.illinoisstate.ReggiePlanner;
 import edu.illinoisstate.RWindow;
 import edu.illinoisstate.UserAccount;
-import edu.illinoisstate.plan.GeneratePlanUI;
 import edu.illinoisstate.settings.SettingsUI;
 import edu.illinoisstate.utils.WindowTracker;
 
@@ -17,7 +15,7 @@ import java.awt.Font;
  * This class is executed when a user successfully signs in
  */
 public class UserHomePage {
-    private final RWindow window = new RWindow("ReggiePlanner v" + ReggiePlanner.VERSION);
+    private final RWindow window = new RWindow("ReggiePlanner v1.0.0");
     private final UserAccount user;
 
     public UserHomePage(UserAccount user) {
@@ -36,7 +34,7 @@ public class UserHomePage {
         label.setPreferredSize(new Dimension(800, 100));
 
         RButton generatePlanBtn = new RButton("Generate new class plan");
-        generatePlanBtn.addActionListener(e -> new GeneratePlanUI(user));
+        generatePlanBtn.addActionListener(e -> new ViewUserPlanUI(user));
 
         RButton editPlanBtn = new RButton("Edit existing plan");
         editPlanBtn.addActionListener(e -> {

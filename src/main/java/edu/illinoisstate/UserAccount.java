@@ -1,11 +1,13 @@
 package edu.illinoisstate;
 
-import com.sun.istack.Nullable;
 import edu.illinoisstate.database.DatabaseHandler;
-import edu.illinoisstate.plan.UserPlan;
 import edu.illinoisstate.utils.Security;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.UUID;
 
 /**
