@@ -13,11 +13,16 @@ public class UserPlan {
     private final UserAccount userAccount;
     @ElementCollection
     private List<Course> generatedCourses = new ArrayList<>();
+    private final List<Course> excludedCourses = new ArrayList<>();
     private final List<Course> coursePool;
 
     public UserPlan(List<Course> courseList, UserAccount account) {
         userAccount = account;
         coursePool = courseList;
+    }
+
+    public void addCompletedCourse(Course course) {
+        excludedCourses.add(course);
     }
 
     public UserAccount getUserAccount() {
@@ -35,8 +40,8 @@ public class UserPlan {
     }
 
     public void generate(int level, int amount) {
-        CourseRandomizer randomizer = new CourseRandomizer(coursePool, level);
-        generatedCourses = randomizer.getCourses(amount);
+        var randomizer = new CourseRandomizer(coursePool, excludedCourses);
+        generatedCourses = randomizer.getCourses(amount, level);
     }
 
 }

@@ -42,24 +42,35 @@ public class ViewUserPlanUI {
         fallPanel.add(fallLabel, BorderLayout.NORTH);
         fallPanel.add(fallList, BorderLayout.SOUTH);
 
-        String[] sprintData = {"IT330", "IT343", "IT180", "IT360", "IT372"};
+        thePlan.generate(2, 5);
+
         JPanel springPanel = new JPanel(new BorderLayout());
         JLabel springLabel = new JLabel("Spring");
 
-        springPanel.add(springLabel, BorderLayout.NORTH);
-        springPanel.add(new JList<>(sprintData), BorderLayout.SOUTH);
+        JList<String> springList = new JList<>(thePlan.getCourseIDs());
 
-        String[] summerData = {"", "", "", "", ""};
+        springPanel.add(springLabel, BorderLayout.NORTH);
+        springPanel.add(springList, BorderLayout.SOUTH);
 
         JPanel summerPanel = new JPanel(new BorderLayout());
         JLabel summerLabel = new JLabel("Summer");
 
+        thePlan.generate(2, 3);
+
+        JList<String> summerList = new JList<>(thePlan.getCourseIDs());
+
         summerPanel.add(summerLabel, BorderLayout.NORTH);
-        summerPanel.add(new JList<>(summerData), BorderLayout.SOUTH);
+        summerPanel.add(summerList, BorderLayout.SOUTH);
 
         RButton reGenerate = new RButton("Generate", () -> {
             thePlan.generate(1, 5);
             fallList.setListData(thePlan.getCourseIDs());
+
+            thePlan.generate(2, 5);
+            springList.setListData(thePlan.getCourseIDs());
+
+            thePlan.generate(2, 3);
+            summerList.setListData(thePlan.getCourseIDs());
         });
 
         //window.getRootPane().setDefaultButton(addBtn);
