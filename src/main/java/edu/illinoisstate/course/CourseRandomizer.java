@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Random;
 
 public class CourseRandomizer {
-    private final List<Course> coursePool;
-    private final List<Course> excludedCourses;
+    private final List<Course> coursePool; // All the courses from the database
+    private final List<Course> excludedCourses; // Courses that shouldn't be included in the generation
 
     public CourseRandomizer(List<Course> coursePool, List<Course> excludedCourses) {
         this.coursePool = coursePool;

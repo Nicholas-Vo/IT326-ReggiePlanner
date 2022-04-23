@@ -1,32 +1,49 @@
 package edu.illinoisstate.plan;
 
-import edu.illinoisstate.UserAccount;
+import com.sun.istack.Nullable;
 import edu.illinoisstate.course.Course;
 import edu.illinoisstate.course.CourseRandomizer;
-import edu.illinoisstate.course.Semester;
 
-import javax.persistence.ElementCollection;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
+@Entity
 public class UserPlan {
-    private final UserAccount userAccount;
-    @ElementCollection
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    private Long databaseID;
+    private final UUID userAccountUUID;
+    @ManyToMany
     private List<Course> generatedCourses = new ArrayList<>();
+    @ManyToMany
     private final List<Course> excludedCourses = new ArrayList<>();
+    @ManyToMany
     private final List<Course> coursePool;
 
-    public UserPlan(List<Course> courseList, UserAccount account) {
-        userAccount = account;
+    public UserPlan(List<Course> courseList, UUID userAccountUUID) {
+        this.userAccountUUID = userAccountUUID;
         coursePool = courseList;
+    }
+
+    public UserPlan() {
+        this.coursePool = null;
+        userAccountUUID = null;
     }
 
     public void addCompletedCourse(Course course) {
         excludedCourses.add(course);
     }
 
-    public UserAccount getUserAccount() {
-        return userAccount;
+    public UUID getUserAccountUUID() {
+        return userAccountUUID;
     }
 
     public String[] getCourseIDs() {

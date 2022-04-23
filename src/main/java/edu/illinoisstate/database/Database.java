@@ -3,6 +3,7 @@ package edu.illinoisstate.database;
 import com.sun.istack.Nullable;
 import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.course.Course;
+import edu.illinoisstate.plan.UserPlan;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
@@ -40,6 +41,18 @@ public class Database {
             entityManager.merge(course); // merge() updates existing record
         } else {
             entityManager.persist(course); // add new record
+        }
+
+        entityManager.getTransaction().commit();
+    }
+
+    public void save(UserPlan aPlan) {
+        entityManager.getTransaction().begin();
+
+        if (containsPlan(aPlan)) {
+            entityManager.merge(aPlan); // merge() updates existing record
+        } else {
+            entityManager.persist(aPlan); // add new record
         }
 
         entityManager.getTransaction().commit();
@@ -89,6 +102,18 @@ public class Database {
 
         for (Course c : courses) {
             if (c.getCourseID().equals(course.getCourseID())) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean containsPlan(UserPlan aPlan) {
+        Query query = query("FROM UserPlan");
+
+        for (UserPlan plan : (List<UserPlan>) query.getResultList()) {
+            if (plan.equals(aPlan)) {
                 return true;
             }
         }
