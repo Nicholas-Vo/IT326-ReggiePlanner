@@ -11,59 +11,32 @@ import java.util.List;
 
 public class UserPlan {
     private final UserAccount userAccount;
-    private List<Course> courses = new ArrayList<>();
     @ElementCollection
-    private List<Course> fallCourses = new ArrayList<>();
-    @ElementCollection
-    private final List<Course> springCourses = new ArrayList<>();
-    @ElementCollection
-    private final List<Course> summerCourses = new ArrayList<>();
+    private List<Course> generatedCourses = new ArrayList<>();
+    private final List<Course> coursePool;
 
-    public UserPlan(UserAccount account) {
+    public UserPlan(List<Course> courseList, UserAccount account) {
         userAccount = account;
+        coursePool = courseList;
     }
 
     public UserAccount getUserAccount() {
         return userAccount;
     }
 
-    public List<Course> getFallCourses() {
-        return fallCourses;
-    }
+    public String[] getCourseIDs() {
+        String[] theArray = new String[generatedCourses.size()];
 
-    public void initializeCourseList(List<Course> allCourses) {
-        courses = allCourses;
-    }
-
-    public String[] getCourseIDs(Semester semester) {
-        List<Course> theList = null;
-
-        switch (semester) {
-            case FALL -> theList = fallCourses;
-            case SPRING -> theList = springCourses;
-            case SUMMER -> theList = summerCourses;
-        }
-
-        String[] theArray = new String[theList.size()];
-
-        for (int i = 0; i < theList.size(); i++) {
-            theArray[i] = theList.get(i).getCourseID();
+        for (int i = 0; i < generatedCourses.size(); i++) {
+            theArray[i] = generatedCourses.get(i).getCourseID();
         }
 
         return theArray;
     }
 
-    public void generate(Semester semester, int amount) {
-        List<Course> theList = null;
-
-        switch (semester) {
-            case FALL -> theList = fallCourses;
-            case SPRING -> theList = springCourses;
-            case SUMMER -> theList = summerCourses;
-        }
-
-        var r = new CourseRandomizer(courses, 1);
-        fallCourses = r.getCourses(amount);
+    public void generate(int level, int amount) {
+        CourseRandomizer randomizer = new CourseRandomizer(coursePool, level);
+        generatedCourses = randomizer.getCourses(amount);
     }
 
 }

@@ -34,7 +34,8 @@ public class Course {
             gpaRequirement = Integer.parseInt(matcher.group(5));
         }
 
-        level = courseID.charAt(2);
+        //IT279
+        level = Integer.parseInt(courseID.substring(2, 3));
     }
 
     public Course() {

@@ -30,14 +30,14 @@ public class ViewUserPlanUI {
     }
 
     private void createWindow() {
-        UserPlan thePlan = new UserPlan(user);
+        UserPlan thePlan = new UserPlan(db.getCourseList(), user);
 
-        thePlan.generate(Semester.FALL, 5);
+        thePlan.generate(1, 5);
 
         JPanel fallPanel = new JPanel(new BorderLayout());
         JLabel fallLabel = new JLabel("Fall");
 
-        JList<String> fallList = new JList<>(thePlan.getCourseIDs(Semester.FALL));
+        JList<String> fallList = new JList<>(thePlan.getCourseIDs());
 
         fallPanel.add(fallLabel, BorderLayout.NORTH);
         fallPanel.add(fallList, BorderLayout.SOUTH);
@@ -58,8 +58,8 @@ public class ViewUserPlanUI {
         summerPanel.add(new JList<>(summerData), BorderLayout.SOUTH);
 
         RButton reGenerate = new RButton("Generate", () -> {
-            thePlan.generate(Semester.FALL, 5);
-            fallList.setListData(thePlan.getCourseIDs(Semester.FALL));
+            thePlan.generate(1, 5);
+            fallList.setListData(thePlan.getCourseIDs());
         });
 
         //window.getRootPane().setDefaultButton(addBtn);
