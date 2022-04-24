@@ -1,30 +1,31 @@
 package edu.illinoisstate.gui;
 
+import edu.illinoisstate.PlanList;
 import edu.illinoisstate.RButton;
 import edu.illinoisstate.RWindow;
 import edu.illinoisstate.UserAccount;
+import edu.illinoisstate.course.CourseRandomizer;
 import edu.illinoisstate.database.Database;
 import edu.illinoisstate.database.DatabaseHandler;
 import edu.illinoisstate.plan.UserPlan;
 import edu.illinoisstate.utils.Utils;
 
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 
 public class ViewUserPlanUI {
     private final RWindow window = new RWindow("Generate a new plan");
-    private final UserAccount user;
-    private final Database db = DatabaseHandler.database();
-
     private final JPanel fallPanel = new JPanel(new BorderLayout());
     private final JLabel fallLabel = new JLabel("Fall");
     private final JPanel springPanel = new JPanel(new BorderLayout());
     private final JLabel springLabel = new JLabel("Spring");
     private final JPanel summerPanel = new JPanel(new BorderLayout());
     private final JLabel summerLabel = new JLabel("Summer");
+
+    private final UserAccount user;
+    private final Database db = DatabaseHandler.database();
 
     public ViewUserPlanUI(UserAccount user) {
         window.setSize(550, 550);
@@ -37,42 +38,37 @@ public class ViewUserPlanUI {
     }
 
     private void createWindow() {
-        UserPlan thePlan = new UserPlan(db.getCourseList(), user.uuid());
-        thePlan.generate(1, 5);
+        var r = new CourseRandomizer(db.getCourseList());
 
-        JList<String> fallList = new JList<>(thePlan.getCourseIDs());
-
+        PlanList fallList = new PlanList(r.generate(5, 1));
         fallPanel.add(fallLabel, BorderLayout.NORTH);
         fallPanel.add(fallList, BorderLayout.SOUTH);
 
-        thePlan.generate(2, 5);
-        JList<String> springList = new JList<>(thePlan.getCourseIDs());
-
+        PlanList springList = new PlanList(r.generate(5, 2));
         springPanel.add(springLabel, BorderLayout.NORTH);
         springPanel.add(springList, BorderLayout.SOUTH);
 
-        thePlan.generate(2, 3);
-        JList<String> summerList = new JList<>(thePlan.getCourseIDs());
-
+        PlanList summerList = new PlanList(r.generate(3, 2));
         summerPanel.add(summerLabel, BorderLayout.NORTH);
         summerPanel.add(summerList, BorderLayout.SOUTH);
 
         RButton refreshBtn = new RButton("Generate", () -> {
-            thePlan.generate(1, 5);
-            fallList.setListData(thePlan.getCourseIDs());
-
-            thePlan.generate(2, 5);
-            springList.setListData(thePlan.getCourseIDs());
-
-            thePlan.generate(2, 3);
-            summerList.setListData(thePlan.getCourseIDs());
+            fallList.setListData(r.generate(5, 1));
+            springList.setListData(r.generate(5, 2));
+            summerList.setListData(r.generate(3, 2));
         });
+
+        UserPlan thePlan = new UserPlan(user.uuid());
 
         RButton saveBtn = new RButton("Save plan", () -> {
-            JOptionPane.showMessageDialog(window,"Plan saved to file!");
+            JOptionPane.showMessageDialog(window, "Plan saved to file!");
+
+            thePlan.setFallCourses(fallList.getCourses());
+            thePlan.setSpringCourses(springList.getCourses());
+            thePlan.setSummerCourses(summerList.getCourses());
+
             db.save(thePlan);
         });
-
 
         //window.getRootPane().setDefaultButton(addBtn);
         window.addComponents(fallPanel, springPanel, summerPanel, refreshBtn, saveBtn);

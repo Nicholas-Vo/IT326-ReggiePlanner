@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+    @Column
     private Long id;
     private String courseID;
     private String name;

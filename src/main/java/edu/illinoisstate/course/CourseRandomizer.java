@@ -6,16 +6,18 @@ import java.util.Random;
 
 public class CourseRandomizer {
     private final List<Course> coursePool; // All the courses from the database
-    private final List<Course> excludedCourses; // Courses that shouldn't be included in the generation
+    private final List<Course> excludedCourses = new ArrayList<>(); // Courses that shouldn't be included in the generation
 
-    public CourseRandomizer(List<Course> coursePool, List<Course> excludedCourses) {
+    public CourseRandomizer(List<Course> coursePool) {
         this.coursePool = coursePool;
-        this.excludedCourses = excludedCourses;
     }
 
-    public List<Course> getCourses(int amount, int courseLevel) {
-        Random random = new Random();
+    public void exclude(Course course) {
+        excludedCourses.add(course);
+    }
 
+    public List<Course> generate(int amount, int courseLevel) {
+        Random random = new Random();
         List<Course> generatedCourses = new ArrayList<>();
 
         // Filter out courses that don't match the input course level
