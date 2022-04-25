@@ -17,7 +17,7 @@ import java.util.List;
 @SuppressWarnings("unchecked") // suppress unchecked cast warnings
 public class Database {
     private final EntityManager entityManager; // the database EntityManager
-    private Session session;
+    private final Session session;
 
     private static Database instance;
 
@@ -36,40 +36,52 @@ public class Database {
     }
 
     public void save(UserAccount account) {
-        entityManager.getTransaction().begin();
-        //session.saveOrUpdate(accuont);
-        if (containsUser(account)) {
-            entityManager.merge(account); // merge() updates existing record
-        } else {
-            entityManager.persist(account); // add new record
-        }
+        session.saveOrUpdate(account);
+    }
 
-        entityManager.getTransaction().commit();
+    public void save(UserPlan plan) {
+        session.saveOrUpdate(plan);
     }
 
     public void save(Course course) {
-        entityManager.getTransaction().begin();
-
-        if (containsCourse(course)) {
-            entityManager.merge(course); // merge() updates existing record
-        } else {
-            entityManager.persist(course); // add new record
-        }
-
-        entityManager.getTransaction().commit();
+        session.saveOrUpdate(course);
     }
 
-    public void save(UserPlan aPlan) {
-        entityManager.getTransaction().begin();
-
-        if (containsPlan(aPlan)) {
-            entityManager.merge(aPlan); // merge() updates existing record
-        } else {
-            entityManager.persist(aPlan); // add new record
-        }
-
-        entityManager.getTransaction().commit();
-    }
+//    public void save(UserAccount account) {
+//        entityManager.getTransaction().begin();
+//        //session.saveOrUpdate(accuont);
+//        if (containsUser(account)) {
+//            entityManager.merge(account); // merge() updates existing record
+//        } else {
+//            entityManager.persist(account); // add new record
+//        }
+//
+//        entityManager.getTransaction().commit();
+//    }
+//
+//    public void save(Course course) {
+//        entityManager.getTransaction().begin();
+//
+//        if (containsCourse(course)) {
+//            entityManager.merge(course); // merge() updates existing record
+//        } else {
+//            entityManager.persist(course); // add new record
+//        }
+//
+//        entityManager.getTransaction().commit();
+//    }
+//
+//    public void save(UserPlan aPlan) {
+//        entityManager.getTransaction().begin();
+//
+//        if (containsPlan(aPlan)) {
+//            entityManager.merge(aPlan); // merge() updates existing record
+//        } else {
+//            entityManager.persist(aPlan); // add new record
+//        }
+//
+//        entityManager.getTransaction().commit();
+//    }
 
     /**
      * delete a user account from the database

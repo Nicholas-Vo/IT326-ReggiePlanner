@@ -1,6 +1,7 @@
 package edu.illinoisstate.plan;
 
 import edu.illinoisstate.course.Course;
+import edu.illinoisstate.database.DatabaseHandler;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -43,6 +44,10 @@ public class UserPlan {
 
     public UUID getUserAccountUUID() {
         return userAccountUUID;
+    }
+
+    public void save() {
+        DatabaseHandler.savePlan(this);
     }
 
 }

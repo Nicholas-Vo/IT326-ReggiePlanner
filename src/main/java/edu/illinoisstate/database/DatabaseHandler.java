@@ -2,6 +2,7 @@ package edu.illinoisstate.database;
 
 import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.course.Course;
+import edu.illinoisstate.plan.UserPlan;
 import edu.illinoisstate.utils.Utils;
 
 import java.io.IOException;
@@ -25,9 +26,13 @@ public class DatabaseHandler {
         }
     }
 
+    public static List<Course> getCourseList() { return Database.getInstance().getCourseList(); }
+
     public static void saveAccount(UserAccount account) {
         Database.getInstance().save(account);
     }
 
-
+    public static void savePlan(UserPlan plan) {
+        Database.getInstance().save(plan);
+    }
 }

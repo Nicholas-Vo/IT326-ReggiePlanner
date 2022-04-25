@@ -1,9 +1,6 @@
 package edu.illinoisstate.gui;
 
-import edu.illinoisstate.PlanList;
-import edu.illinoisstate.RButton;
-import edu.illinoisstate.RWindow;
-import edu.illinoisstate.UserAccount;
+import edu.illinoisstate.*;
 import edu.illinoisstate.course.CourseRandomizer;
 import edu.illinoisstate.database.Database;
 import edu.illinoisstate.database.DatabaseHandler;
@@ -25,7 +22,6 @@ public class ViewUserPlanUI {
     private final JLabel summerLabel = new JLabel("Summer");
 
     private final UserAccount user;
-    private final Database db = Database.getInstance();
 
     public ViewUserPlanUI(UserAccount user) {
         window.setSize(550, 550);
@@ -38,7 +34,7 @@ public class ViewUserPlanUI {
     }
 
     private void createWindow() {
-        CourseRandomizer r = new CourseRandomizer(db.getCourseList());
+        CourseRandomizer r = new CourseRandomizer();
 
         PlanList fallList = new PlanList(r.generate(5, 1));
         fallPanel.add(fallLabel, BorderLayout.NORTH);
@@ -60,13 +56,9 @@ public class ViewUserPlanUI {
         });
 
         RButton saveBtn = new RButton("Save plan");
-
         saveBtn.addActionListener(e -> {
-            UserPlan thePlan = new UserPlan(
-                    user.uuid(), fallList.getCourses(), springList.getCourses(), summerList.getCourses());
-
+            Controller.createPlan(user.uuid(), fallList.courses(), springList.courses(), summerList.courses());
             JOptionPane.showMessageDialog(window, "Plan saved to file.");
-            db.save(thePlan);
         });
 
         //window.getRootPane().setDefaultButton(addBtn);

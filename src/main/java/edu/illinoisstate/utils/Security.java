@@ -2,7 +2,6 @@ package edu.illinoisstate.utils;
 
 import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.database.Database;
-import edu.illinoisstate.database.DatabaseHandler;
 import net.bytebuddy.utility.RandomString;
 
 import java.nio.charset.Charset;

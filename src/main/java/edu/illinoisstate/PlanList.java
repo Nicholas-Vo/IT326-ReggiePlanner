@@ -27,7 +27,7 @@ public class PlanList extends JList<String> {
         return theArray;
     }
 
-    public List<Course> getCourses() {
+    public List<Course> courses() {
         return courses;
     }
 
