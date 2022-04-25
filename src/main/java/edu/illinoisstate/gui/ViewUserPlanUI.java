@@ -61,7 +61,7 @@ public class ViewUserPlanUI {
         UserPlan thePlan = new UserPlan(user.uuid());
 
         RButton saveBtn = new RButton("Save plan", () -> {
-            JOptionPane.showMessageDialog(window, "Plan saved to file!");
+            JOptionPane.showMessageDialog(window, "Plan saved to file.");
 
             thePlan.setFallCourses(fallList.getCourses());
             thePlan.setSpringCourses(springList.getCourses());
