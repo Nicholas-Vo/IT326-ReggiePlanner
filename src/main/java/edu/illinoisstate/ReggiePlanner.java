@@ -1,6 +1,5 @@
 package edu.illinoisstate;
 
-import edu.illinoisstate.course.CourseHandler;
 import edu.illinoisstate.database.DatabaseHandler;
 import edu.illinoisstate.gui.MainProgramWindow;
 
@@ -23,7 +22,7 @@ public class ReggiePlanner {
         DatabaseHandler database = new DatabaseHandler();
         database.loadCoursesFromFile();
 
-        new CourseHandler();
+        //new CourseHandler();
     }
 
 }

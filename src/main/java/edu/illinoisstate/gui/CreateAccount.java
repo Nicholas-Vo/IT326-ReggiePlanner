@@ -49,7 +49,7 @@ public class CreateAccount {
                 return;
             }
 
-            Database database = DatabaseHandler.database();
+            Database database = Database.getInstance();
             if (database.getExistingEmailList().contains(emailField.getText())) {
                 JOptionPane.showMessageDialog(window, "That email is already registered within our system.");
                 return;

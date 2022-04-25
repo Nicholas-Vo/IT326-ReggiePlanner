@@ -57,7 +57,7 @@ public class DeleteAccountUI {
 
             if (result == 0) {
                 JOptionPane.showMessageDialog(window, "Account successfully deleted.");
-                DatabaseHandler.database().deleteUserAccount(user);
+                Database.getInstance().deleteUserAccount(user);
                 WindowTracker.closeAllActiveWindows();
                 new MainProgramWindow(); // Create a new main window
             }

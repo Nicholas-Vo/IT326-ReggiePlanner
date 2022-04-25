@@ -25,7 +25,7 @@ public class ViewUserPlanUI {
     private final JLabel summerLabel = new JLabel("Summer");
 
     private final UserAccount user;
-    private final Database db = DatabaseHandler.database();
+    private final Database db = Database.getInstance();
 
     public ViewUserPlanUI(UserAccount user) {
         window.setSize(550, 550);

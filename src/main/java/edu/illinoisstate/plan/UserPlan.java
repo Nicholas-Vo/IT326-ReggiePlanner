@@ -2,12 +2,7 @@ package edu.illinoisstate.plan;
 
 import edu.illinoisstate.course.Course;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -19,16 +14,14 @@ public class UserPlan {
     @Column
     private Long databaseID;
     private UUID userAccountUUID;
-    @OneToMany
+    @ManyToMany
     private List<Course> fallCourses = new ArrayList<>();
-    @OneToMany
+    @ManyToMany
     private List<Course> springCourses = new ArrayList<>();
-    @OneToMany
+    @ManyToMany
     private List<Course> summerCourses = new ArrayList<>();
 
-
-    public UserPlan(UUID userAccountUUID, List<Course> fallCourses,
-                    List<Course> springCourses, List<Course> summerCourses) {
+    public UserPlan(UUID userAccountUUID) {
         this.userAccountUUID = userAccountUUID;
     }
 

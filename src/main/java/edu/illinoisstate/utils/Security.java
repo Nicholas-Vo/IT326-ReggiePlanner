@@ -35,7 +35,7 @@ public class Security {
             return false;
         }
 
-        Database db = DatabaseHandler.database();
+        Database db = Database.getInstance();
         if (db.getUsernamesList().contains(username)) {
             UserAccount user = db.getUserAccount(username);
 

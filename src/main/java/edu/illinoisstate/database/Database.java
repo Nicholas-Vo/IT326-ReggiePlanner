@@ -4,6 +4,7 @@ import com.sun.istack.Nullable;
 import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.course.Course;
 import edu.illinoisstate.plan.UserPlan;
+import org.hibernate.Session;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
@@ -16,15 +17,27 @@ import java.util.List;
 @SuppressWarnings("unchecked") // suppress unchecked cast warnings
 public class Database {
     private final EntityManager entityManager; // the database EntityManager
+    private Session session;
 
-    public Database() {
+    private static Database instance;
+
+    private Database() {
         var factory = Persistence.createEntityManagerFactory("default");
+
         entityManager = factory.createEntityManager();
+        session = entityManager.unwrap(Session.class);
+    }
+
+    public static Database getInstance() {
+        if (instance == null) {
+            instance = new Database();
+        }
+        return instance;
     }
 
     public void save(UserAccount account) {
         entityManager.getTransaction().begin();
-
+        //session.saveOrUpdate(accuont);
         if (containsUser(account)) {
             entityManager.merge(account); // merge() updates existing record
         } else {
