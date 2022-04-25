@@ -56,7 +56,7 @@ public class MainProgramWindow {
         panel.add(resetPasswordButton);
         panel.add(exitProgramButton);
 
-        JLabel verLabel = new JLabel("Version v1.0.0");
+        JLabel verLabel = new JLabel("v1.0.0");
         verLabel.setFont(new Font("Abadi", Font.PLAIN, 12));
         verLabel.setPreferredSize(new Dimension(250, 100));
         verLabel.setAlignmentX(Component.CENTER_ALIGNMENT);

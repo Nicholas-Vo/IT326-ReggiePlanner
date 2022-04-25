@@ -38,7 +38,7 @@ public class ViewUserPlanUI {
     }
 
     private void createWindow() {
-        var r = new CourseRandomizer(db.getCourseList());
+        CourseRandomizer r = new CourseRandomizer(db.getCourseList());
 
         PlanList fallList = new PlanList(r.generate(5, 1));
         fallPanel.add(fallLabel, BorderLayout.NORTH);
@@ -52,21 +52,20 @@ public class ViewUserPlanUI {
         summerPanel.add(summerLabel, BorderLayout.NORTH);
         summerPanel.add(summerList, BorderLayout.SOUTH);
 
-        RButton refreshBtn = new RButton("Generate", () -> {
+        RButton refreshBtn = new RButton("Generate");
+        refreshBtn.addActionListener(e -> {
             fallList.setListData(r.generate(5, 1));
             springList.setListData(r.generate(5, 2));
             summerList.setListData(r.generate(3, 2));
         });
 
-        UserPlan thePlan = new UserPlan(user.uuid());
+        RButton saveBtn = new RButton("Save plan");
 
-        RButton saveBtn = new RButton("Save plan", () -> {
-            JOptionPane.showMessageDialog(window, "Plan saved to file!");
+        saveBtn.addActionListener(e -> {
+            UserPlan thePlan = new UserPlan(
+                    user.uuid(), fallList.getCourses(), springList.getCourses(), summerList.getCourses());
 
-            thePlan.setFallCourses(fallList.getCourses());
-            thePlan.setSpringCourses(springList.getCourses());
-            thePlan.setSummerCourses(summerList.getCourses());
-
+            JOptionPane.showMessageDialog(window, "Plan saved to file.");
             db.save(thePlan);
         });
 
