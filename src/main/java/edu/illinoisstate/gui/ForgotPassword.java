@@ -30,7 +30,7 @@ public class ForgotPassword {
     public void createWindow() {
         JTextField username = new HintTextBox("username", 15);
         RButton resetButton = new RButton("Recover", () -> {
-            Database database = DatabaseHandler.database();
+            Database database = Database.getInstance();
 
             if (!database.getUsernamesList().contains(username.getText())) {
                 JOptionPane.showMessageDialog(window, "Invalid username. Try again?");

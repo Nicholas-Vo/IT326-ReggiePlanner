@@ -34,7 +34,7 @@ public class Login {
 
         RButton loginButton = new RButton("Login");
         loginButton.addActionListener(e -> {
-            Database database = DatabaseHandler.database();
+            Database database = Database.getInstance();
 
             if (!database.getUsernamesList().contains(username.getText())) {
                 JOptionPane.showMessageDialog(window, "Incorrect username or password.");

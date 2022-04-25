@@ -21,7 +21,6 @@ public class UserPlan {
     @ManyToMany
     private List<Course> summerCourses = new ArrayList<>();
 
-
     public UserPlan(UUID userAccountUUID) {
         this.userAccountUUID = userAccountUUID;
     }

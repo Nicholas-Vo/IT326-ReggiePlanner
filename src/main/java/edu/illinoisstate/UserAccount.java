@@ -128,7 +128,7 @@ public class UserAccount {
      * Save all user data to database
      */
     public void save() {
-        DatabaseHandler.database().save(this);
+        DatabaseHandler.saveAccount(this);
     }
 
     /**

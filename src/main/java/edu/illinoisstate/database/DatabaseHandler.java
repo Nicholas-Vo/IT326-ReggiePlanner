@@ -1,5 +1,6 @@
 package edu.illinoisstate.database;
 
+import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.course.Course;
 import edu.illinoisstate.utils.Utils;
 
@@ -9,16 +10,6 @@ import java.nio.file.Files;
 import java.util.List;
 
 public class DatabaseHandler {
-    private static Database db;
-
-    public DatabaseHandler() {
-        db = new Database();
-    }
-
-    public static Database database() {
-        return db;
-    }
-
     /**
      * Grab all courses from the courses.txt file, and persist them to database if they don't exist already
      */
@@ -28,9 +19,15 @@ public class DatabaseHandler {
             List<String> list = Files.readAllLines(Utils.getFilePath("courses.txt"), StandardCharsets.UTF_8);
 
             // Create course object and store it in database
-            list.forEach(data -> db.save(new Course(data)));
+            list.forEach(data -> Database.getInstance().save(new Course(data)));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    public static void saveAccount(UserAccount account) {
+        Database.getInstance().save(account);
+    }
+
+
 }
