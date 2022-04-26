@@ -40,14 +40,14 @@ public class UserHomePage {
         generatePlanBtn.addActionListener(e -> {
             UserPlan plan = DatabaseHandler.getUserPlan(user);
 
-            if (plan == null) {
-                new GenerateNewUserPlanUI(user);
+            if (plan != null) {
+                String confirmMsg = "Are you sure you wish to generate a new plan?";
+                if (JOptionPane.showConfirmDialog(window, confirmMsg) != 0) {
+                    return;
+                }
             }
 
-            int result = JOptionPane.showConfirmDialog(window, "Are you sure you wish to generate a new plan?");
-            if (result == 0) {
-                new GenerateNewUserPlanUI(user);
-            }
+            new GenerateNewUserPlanUI(user);
         });
 
         RButton editPlanBtn = new RButton("Edit existing plan");

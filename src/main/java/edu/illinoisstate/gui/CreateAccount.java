@@ -3,11 +3,9 @@ package edu.illinoisstate.gui;
 import edu.illinoisstate.Controller;
 import edu.illinoisstate.RButton;
 import edu.illinoisstate.RWindow;
-import edu.illinoisstate.database.DatabaseHandler;
 import edu.illinoisstate.utils.AccountValidator;
 import edu.illinoisstate.utils.HintPasswordTextBox;
 import edu.illinoisstate.utils.HintTextBox;
-import edu.illinoisstate.utils.Security;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -36,7 +34,6 @@ public class CreateAccount {
             String email = emailField.getText();
 
             AccountValidator validator = new AccountValidator();
-            validator.check(username, email, password);
 
             if (!validator.check(username, email, password)) {
                 JOptionPane.showMessageDialog(window, validator.getReason());

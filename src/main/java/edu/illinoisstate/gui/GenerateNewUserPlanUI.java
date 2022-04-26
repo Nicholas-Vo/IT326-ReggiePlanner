@@ -57,8 +57,11 @@ public class GenerateNewUserPlanUI {
 
         RButton saveBtn = new RButton("Save plan");
         saveBtn.addActionListener(e -> {
-            Controller.createPlan(user.uuid(), fallList.courses(), springList.courses(), summerList.courses());
-            JOptionPane.showMessageDialog(window, "Plan saved to file.");
+            if (Controller.createPlan(user.uuid(), fallList.courses(), springList.courses(), summerList.courses())) {
+                JOptionPane.showMessageDialog(window, "Plan saved to file.");
+            } else {
+                JOptionPane.showMessageDialog(window, "We ran into an error! Please try again.");
+            }
         });
 
         //window.getRootPane().setDefaultButton(addBtn);

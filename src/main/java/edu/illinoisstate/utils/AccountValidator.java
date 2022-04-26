@@ -24,35 +24,29 @@ public class AccountValidator {
     public boolean check(String email, String username, String password) {
         if (username.length() < 4 || username.length() > 16) {
             reasons.append("Invalid username length");
-            return false;
         }
 
         if (email.length() < 4 || email.length() > 24) {
-            reasons.append("Invalid email length");
-            return false;
+            reasons.append("\nInvalid email length");
         }
 
         if (!Security.isValidEmail(email)) {
-            reasons.append("Invalid email");
-            return false;
+            reasons.append("\nInvalid email");
         }
 
         if (!Security.isValidPassword(username, password)) {
-            reasons.append("Invalid password");
-            return false;
+            reasons.append("\nInvalid password");
         }
 
         if (DatabaseHandler.emailExistsInSystem(email)) {
-            reasons.append("Email already exists in the system");
-            return false;
+            reasons.append("\nEmail already exists in the system");
         }
 
         if (DatabaseHandler.usernameAlreadyExists(username)) {
-            reasons.append("Username already exists in the system");
-            return false;
+            reasons.append("\nUsername already exists in the system");
         }
 
-        return true;
+        return reasons.isEmpty();
     }
 
 }
