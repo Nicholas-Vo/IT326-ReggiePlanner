@@ -1,20 +1,20 @@
 package edu.illinoisstate.gui;
 
-import edu.illinoisstate.*;
-import edu.illinoisstate.course.Course;
+import edu.illinoisstate.Controller;
+import edu.illinoisstate.PlanList;
+import edu.illinoisstate.RButton;
+import edu.illinoisstate.RWindow;
+import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.course.CourseRandomizer;
-import edu.illinoisstate.database.Database;
 import edu.illinoisstate.database.DatabaseHandler;
-import edu.illinoisstate.plan.UserPlan;
 import edu.illinoisstate.utils.HintTextBox;
 import edu.illinoisstate.utils.Utils;
 
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
-import java.util.ArrayList;
-import java.util.List;
 
 public class GenerateNewUserPlanUI {
     private final RWindow window = new RWindow("Generate a new plan");
@@ -51,17 +51,39 @@ public class GenerateNewUserPlanUI {
         PlanList summerList = new PlanList(randomizer.generate(3, 2));
         summerPanel.add(summerLabel, BorderLayout.NORTH);
         summerPanel.add(summerList, BorderLayout.SOUTH);
+        summerPanel.setVisible(false);
+
+        final int[] amountOfSummerCourse = {0}; // int array needed because of following lambda
+        JCheckBox summerCheckBox = new JCheckBox("Include summer");
+        summerCheckBox.addActionListener(e -> {
+            boolean selected = summerCheckBox.isSelected();
+
+            if (selected) {
+                String question = "How many summer courses do you wish to take?";
+
+                try {
+                    amountOfSummerCourse[0] = Integer.parseInt(JOptionPane.showInputDialog(question));
+                } catch (NumberFormatException nfe) {
+                    amountOfSummerCourse[0] = 1;
+                    JOptionPane.showMessageDialog(window, "That's not a valid number.");
+                }
+            }
+
+            summerLabel.setVisible(selected);
+            summerPanel.setVisible(selected);
+        });
 
         RButton refreshBtn = new RButton("Generate");
         refreshBtn.addActionListener(e -> {
             fallList.setListData(randomizer.generate(5, 1));
             springList.setListData(randomizer.generate(5, 2));
-            summerList.setListData(randomizer.generate(3, 2));
+            if (summerCheckBox.isSelected()) {
+                summerList.setListData(randomizer.generate(Math.min(amountOfSummerCourse[0], 5), 2));
+            }
         });
 
         JLabel excludeLabel = new JLabel();
         excludeLabel.setVisible(false);
-
         HintTextBox excludeField = new HintTextBox("exclude class", 15);
 
         RButton addCourseBtn = new RButton("Add completed course");
@@ -90,7 +112,7 @@ public class GenerateNewUserPlanUI {
         });
 
         window.addComponents(fallPanel, springPanel, summerPanel,
-                refreshBtn, saveBtn, excludeField, addCourseBtn, excludeLabel);
+                refreshBtn, saveBtn, excludeField, addCourseBtn, excludeLabel, summerCheckBox);
     }
 
 }
