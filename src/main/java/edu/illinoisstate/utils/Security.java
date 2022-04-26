@@ -2,6 +2,7 @@ package edu.illinoisstate.utils;
 
 import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.database.Database;
+import edu.illinoisstate.database.DatabaseHandler;
 import net.bytebuddy.utility.RandomString;
 
 import java.nio.charset.Charset;
@@ -10,6 +11,10 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class Security {
+
+    public static boolean isValidEmail(String email) {
+        return !email.contains("@");
+    }
 
     public static boolean isValidPassword(String username, String input) {
         return verifyPassword(username, input);
@@ -37,7 +42,6 @@ public class Security {
         Database db = Database.getInstance();
         if (db.getUsernamesList().contains(username)) {
             UserAccount user = db.getUserAccount(username);
-
             String currentPW = hash(user.getPasswordHash());
 
             if (user.getTemporaryPasswordHash() != null) {

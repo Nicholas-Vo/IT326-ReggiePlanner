@@ -3,10 +3,13 @@ package edu.illinoisstate.gui;
 import edu.illinoisstate.RButton;
 import edu.illinoisstate.RWindow;
 import edu.illinoisstate.UserAccount;
+import edu.illinoisstate.database.DatabaseHandler;
+import edu.illinoisstate.plan.UserPlan;
 import edu.illinoisstate.settings.SettingsUI;
 import edu.illinoisstate.utils.WindowTracker;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -34,7 +37,18 @@ public class UserHomePage {
         label.setPreferredSize(new Dimension(800, 100));
 
         RButton generatePlanBtn = new RButton("Generate new class plan");
-        generatePlanBtn.addActionListener(e -> new ViewUserPlanUI(user));
+        generatePlanBtn.addActionListener(e -> {
+            UserPlan plan = DatabaseHandler.getUserPlan(user);
+
+            if (plan == null) {
+                new GenerateNewUserPlanUI(user);
+            }
+
+            int result = JOptionPane.showConfirmDialog(window, "Are you sure you wish to generate a new plan?");
+            if (result == 0) {
+                new GenerateNewUserPlanUI(user);
+            }
+        });
 
         RButton editPlanBtn = new RButton("Edit existing plan");
         editPlanBtn.addActionListener(e -> {

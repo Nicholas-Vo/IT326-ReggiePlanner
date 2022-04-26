@@ -58,6 +58,10 @@ public class UserAccount {
         this.passwordHash = Security.hash(passwordHash);
     }
 
+    public void setUUID(UUID uuid) {
+        this.uuid = uuid;
+    }
+
     public String getTemporaryPasswordHash() {
         return temporaryPasswordHash;
     }

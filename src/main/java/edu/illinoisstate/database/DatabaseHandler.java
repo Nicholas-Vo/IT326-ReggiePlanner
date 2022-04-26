@@ -35,4 +35,16 @@ public class DatabaseHandler {
     public static void savePlan(UserPlan plan) {
         Database.getInstance().save(plan);
     }
+
+    public static UserPlan getUserPlan(UserAccount user) {
+        return Database.getInstance().getPlanByID(user.uuid());
+    }
+
+    public static boolean usernameAlreadyExists(String username) {
+        return Database.getInstance().getUsernamesList().contains(username);
+    }
+
+    public static boolean emailExistsInSystem(String email) {
+        return Database.getInstance().getExistingEmailList().contains(email.toLowerCase());
+    }
 }

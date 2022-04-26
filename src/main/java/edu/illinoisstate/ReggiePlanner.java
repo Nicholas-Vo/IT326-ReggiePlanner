@@ -15,14 +15,16 @@ public class ReggiePlanner {
         try {
             UIManager.setLookAndFeel(
                     UIManager.getSystemLookAndFeelClassName());
-        } catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+        } catch (UnsupportedLookAndFeelException
+                | ClassNotFoundException
+                | InstantiationException
+                | IllegalAccessException e) {
             e.printStackTrace();
         }
+
         new MainProgramWindow();
         DatabaseHandler database = new DatabaseHandler();
         database.loadCoursesFromFile();
-
-        //new CourseHandler();
     }
 
 }

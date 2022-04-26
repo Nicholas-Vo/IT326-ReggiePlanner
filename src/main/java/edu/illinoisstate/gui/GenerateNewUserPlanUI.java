@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 
-public class ViewUserPlanUI {
+public class GenerateNewUserPlanUI {
     private final RWindow window = new RWindow("Generate a new plan");
     private final JPanel fallPanel = new JPanel(new BorderLayout());
     private final JLabel fallLabel = new JLabel("Fall");
@@ -23,7 +23,7 @@ public class ViewUserPlanUI {
 
     private final UserAccount user;
 
-    public ViewUserPlanUI(UserAccount user) {
+    public GenerateNewUserPlanUI(UserAccount user) {
         window.setSize(550, 550);
         window.setLocationRelativeTo(null);
         Utils.allowEscapeToClose(window, window.getPanel());

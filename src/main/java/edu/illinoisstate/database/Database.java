@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * All database logic goes here
@@ -18,7 +19,6 @@ import java.util.List;
 public class Database {
     private final EntityManager entityManager; // the database EntityManager
     private final Session session;
-
     private static Database instance;
 
     private Database() {
@@ -46,42 +46,6 @@ public class Database {
     public void save(Course course) {
         session.saveOrUpdate(course);
     }
-
-//    public void save(UserAccount account) {
-//        entityManager.getTransaction().begin();
-//        //session.saveOrUpdate(accuont);
-//        if (containsUser(account)) {
-//            entityManager.merge(account); // merge() updates existing record
-//        } else {
-//            entityManager.persist(account); // add new record
-//        }
-//
-//        entityManager.getTransaction().commit();
-//    }
-//
-//    public void save(Course course) {
-//        entityManager.getTransaction().begin();
-//
-//        if (containsCourse(course)) {
-//            entityManager.merge(course); // merge() updates existing record
-//        } else {
-//            entityManager.persist(course); // add new record
-//        }
-//
-//        entityManager.getTransaction().commit();
-//    }
-//
-//    public void save(UserPlan aPlan) {
-//        entityManager.getTransaction().begin();
-//
-//        if (containsPlan(aPlan)) {
-//            entityManager.merge(aPlan); // merge() updates existing record
-//        } else {
-//            entityManager.persist(aPlan); // add new record
-//        }
-//
-//        entityManager.getTransaction().commit();
-//    }
 
     /**
      * delete a user account from the database
@@ -156,6 +120,21 @@ public class Database {
         for (UserAccount aUser : (List<UserAccount>) query.getResultList()) {
             if (aUser.getUsername().equalsIgnoreCase(username)) {
                 return aUser;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Retrieve a UserAccount from the database; this may return null
+     */
+    @Nullable
+    public UserPlan getPlanByID(UUID uuid) {
+        Query query = query("FROM UserPlan");
+
+        for (UserPlan plan : (List<UserPlan>) query.getResultList()) {
+            if (plan.getUserAccountUUID().equals(uuid)) {
+                return plan;
             }
         }
         return null;
