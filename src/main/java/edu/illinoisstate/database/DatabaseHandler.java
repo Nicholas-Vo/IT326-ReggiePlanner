@@ -26,7 +26,17 @@ public class DatabaseHandler {
         }
     }
 
-    public static List<Course> getCourseList() { return Database.getInstance().getCourseList(); }
+    public static Course getCourseByID(String id) {
+        return Database.getInstance().getCourseByID(id);
+    }
+
+    public static boolean isValidCourse(String courseID) {
+        return Database.getInstance().getCourseByID(courseID) != null;
+    }
+
+    public static List<Course> getCourseList() {
+        return Database.getInstance().getCourseList();
+    }
 
     public static void saveAccount(UserAccount account) {
         Database.getInstance().save(account);

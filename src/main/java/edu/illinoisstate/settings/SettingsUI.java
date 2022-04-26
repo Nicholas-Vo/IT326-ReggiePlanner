@@ -15,6 +15,7 @@ public class SettingsUI {
         window.setSize(500, 300);
         window.setIconImage(Utils.getImage("settings.png"));
         window.setLocationRelativeTo(null); // Centers the window on the screen
+        Utils.allowEscapeToClose(window, window.getPanel());
 
         this.user = user;
         createWindow();

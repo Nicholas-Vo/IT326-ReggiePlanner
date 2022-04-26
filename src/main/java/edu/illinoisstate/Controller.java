@@ -10,7 +10,8 @@ import java.util.UUID;
 
 public class Controller {
 
-    public static boolean createPlan(UUID userID, List<Course> fall, List<Course> spring, List<Course> summer) {
+    public static boolean createPlan(UUID userID, List<Course> fall, List<Course> spring,
+                                     List<Course> summer) {
         UserPlan plan = new UserPlan(userID);
         plan.setFallCourses(fall);
         plan.setSpringCourses(spring);

@@ -22,8 +22,12 @@ public class AccountValidator {
      * @return boolean value
      */
     public boolean check(String email, String username, String password) {
-        if (username.length() < 4 || username.length() > 16) {
-            reasons.append("Invalid username length");
+        if (username.length() < 4) {
+            reasons.append("Username must be at least 4 characters long");
+        }
+
+        if (username.length() > 16) {
+            reasons.append("Username cannot be longer than 16 characters");
         }
 
         if (email.length() < 4 || email.length() > 24) {
