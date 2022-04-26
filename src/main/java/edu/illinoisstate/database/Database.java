@@ -3,85 +3,48 @@ package edu.illinoisstate.database;
 import com.sun.istack.Nullable;
 import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.course.Course;
-import edu.illinoisstate.utils.Utils;
+import edu.illinoisstate.plan.UserPlan;
+import org.hibernate.Session;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * All database logic goes here
  */
 @SuppressWarnings("unchecked") // suppress unchecked cast warnings
 public class Database {
-    private static Database database; // the single instance of this class
     private final EntityManager entityManager; // the database EntityManager
+    private final Session session;
+    private static Database instance;
 
-
-    public Database() {
-        database = this;
-
+    private Database() {
         var factory = Persistence.createEntityManagerFactory("default");
+
         entityManager = factory.createEntityManager();
-        entityManager.getTransaction().begin();
-
-        loadCoursesFromFile();
-
-        entityManager.getTransaction().commit();
+        session = entityManager.unwrap(Session.class);
     }
 
-    /**
-     * Grab all courses from the courses.txt file, and persist them to database if they don't exist already
-     */
-    private void loadCoursesFromFile() {
-        try {
-            // Get course data from courses.txt
-            List<String> list = Files.readAllLines(Utils.getFilePath("courses.txt"), StandardCharsets.UTF_8);
-
-            // Create course object and store it in database, if it doesn't already exist
-            list.forEach(data -> {
-                Course course = new Course(data);
-
-                if (!containsCourse(course)) {
-                    entityManager.persist(course);
-                    System.out.println("Saving new course to database: ");
-                    System.out.println(course);
-                }
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    /**
-     * obtain an instance of the Database singleton class
-     *
-     * @return the class instance
-     */
     public static Database getInstance() {
-        return database;
+        if (instance == null) {
+            instance = new Database();
+        }
+        return instance;
     }
 
-    /**
-     * save a user account to the database
-     *
-     * @param account the account to save
-     */
-    public void saveUserAccount(UserAccount account) {
-        entityManager.getTransaction().begin();
+    public void save(UserAccount account) {
+        session.saveOrUpdate(account);
+    }
 
-        if (containsUser(account)) {
-            entityManager.merge(account); // merge() updates existing record
-        } else {
-            entityManager.persist(account); // add new record
-        }
+    public void save(UserPlan plan) {
+        session.saveOrUpdate(plan);
+    }
 
-        entityManager.getTransaction().commit();
+    public void save(Course course) {
+        session.saveOrUpdate(course);
     }
 
     /**
@@ -135,6 +98,18 @@ public class Database {
         return false;
     }
 
+    public boolean containsPlan(UserPlan aPlan) {
+        Query query = query("FROM UserPlan");
+
+        for (UserPlan plan : (List<UserPlan>) query.getResultList()) {
+            if (plan.equals(aPlan)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     /**
      * Retrieve a UserAccount from the database; this may return null
      */
@@ -145,6 +120,21 @@ public class Database {
         for (UserAccount aUser : (List<UserAccount>) query.getResultList()) {
             if (aUser.getUsername().equalsIgnoreCase(username)) {
                 return aUser;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Retrieve a UserAccount from the database; this may return null
+     */
+    @Nullable
+    public UserPlan getPlanByID(UUID uuid) {
+        Query query = query("FROM UserPlan");
+
+        for (UserPlan plan : (List<UserPlan>) query.getResultList()) {
+            if (plan.getUserAccountUUID().equals(uuid)) {
+                return plan;
             }
         }
         return null;

@@ -1,11 +1,13 @@
 package edu.illinoisstate;
 
-import com.sun.istack.Nullable;
-import edu.illinoisstate.database.Database;
-import edu.illinoisstate.plan.UserPlan;
+import edu.illinoisstate.database.DatabaseHandler;
 import edu.illinoisstate.utils.Security;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.UUID;
 
 /**
@@ -25,9 +27,6 @@ public class UserAccount {
     private String userNote;
     private boolean mustChangePassword = false;
 
-    @Embedded
-    private UserPlan plan;
-
     public UserAccount(UUID uuid, String email, String username, String passwordHash) {
         this.uuid = uuid;
         this.email = email;
@@ -37,11 +36,6 @@ public class UserAccount {
 
     public UserAccount() {
         // Empty no-param constructor needed for HSQLDB
-    }
-
-    @Nullable
-    public UserPlan getPlan() {
-        return plan;
     }
 
     public void setUserNote(String note) {
@@ -62,7 +56,10 @@ public class UserAccount {
 
     public void setPassword(String passwordHash) {
         this.passwordHash = Security.hash(passwordHash);
-        save();
+    }
+
+    public void setUUID(UUID uuid) {
+        this.uuid = uuid;
     }
 
     public String getTemporaryPasswordHash() {
@@ -78,12 +75,10 @@ public class UserAccount {
         If the input is null, set temp. hash to null - otherwise hash it
          */
         temporaryPasswordHash = (input == null) ? null : Security.hash(input);
-        save();
     }
 
     public void setUsername(String username) {
         this.username = username;
-        save();
     }
 
     public String getUsername() {
@@ -92,7 +87,6 @@ public class UserAccount {
 
     public void setEmail(String email) {
         this.email = email;
-        save();
     }
 
     public boolean mustChangePassword() {
@@ -101,7 +95,6 @@ public class UserAccount {
 
     public void setForcePasswordChangeValue(boolean newValue) {
         mustChangePassword = newValue;
-        save();
     }
 
     public String email() {
@@ -139,7 +132,7 @@ public class UserAccount {
      * Save all user data to database
      */
     public void save() {
-        Database.getInstance().saveUserAccount(this);
+        DatabaseHandler.saveAccount(this);
     }
 
     /**

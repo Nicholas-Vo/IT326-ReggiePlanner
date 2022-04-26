@@ -4,6 +4,7 @@ import edu.illinoisstate.RButton;
 import edu.illinoisstate.RWindow;
 import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.database.Database;
+import edu.illinoisstate.database.DatabaseHandler;
 import edu.illinoisstate.utils.HintPasswordTextBox;
 import edu.illinoisstate.utils.HintTextBox;
 import edu.illinoisstate.utils.Security;
@@ -54,10 +55,10 @@ public class Login {
                 return;
             }
 
-//            if (user.mustChangePassword()) {
-//                new ForcePasswordChange(user, window);
-//                return;
-//            }
+            if (user.mustChangePassword()) {
+                new ForcePasswordChange(user, window);
+                return;
+            }
 
             // Close this window and the main program window now that we're logged in, then open up home page
             window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));

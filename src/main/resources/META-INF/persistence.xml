@@ -5,6 +5,7 @@
              version="2.2">
     <persistence-unit name="default">
         <class>edu.illinoisstate.course.Course</class>
+        <class>edu.illinoisstate.plan.UserPlan</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbcDriver"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:file:target/myDB;shutdown=true;hsqldb.lock_file=false"/>

@@ -1,20 +1,24 @@
 package edu.illinoisstate.gui;
 
 import edu.illinoisstate.RButton;
-import edu.illinoisstate.ReggiePlanner;
 import edu.illinoisstate.RWindow;
 import edu.illinoisstate.UserAccount;
+import edu.illinoisstate.database.DatabaseHandler;
+import edu.illinoisstate.plan.UserPlan;
 import edu.illinoisstate.settings.SettingsUI;
 import edu.illinoisstate.utils.WindowTracker;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import java.awt.Dimension;
+import java.awt.Font;
 
 /**
  * This class is executed when a user successfully signs in
  */
 public class UserHomePage {
-    private final RWindow window = new RWindow("ReggiePlanner v" + ReggiePlanner.VERSION);
+    private final RWindow window = new RWindow("ReggiePlanner v1.0.0");
     private final UserAccount user;
 
     public UserHomePage(UserAccount user) {
@@ -34,7 +38,16 @@ public class UserHomePage {
 
         RButton generatePlanBtn = new RButton("Generate new class plan");
         generatePlanBtn.addActionListener(e -> {
+            UserPlan plan = DatabaseHandler.getUserPlan(user);
 
+            if (plan != null) {
+                String confirmMsg = "Are you sure you wish to generate a new plan?";
+                if (JOptionPane.showConfirmDialog(window, confirmMsg) != 0) {
+                    return;
+                }
+            }
+
+            new GenerateNewUserPlanUI(user);
         });
 
         RButton editPlanBtn = new RButton("Edit existing plan");

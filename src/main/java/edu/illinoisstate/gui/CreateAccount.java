@@ -1,17 +1,16 @@
 package edu.illinoisstate.gui;
 
+import edu.illinoisstate.Controller;
 import edu.illinoisstate.RButton;
 import edu.illinoisstate.RWindow;
-import edu.illinoisstate.UserAccount;
-import edu.illinoisstate.database.Database;
+import edu.illinoisstate.utils.AccountValidator;
 import edu.illinoisstate.utils.HintPasswordTextBox;
 import edu.illinoisstate.utils.HintTextBox;
-import edu.illinoisstate.utils.Security;
-import edu.illinoisstate.utils.Utils;
 
-import javax.swing.*;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import java.awt.event.WindowEvent;
-import java.util.UUID;
 
 public class CreateAccount {
     private final RWindow window = new RWindow("Create a new account");
@@ -31,45 +30,23 @@ public class CreateAccount {
 
         RButton submitButton = new RButton("Submit", () -> {
             String username = usernameField.getText();
-            if (username.length() < 4 || username.length() > 16) {
-                JOptionPane.showMessageDialog(window, "Sorry, that's an invalid username length.");
-                return;
-            }
-
-            if (!Security.isValidPassword(usernameField.getText(), passwordField.getText())) {
-                JOptionPane.showMessageDialog(window, "Sorry, that's an invalid password.");
-                return;
-            }
-
+            String password = passwordField.getText();
             String email = emailField.getText();
-            if (email.length() < 4 || email.length() > 24) {
-                JOptionPane.showMessageDialog(window, "Sorry, that's an invalid email.");
+
+            AccountValidator validator = new AccountValidator();
+
+            if (!validator.check(username, email, password)) {
+                JOptionPane.showMessageDialog(window, validator.getReason());
                 return;
             }
 
-            Database database = Database.getInstance();
-            if (database.getExistingEmailList().contains(emailField.getText())) {
-                JOptionPane.showMessageDialog(window, "That email is already registered within our system.");
-                return;
+            if (Controller.createAccount(username, email, password)) {
+                JOptionPane.showMessageDialog(window, "Account created: You may now log in.");
+                System.out.println("Created new user account \"" + username + "\".");
+                window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
+            } else {
+                JOptionPane.showMessageDialog(window, "Error creating account. Please contact support.");
             }
-
-            if (!email.contains("@")) {
-                JOptionPane.showMessageDialog(window, "Sorry, that's an invalid email provider.");
-                return;
-            }
-
-            if (database.getUsernamesList().contains(usernameField.getText())) {
-                JOptionPane.showMessageDialog(window, "Sorry, that username already exists.");
-                return;
-            }
-
-            UserAccount account = new UserAccount(UUID.randomUUID(), emailField.getText(),
-                    usernameField.getText(), Security.hash(passwordField.getText()));
-
-            database.saveUserAccount(account);
-            JOptionPane.showMessageDialog(window, "Account created: You may now log in.");
-            window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
-            System.out.println("Created new user account \"" + account.getUsername() + "\".");
         });
 
         window.getRootPane().setDefaultButton(submitButton); // Allows Enter key to submit

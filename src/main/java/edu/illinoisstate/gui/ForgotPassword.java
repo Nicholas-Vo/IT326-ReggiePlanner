@@ -4,6 +4,7 @@ import edu.illinoisstate.RButton;
 import edu.illinoisstate.RWindow;
 import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.database.Database;
+import edu.illinoisstate.database.DatabaseHandler;
 import edu.illinoisstate.email.EmailHandler;
 import edu.illinoisstate.utils.HintTextBox;
 import edu.illinoisstate.utils.Utils;
