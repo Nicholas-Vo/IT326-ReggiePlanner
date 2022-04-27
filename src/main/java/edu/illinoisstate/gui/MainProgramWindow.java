@@ -1,7 +1,6 @@
 package edu.illinoisstate.gui;
 
 import edu.illinoisstate.RButton;
-import edu.illinoisstate.ReggiePlanner;
 import edu.illinoisstate.utils.Utils;
 
 import javax.swing.Box;
