@@ -33,7 +33,7 @@ public class GenerateNewPlan {
 
         window.add(getPanel());
         window.revalidate();
-        window.repaint();
+        //window.repaint();
     }
 
     public JPanel getPanel() {
