@@ -9,17 +9,23 @@ import edu.illinoisstate.settings.ContactDevelopersUI;
 import edu.illinoisstate.settings.DeleteAccountUI;
 import edu.illinoisstate.utils.WindowTracker;
 
-import javax.swing.*;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 
 /**
  * This class is executed when a user successfully signs in
  */
 public class UserHomePage {
-    private final RWindow window = new RWindow("ReggiePlanner v1.0.0");
     private final UserAccount user;
+    private final RWindow window = new RWindow("ReggiePlanner v1.0.0");
     private final JMenuBar menuBar = new JMenuBar();
 
     public UserHomePage(UserAccount user) {
@@ -33,8 +39,8 @@ public class UserHomePage {
     }
 
     public void createWindow() {
-        JLabel label = new JLabel(user.getUsername() + "'s homepage", SwingConstants.CENTER);
-        label.setFont(new Font("Impact", Font.BOLD, 20));
+        JLabel label = new JLabel("ReggiePlanner", SwingConstants.CENTER);
+        label.setFont(new Font("Jumble", Font.BOLD, 35));
         label.setPreferredSize(new Dimension(800, 100));
 
         RMenu generatePlanMenu = new RMenu("Generate new plan");
@@ -48,7 +54,7 @@ public class UserHomePage {
                 }
             }
 
-            new GenerateNewUserPlanUI(user);
+            new GenerateNewPlan(window, user);
         });
 
         RMenu editPlan = new RMenu("Edit your plan");

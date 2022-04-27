@@ -8,7 +8,6 @@ import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.course.CourseRandomizer;
 import edu.illinoisstate.database.DatabaseHandler;
 import edu.illinoisstate.utils.HintTextBox;
-import edu.illinoisstate.utils.Utils;
 
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -16,28 +15,28 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 
-public class GenerateNewUserPlanUI {
-    private final RWindow window = new RWindow("Generate a new plan");
+public class GenerateNewPlan {
     private final JPanel fallPanel = new JPanel(new BorderLayout());
     private final JLabel fallLabel = new JLabel("Fall");
     private final JPanel springPanel = new JPanel(new BorderLayout());
     private final JLabel springLabel = new JLabel("Spring");
     private final JPanel summerPanel = new JPanel(new BorderLayout());
     private final JLabel summerLabel = new JLabel("Summer");
-
     private final UserAccount user;
+    private final RWindow window;
 
-    public GenerateNewUserPlanUI(UserAccount user) {
-        window.setSize(550, 550);
-        window.setLocationRelativeTo(null);
-        Utils.allowEscapeToClose(window, window.getPanel());
+    private final JPanel mainPanel = new JPanel();
 
+    public GenerateNewPlan(RWindow window, UserAccount user) {
+        this.window = window;
         this.user = user;
 
-        createWindow();
+        window.add(getPanel());
+        window.revalidate();
+        //window.repaint();
     }
 
-    private void createWindow() {
+    public JPanel getPanel() {
         CourseRandomizer randomizer = new CourseRandomizer();
 
         PlanList fallList = new PlanList(randomizer.generate(5, 1));
@@ -111,8 +110,17 @@ public class GenerateNewUserPlanUI {
             }
         });
 
-        window.addComponents(fallPanel, springPanel, summerPanel,
-                refreshBtn, saveBtn, excludeField, addCourseBtn, excludeLabel, summerCheckBox);
+        mainPanel.add(fallPanel);
+        mainPanel.add(springPanel);
+        mainPanel.add(summerPanel);
+        mainPanel.add(refreshBtn);
+        mainPanel.add(saveBtn);
+        mainPanel.add(excludeField);
+        mainPanel.add(addCourseBtn);
+        mainPanel.add(excludeLabel);
+        mainPanel.add(summerCheckBox);
+
+        return mainPanel;
     }
 
 }
