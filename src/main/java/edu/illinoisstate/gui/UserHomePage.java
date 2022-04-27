@@ -1,18 +1,18 @@
 package edu.illinoisstate.gui;
 
-import edu.illinoisstate.RButton;
+import edu.illinoisstate.RMenu;
 import edu.illinoisstate.RWindow;
 import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.database.DatabaseHandler;
 import edu.illinoisstate.plan.UserPlan;
-import edu.illinoisstate.settings.SettingsUI;
+import edu.illinoisstate.settings.ContactDevelopersUI;
+import edu.illinoisstate.settings.DeleteAccountUI;
 import edu.illinoisstate.utils.WindowTracker;
 
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import java.awt.Dimension;
 import java.awt.Font;
+
 
 /**
  * This class is executed when a user successfully signs in
@@ -20,6 +20,7 @@ import java.awt.Font;
 public class UserHomePage {
     private final RWindow window = new RWindow("ReggiePlanner v1.0.0");
     private final UserAccount user;
+    private final JMenuBar menuBar = new JMenuBar();
 
     public UserHomePage(UserAccount user) {
         window.setSize(600, 600);
@@ -36,8 +37,8 @@ public class UserHomePage {
         label.setFont(new Font("Impact", Font.BOLD, 20));
         label.setPreferredSize(new Dimension(800, 100));
 
-        RButton generatePlanBtn = new RButton("Generate new class plan");
-        generatePlanBtn.addActionListener(e -> {
+        RMenu generatePlanMenu = new RMenu("Generate new plan");
+        generatePlanMenu.addButtonClickAction(() -> {
             UserPlan plan = DatabaseHandler.getUserPlan(user);
 
             if (plan != null) {
@@ -50,24 +51,44 @@ public class UserHomePage {
             new GenerateNewUserPlanUI(user);
         });
 
-        RButton editPlanBtn = new RButton("Edit existing plan");
-        editPlanBtn.addActionListener(e -> {
+        RMenu editPlan = new RMenu("Edit your plan");
+        editPlan.addButtonClickAction(() -> {
 
         });
 
-        RButton createNoteBtn = new RButton("Create user note");
-        createNoteBtn.addActionListener(e -> {
+        RMenu addUserNote = new RMenu("Add note");
+        addUserNote.addButtonClickAction(() -> {
 
         });
 
-        RButton settingButton = new RButton("Settings", () -> new SettingsUI(user));
+        JMenu settingsMenu = new JMenu("Settings");
 
-        RButton logoutButton = new RButton("Logout", () -> {
+        JMenuItem editProfile = new JMenuItem("Edit profile");
+        editProfile.addActionListener(e -> {
+        });
+        JMenuItem contactDevs = new JMenuItem("Contact developers");
+        contactDevs.addActionListener(e -> new ContactDevelopersUI(user));
+        JMenuItem deleteAccount = new JMenuItem("Delete account");
+        deleteAccount.addActionListener(e -> new DeleteAccountUI(user));
+
+        settingsMenu.add(editProfile);
+        settingsMenu.add(contactDevs);
+        settingsMenu.add(deleteAccount);
+
+        RMenu logout = new RMenu("Log out");
+        logout.addButtonClickAction(() -> {
             WindowTracker.closeAllActiveWindows();
             new MainProgramWindow(); // re-open main program window
         });
 
-        window.addComponents(label, generatePlanBtn, editPlanBtn, createNoteBtn, settingButton, logoutButton);
+        menuBar.add(generatePlanMenu);
+        menuBar.add(editPlan);
+        menuBar.add(addUserNote);
+        menuBar.add(settingsMenu);
+        menuBar.add(logout);
+
+        window.setJMenuBar(menuBar);
+        window.addComponents(label);
     }
 
 }
