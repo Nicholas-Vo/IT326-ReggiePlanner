@@ -12,15 +12,18 @@ import edu.illinoisstate.utils.WindowTracker;
 import javax.swing.*;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 
 /**
  * This class is executed when a user successfully signs in
  */
 public class UserHomePage {
-    private final RWindow window = new RWindow("ReggiePlanner v1.0.0");
     private final UserAccount user;
+    private final RWindow window = new RWindow("ReggiePlanner v1.0.0");
     private final JMenuBar menuBar = new JMenuBar();
+
+    private JPanel mainPanel = new JPanel();
 
     public UserHomePage(UserAccount user) {
         window.setSize(600, 600);
@@ -48,7 +51,7 @@ public class UserHomePage {
                 }
             }
 
-            new GenerateNewUserPlanUI(user);
+            new GenerateNewPlan(window, user);
         });
 
         RMenu editPlan = new RMenu("Edit your plan");
