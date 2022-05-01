@@ -9,48 +9,56 @@ import edu.illinoisstate.course.CourseRandomizer;
 import edu.illinoisstate.database.DatabaseHandler;
 import edu.illinoisstate.utils.HintTextBox;
 
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+import javax.swing.*;
 import java.awt.BorderLayout;
+import java.awt.Font;
 
 public class GenerateNewPlan {
-    private final JPanel fallPanel = new JPanel(new BorderLayout());
-    private final JLabel fallLabel = new JLabel("Fall");
-    private final JPanel springPanel = new JPanel(new BorderLayout());
-    private final JLabel springLabel = new JLabel("Spring");
-    private final JPanel summerPanel = new JPanel(new BorderLayout());
-    private final JLabel summerLabel = new JLabel("Summer");
+    private final JLabel fallLabel = new JLabel("Fall  ");
+    private final JLabel springLabel = new JLabel("Spring  ");
+    private final JLabel summerLabel = new JLabel("Summer  ");
     private final UserAccount user;
     private final RWindow window;
 
-    private final JPanel mainPanel = new JPanel();
-
-    public GenerateNewPlan(RWindow window, UserAccount user) {
+    public GenerateNewPlan(RWindow window, JPanel homePanel, UserAccount user) {
         this.window = window;
         this.user = user;
 
-        window.add(getPanel());
-        window.revalidate();
-        //window.repaint();
+        homePanel.add(getPanel(), "Generate");
     }
 
     public JPanel getPanel() {
+        JPanel mainPanel = new JPanel(new BorderLayout());
+
+        JPanel listPanel = new JPanel();
+        listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.LINE_AXIS));
+        JPanel otherPanel = new JPanel();
+
         CourseRandomizer randomizer = new CourseRandomizer();
 
         PlanList fallList = new PlanList(randomizer.generate(5, 1));
-        fallPanel.add(fallLabel, BorderLayout.NORTH);
-        fallPanel.add(fallList, BorderLayout.SOUTH);
+        fallLabel.setFont(new Font("Jumble", Font.BOLD, 12));
+        listPanel.add(fallLabel);
+        listPanel.add(Box.createHorizontalStrut(5));
+        listPanel.add(fallList);
+        listPanel.add(Box.createHorizontalStrut(5));
 
         PlanList springList = new PlanList(randomizer.generate(5, 2));
-        springPanel.add(springLabel, BorderLayout.NORTH);
-        springPanel.add(springList, BorderLayout.SOUTH);
+        springLabel.setFont(new Font("Jumble", Font.BOLD, 12));
+        listPanel.add(springLabel);
+        listPanel.add(Box.createHorizontalStrut(5));
+        listPanel.add(springList);
 
         PlanList summerList = new PlanList(randomizer.generate(3, 2));
-        summerPanel.add(summerLabel, BorderLayout.NORTH);
-        summerPanel.add(summerList, BorderLayout.SOUTH);
-        summerPanel.setVisible(false);
+        summerLabel.setFont(new Font("Jumble", Font.BOLD, 12));
+        listPanel.add(Box.createHorizontalStrut(5));
+        listPanel.add(summerLabel);
+        listPanel.add(Box.createHorizontalStrut(5));
+        listPanel.add(summerList);
+        listPanel.add(Box.createHorizontalStrut(5));
+
+        summerLabel.setVisible(false);
+        summerList.setVisible(false);
 
         final int[] amountOfSummerCourse = {0}; // int array needed because of following lambda
         JCheckBox summerCheckBox = new JCheckBox("Include summer");
@@ -69,7 +77,7 @@ public class GenerateNewPlan {
             }
 
             summerLabel.setVisible(selected);
-            summerPanel.setVisible(selected);
+            summerList.setVisible(selected);
         });
 
         RButton refreshBtn = new RButton("Generate");
@@ -84,6 +92,7 @@ public class GenerateNewPlan {
         JLabel excludeLabel = new JLabel();
         excludeLabel.setVisible(false);
         HintTextBox excludeField = new HintTextBox("exclude class", 15);
+        excludeField.setMaximumSize(excludeField.getPreferredSize());
 
         RButton addCourseBtn = new RButton("Add completed course");
         addCourseBtn.addActionListener(e -> {
@@ -110,15 +119,21 @@ public class GenerateNewPlan {
             }
         });
 
-        mainPanel.add(fallPanel);
-        mainPanel.add(springPanel);
-        mainPanel.add(summerPanel);
-        mainPanel.add(refreshBtn);
-        mainPanel.add(saveBtn);
-        mainPanel.add(excludeField);
-        mainPanel.add(addCourseBtn);
-        mainPanel.add(excludeLabel);
-        mainPanel.add(summerCheckBox);
+        listPanel.add(Box.createHorizontalStrut(5));
+        listPanel.add(refreshBtn);
+        listPanel.add(Box.createHorizontalStrut(5));
+        listPanel.add(saveBtn);
+
+        otherPanel.setLayout(new BoxLayout(otherPanel, BoxLayout.LINE_AXIS));
+        otherPanel.add(excludeField);
+        otherPanel.add(addCourseBtn);
+        otherPanel.add(Box.createHorizontalStrut(5));
+        otherPanel.add(excludeLabel);
+        otherPanel.add(summerCheckBox);
+
+        mainPanel.add(listPanel, BorderLayout.NORTH);
+        mainPanel.add(Box.createHorizontalStrut(25));
+        mainPanel.add(otherPanel, BorderLayout.SOUTH);
 
         return mainPanel;
     }

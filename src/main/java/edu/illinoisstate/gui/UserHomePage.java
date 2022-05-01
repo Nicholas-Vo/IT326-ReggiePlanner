@@ -9,14 +9,11 @@ import edu.illinoisstate.settings.ContactDevelopersUI;
 import edu.illinoisstate.settings.DeleteAccountUI;
 import edu.illinoisstate.utils.WindowTracker;
 
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.SwingConstants;
+import javax.swing.*;
+import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.LayoutManager;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 
@@ -26,12 +23,16 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class UserHomePage {
     private final UserAccount user;
     private final RWindow window = new RWindow("ReggiePlanner v1.0.0");
+    private final CardLayout cardLayout = new CardLayout();
+    private final JPanel homePanel = new JPanel(cardLayout);
     private final JMenuBar menuBar = new JMenuBar();
 
     public UserHomePage(UserAccount user) {
         window.setSize(600, 600);
         window.setLocationRelativeTo(null);
         WindowTracker.addToActiveWindows(window);
+
+        window.setLayout(new CardLayout());
 
         this.user = user;
 
@@ -54,7 +55,9 @@ public class UserHomePage {
                 }
             }
 
-            new GenerateNewPlan(window, user);
+            new GenerateNewPlan(window, homePanel, user);
+            cardLayout.show(homePanel, "Generate");
+            window.pack();
         });
 
         RMenu editPlan = new RMenu("Edit your plan");
@@ -93,8 +96,10 @@ public class UserHomePage {
         menuBar.add(settingsMenu);
         menuBar.add(logout);
 
+        homePanel.add(label);
+
         window.setJMenuBar(menuBar);
-        window.addComponents(label);
+        window.addComponents(homePanel);
     }
 
 }

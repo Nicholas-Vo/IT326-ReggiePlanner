@@ -51,7 +51,6 @@ public class CreateAccount {
             }
         });
 
-        window.pack();
         window.getRootPane().setDefaultButton(submitButton); // Allows Enter key to submit
         window.addComponents(emailField, usernameField, passwordField, label, submitButton);
     }

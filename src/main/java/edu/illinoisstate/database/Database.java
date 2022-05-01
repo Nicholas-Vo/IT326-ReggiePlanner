@@ -5,6 +5,7 @@ import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.course.Course;
 import edu.illinoisstate.plan.UserPlan;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
@@ -36,15 +37,27 @@ public class Database {
     }
 
     public void save(UserAccount account) {
+        Transaction tx = session.beginTransaction();
+
         session.saveOrUpdate(account);
+
+        tx.commit();
     }
 
     public void save(UserPlan plan) {
+        Transaction tx = session.beginTransaction();
+
         session.saveOrUpdate(plan);
+
+        tx.commit();
     }
 
     public void save(Course course) {
+        Transaction tx = session.beginTransaction();
+
         session.saveOrUpdate(course);
+
+        tx.commit();
     }
 
     /**
