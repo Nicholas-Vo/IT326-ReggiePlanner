@@ -63,7 +63,7 @@ public class UserHomePage {
             new GenerateNewPlan(window, homePanel, user);
             homePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
             cardLayout.show(homePanel, "Generate");
-            //window.pack();
+            window.pack();
         });
 
         RMenu editPlan = new RMenu("Edit your plan");

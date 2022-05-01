@@ -26,6 +26,10 @@ public class DatabaseHandler {
         }
     }
 
+    public static UserAccount getUser(String username) {
+        return Database.getInstance().getUserAccount(username);
+    }
+
     public static Course getCourseByID(String id) {
         return Database.getInstance().getCourseByID(id);
     }
@@ -42,6 +46,10 @@ public class DatabaseHandler {
         Database.getInstance().save(account);
     }
 
+    public static void deleteAccount(UserAccount account) {
+        Database.getInstance().deleteUserAccount(account);
+    }
+
     public static void savePlan(UserPlan plan) {
         Database.getInstance().save(plan);
     }
@@ -50,7 +58,7 @@ public class DatabaseHandler {
         return Database.getInstance().getPlanByID(user.uuid());
     }
 
-    public static boolean usernameAlreadyExists(String username) {
+    public static boolean dbContainsUsername(String username) {
         return Database.getInstance().getUsernamesList().contains(username);
     }
 

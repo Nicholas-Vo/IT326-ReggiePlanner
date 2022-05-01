@@ -46,7 +46,7 @@ public class AccountValidator {
             reasons.append("\nEmail already exists in the system");
         }
 
-        if (DatabaseHandler.usernameAlreadyExists(username)) {
+        if (DatabaseHandler.dbContainsUsername(username)) {
             reasons.append("\nUsername already exists in the system");
         }
 

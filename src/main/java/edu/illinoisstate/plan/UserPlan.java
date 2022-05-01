@@ -4,12 +4,7 @@ import com.sun.istack.NotNull;
 import edu.illinoisstate.course.Course;
 import edu.illinoisstate.database.DatabaseHandler;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -20,15 +15,16 @@ public class UserPlan {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column
     private Long databaseID;
+    @NotNull
     private UUID userAccountUUID;
     @NotNull
-    @ManyToMany
+    @Transient
     private List<Course> fallCourses = new ArrayList<>();
     @NotNull
-    @ManyToMany
+    @Transient
     private List<Course> springCourses = new ArrayList<>();
     @NotNull
-    @ManyToMany
+    @Transient
     private List<Course> summerCourses = new ArrayList<>();
 
     public UserPlan(UUID userAccountUUID) {
