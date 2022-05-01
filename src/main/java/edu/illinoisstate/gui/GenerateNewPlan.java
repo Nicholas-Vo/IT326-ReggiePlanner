@@ -10,8 +10,7 @@ import edu.illinoisstate.database.DatabaseHandler;
 import edu.illinoisstate.utils.HintTextBox;
 
 import javax.swing.*;
-import java.awt.BorderLayout;
-import java.awt.Font;
+import java.awt.*;
 
 public class GenerateNewPlan {
     private final JLabel fallLabel = new JLabel("Fall  ");
@@ -32,6 +31,8 @@ public class GenerateNewPlan {
 
         JPanel listPanel = new JPanel();
         listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.LINE_AXIS));
+
+        JPanel btnPanel = new JPanel();
         JPanel otherPanel = new JPanel();
 
         CourseRandomizer randomizer = new CourseRandomizer();
@@ -54,8 +55,6 @@ public class GenerateNewPlan {
         listPanel.add(Box.createHorizontalStrut(5));
         listPanel.add(summerLabel);
         listPanel.add(Box.createHorizontalStrut(5));
-        listPanel.add(summerList);
-        listPanel.add(Box.createHorizontalStrut(5));
 
         summerLabel.setVisible(false);
         summerList.setVisible(false);
@@ -76,6 +75,8 @@ public class GenerateNewPlan {
                 }
             }
 
+            summerList.setListData(randomizer.generate(amountOfSummerCourse[0], 2));
+            listPanel.add(summerList);
             summerLabel.setVisible(selected);
             summerList.setVisible(selected);
         });
@@ -119,20 +120,23 @@ public class GenerateNewPlan {
             }
         });
 
-        listPanel.add(Box.createHorizontalStrut(5));
-        listPanel.add(refreshBtn);
-        listPanel.add(Box.createHorizontalStrut(5));
-        listPanel.add(saveBtn);
+        mainPanel.add(listPanel, BorderLayout.NORTH);
+
+        btnPanel.setLayout(new BoxLayout(btnPanel, BoxLayout.LINE_AXIS));
+        btnPanel.add(Box.createHorizontalStrut(5));
+        btnPanel.add(refreshBtn);
+        btnPanel.add(Box.createHorizontalStrut(5));
+        btnPanel.add(saveBtn);
+        btnPanel.add(Box.createHorizontalStrut(5));
+        btnPanel.add(summerCheckBox);
+        btnPanel.add(Box.createVerticalStrut(50));
+        mainPanel.add(btnPanel);
 
         otherPanel.setLayout(new BoxLayout(otherPanel, BoxLayout.LINE_AXIS));
         otherPanel.add(excludeField);
         otherPanel.add(addCourseBtn);
         otherPanel.add(Box.createHorizontalStrut(5));
         otherPanel.add(excludeLabel);
-        otherPanel.add(summerCheckBox);
-
-        mainPanel.add(listPanel, BorderLayout.NORTH);
-        mainPanel.add(Box.createHorizontalStrut(25));
         mainPanel.add(otherPanel, BorderLayout.SOUTH);
 
         return mainPanel;

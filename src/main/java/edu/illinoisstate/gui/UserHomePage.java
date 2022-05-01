@@ -9,12 +9,17 @@ import edu.illinoisstate.settings.ContactDevelopersUI;
 import edu.illinoisstate.settings.DeleteAccountUI;
 import edu.illinoisstate.utils.WindowTracker;
 
-import javax.swing.*;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import java.awt.CardLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.LayoutManager;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 
 /**
@@ -56,8 +61,9 @@ public class UserHomePage {
             }
 
             new GenerateNewPlan(window, homePanel, user);
+            homePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
             cardLayout.show(homePanel, "Generate");
-            window.pack();
+            //window.pack();
         });
 
         RMenu editPlan = new RMenu("Edit your plan");
