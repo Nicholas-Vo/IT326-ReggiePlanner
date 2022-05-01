@@ -68,7 +68,17 @@ public class UserHomePage {
 
         RMenu editPlan = new RMenu("Edit your plan");
         editPlan.addButtonClickAction(() -> {
+            UserPlan plan = DatabaseHandler.getUserPlan(user);
 
+            if (plan == null) {
+                JOptionPane.showMessageDialog(window, "You must generate a plan before doing that.");
+                return;
+            }
+
+            new EditYourPlan(window, homePanel, user);
+            homePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+            cardLayout.show(homePanel, "Edit");
+            window.pack();
         });
 
         RMenu addUserNote = new RMenu("Add note");
@@ -77,7 +87,6 @@ public class UserHomePage {
         });
 
         JMenu settingsMenu = new JMenu("Settings");
-
         JMenuItem editProfile = new JMenuItem("Edit profile");
         editProfile.addActionListener(e -> {
         });

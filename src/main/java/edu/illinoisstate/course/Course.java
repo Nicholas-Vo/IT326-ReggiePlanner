@@ -20,13 +20,9 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column
     private Long id;
-    @NotNull
     private String courseID;
-    @NotNull
     private String name;
-    @NotNull
     private double credits;
-    @NotNull
     private int level;
 
     /**

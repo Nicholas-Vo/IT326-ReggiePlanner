@@ -18,13 +18,13 @@ public class UserPlan {
     @NotNull
     private UUID userAccountUUID;
     @NotNull
-    @Transient
+    @OneToMany
     private List<Course> fallCourses = new ArrayList<>();
     @NotNull
-    @Transient
+    @OneToMany
     private List<Course> springCourses = new ArrayList<>();
     @NotNull
-    @Transient
+    @OneToMany
     private List<Course> summerCourses = new ArrayList<>();
 
     public UserPlan(UUID userAccountUUID) {
@@ -55,4 +55,15 @@ public class UserPlan {
         DatabaseHandler.savePlan(this);
     }
 
+    public List<Course> getSummerCourses() {
+        return summerCourses;
+    }
+
+    public List<Course> getSpringCourses() {
+        return springCourses;
+    }
+
+    public List<Course> getFallCourses() {
+        return fallCourses;
+    }
 }

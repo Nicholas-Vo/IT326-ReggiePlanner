@@ -7,6 +7,7 @@ import edu.illinoisstate.RWindow;
 import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.course.CourseRandomizer;
 import edu.illinoisstate.database.DatabaseHandler;
+import edu.illinoisstate.plan.UserPlan;
 import edu.illinoisstate.utils.HintTextBox;
 
 import javax.swing.Box;
@@ -119,8 +120,8 @@ public class GenerateNewPlan {
 
         RButton saveBtn = new RButton("Save plan");
         saveBtn.addActionListener(e -> {
-            if (Controller.createPlan(user.uuid(), fallList.courses(), springList.courses(), summerList.courses())) {
-                JOptionPane.showMessageDialog(window, "Plan saved to file.");
+            if (Controller.modifyPlan(user.uuid(), fallList.courses(), springList.courses(), summerList.courses())) {
+                JOptionPane.showMessageDialog(window, "Your plan has been saved.");
             } else {
                 JOptionPane.showMessageDialog(window, "We ran into an error! Please try again.");
             }

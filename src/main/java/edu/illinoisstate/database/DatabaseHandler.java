@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.List;
+import java.util.UUID;
 
 public class DatabaseHandler {
     /**
@@ -28,6 +29,10 @@ public class DatabaseHandler {
 
     public static UserAccount getUser(String username) {
         return Database.getInstance().getUserAccount(username);
+    }
+
+    public static UserAccount getUser(UUID uuid) {
+        return Database.getInstance().getUserAccount(uuid);
     }
 
     public static Course getCourseByID(String id) {
