@@ -11,15 +11,15 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * All database logic goes here
+ * The database implementation
  */
-@SuppressWarnings("unchecked") // suppress unchecked cast warnings
+@SuppressWarnings("unchecked")
 public class Database {
-    private final EntityManager entityManager; // the database EntityManager
+    private final EntityManager entityManager;
     private static Database instance;
 
     private Database() {
-        var factory = Persistence.createEntityManagerFactory("default");
+        var factory = Persistence.createEntityManagerFactory("default2");
 
         entityManager = factory.createEntityManager();
     }
@@ -76,7 +76,6 @@ public class Database {
         entityManager.getTransaction().begin();
 
         entityManager.remove(account);
-        System.out.println("Account " + account.getUsername() + " has been deleted.");
 
         entityManager.getTransaction().commit();
     }

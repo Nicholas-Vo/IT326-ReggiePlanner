@@ -3,7 +3,6 @@ package edu.illinoisstate.plan;
 import com.sun.istack.NotNull;
 import edu.illinoisstate.course.Course;
 import edu.illinoisstate.database.DatabaseHandler;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,18 +11,14 @@ import java.util.UUID;
 @Entity
 public class UserPlan {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long databaseID;
-    @NotNull
     private UUID userAccountUUID;
-    @NotNull
+
     @OneToMany
     private List<Course> fallCourses = new ArrayList<>();
-    @NotNull
     @OneToMany
     private List<Course> springCourses = new ArrayList<>();
-    @NotNull
     @OneToMany
     private List<Course> summerCourses = new ArrayList<>();
 
