@@ -26,7 +26,7 @@ public class AccountValidator {
             reasons.append("Invalid username length");
         }
 
-        if (email.length() < 4 || email.length() > 24) {
+        if (email.length() < 4 || email.length() > 30) {
             reasons.append("\nInvalid email length");
         }
 
