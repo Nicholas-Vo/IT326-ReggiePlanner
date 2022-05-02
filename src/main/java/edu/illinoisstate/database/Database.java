@@ -1,12 +1,15 @@
 package edu.illinoisstate.database;
 
+import com.sun.istack.Nullable;
 import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.course.Course;
 import edu.illinoisstate.plan.UserPlan;
+import org.hibernate.Session;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,6 +20,7 @@ import java.util.UUID;
 public class Database {
     private final EntityManager entityManager; // the database EntityManager
     private static Database instance;
+    private UserPlan thePlan = null;
 
     private Database() {
         var factory = Persistence.createEntityManagerFactory("default");
@@ -31,37 +35,29 @@ public class Database {
         return instance;
     }
 
-    public void save(UserAccount acc) {
+    @Transactional
+    public void save(UserAccount account) {
         entityManager.getTransaction().begin();
 
-        if (containsUser(acc)) {
-            entityManager.merge(acc); // merge() updates existing record
-        } else {
-            entityManager.persist(acc); // add new record
+        if (!entityManager.contains(account)) {
+            entityManager.persist(account);
+            entityManager.flush();
         }
 
         entityManager.getTransaction().commit();
     }
 
-    public void save(UserPlan aPlan) {
-        entityManager.getTransaction().begin();
-
-        if (containsPlan(aPlan)) {
-            entityManager.merge(aPlan);
-        } else {
-            entityManager.persist(aPlan);
-        }
-
-        entityManager.getTransaction().commit();
+    public void save(UserPlan plan) {
+        thePlan = plan;
     }
 
+    @Transactional
     public void save(Course course) {
         entityManager.getTransaction().begin();
 
-        if (containsCourse(course)) {
-            entityManager.merge(course);
-        } else {
+        if (!entityManager.contains(course)) {
             entityManager.persist(course);
+            entityManager.flush();
         }
 
         entityManager.getTransaction().commit();
@@ -119,20 +115,13 @@ public class Database {
     }
 
     public boolean containsPlan(UserPlan aPlan) {
-        Query query = query("FROM UserPlan");
-
-        for (UserPlan plan : (List<UserPlan>) query.getResultList()) {
-            if (plan.equals(aPlan)) {
-                return true;
-            }
-        }
-
-        return false;
+        return thePlan != null;
     }
 
     /**
      * Retrieve a UserAccount from the database; this may return null
      */
+    @Nullable
     public UserAccount getUserAccount(String username) {
         Query query = query("FROM UserAccount");
 
@@ -144,6 +133,10 @@ public class Database {
         return null;
     }
 
+    /**
+     * Retrieve a UserAccount from the database; this may return null
+     */
+    @Nullable
     public UserAccount getUserAccount(UUID uuid) {
         Query query = query("FROM UserAccount");
 
@@ -158,15 +151,9 @@ public class Database {
     /**
      * Retrieve a UserAccount from the database; this may return null
      */
+    @Nullable
     public UserPlan getPlanByID(UUID uuid) {
-        Query query = query("FROM UserPlan");
-
-        for (UserPlan plan : (List<UserPlan>) query.getResultList()) {
-            if (plan.getUserAccountUUID().equals(uuid)) {
-                return plan;
-            }
-        }
-        return null;
+        return thePlan;
     }
 
     /*
@@ -185,6 +172,7 @@ public class Database {
         return (List<Course>) query("FROM Course").getResultList();
     }
 
+    @Nullable
     public Course getCourseByID(String courseID) {
         List<Course> courses = getCourseList();
 
