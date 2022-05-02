@@ -110,7 +110,6 @@ public class UserHomePage {
         menuBar.add(addUserNote);
         menuBar.add(settingsMenu);
         menuBar.add(logout);
-
         homePanel.add(label);
 
         window.setJMenuBar(menuBar);

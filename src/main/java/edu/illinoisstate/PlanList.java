@@ -1,6 +1,7 @@
 package edu.illinoisstate;
 
 import edu.illinoisstate.course.Course;
+import org.hsqldb.rights.User;
 
 import javax.swing.JList;
 import java.util.List;

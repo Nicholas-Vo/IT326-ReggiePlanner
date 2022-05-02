@@ -28,6 +28,10 @@ public class Course {
     /**
      * Construct a new course given a course String from file
      */
+    public Course(String courseID, String name) {
+        this.courseID = courseID;
+        this.name = name;
+    }
     public Course(String input) {
         String regex = "(IT[0-9]{3}).*(\"(.*?)\").*([0-9]).*([0-9])";
         Matcher matcher = Pattern.compile(regex).matcher(input);

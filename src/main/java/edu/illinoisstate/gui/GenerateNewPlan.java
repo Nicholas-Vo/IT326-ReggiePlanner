@@ -5,6 +5,7 @@ import edu.illinoisstate.PlanList;
 import edu.illinoisstate.RButton;
 import edu.illinoisstate.RWindow;
 import edu.illinoisstate.UserAccount;
+import edu.illinoisstate.course.Course;
 import edu.illinoisstate.course.CourseRandomizer;
 import edu.illinoisstate.database.DatabaseHandler;
 import edu.illinoisstate.plan.UserPlan;
@@ -18,6 +19,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Font;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GenerateNewPlan {
     private final JLabel fallLabel = new JLabel("Fall  ");
@@ -31,6 +34,10 @@ public class GenerateNewPlan {
         this.user = user;
 
         homePanel.add(getPanel(), "Generate");
+    }
+    public double calcPrice(int amount){
+        double price = 384.13*(amount*3);
+        return price;
     }
 
     public JPanel getPanel() {
@@ -50,18 +57,21 @@ public class GenerateNewPlan {
         listPanel.add(Box.createHorizontalStrut(5));
         listPanel.add(fallList);
         listPanel.add(Box.createHorizontalStrut(5));
+        calcPrice(fallList.getMaxSelectionIndex()+1);
 
         PlanList springList = new PlanList(randomizer.generate(5, 2));
         springLabel.setFont(new Font("Jumble", Font.BOLD, 12));
         listPanel.add(springLabel);
         listPanel.add(Box.createHorizontalStrut(5));
         listPanel.add(springList);
+        calcPrice(springList.getMaxSelectionIndex()+1);
 
         PlanList summerList = new PlanList(randomizer.generate(3, 2));
         summerLabel.setFont(new Font("Jumble", Font.BOLD, 12));
         listPanel.add(Box.createHorizontalStrut(5));
         listPanel.add(summerLabel);
         listPanel.add(Box.createHorizontalStrut(5));
+        calcPrice(summerList.getMaxSelectionIndex()+1);
 
         summerLabel.setVisible(false);
         summerList.setVisible(false);
@@ -125,6 +135,8 @@ public class GenerateNewPlan {
             } else {
                 JOptionPane.showMessageDialog(window, "We ran into an error! Please try again.");
             }
+            RButton Searchbtn = new RButton("Search Course List");
+
         });
 
         mainPanel.add(listPanel, BorderLayout.NORTH);
@@ -148,6 +160,7 @@ public class GenerateNewPlan {
 
         return mainPanel;
     }
+
 
 }
 

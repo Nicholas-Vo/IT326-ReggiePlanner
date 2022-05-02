@@ -66,4 +66,5 @@ public class UserPlan {
     public List<Course> getFallCourses() {
         return fallCourses;
     }
+
 }
