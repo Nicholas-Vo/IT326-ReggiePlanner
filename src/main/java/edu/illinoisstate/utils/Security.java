@@ -1,9 +1,8 @@
 package edu.illinoisstate.utils;
 
 import edu.illinoisstate.UserAccount;
-import edu.illinoisstate.database.Database;
 import edu.illinoisstate.database.DatabaseHandler;
-import net.bytebuddy.utility.RandomString;
+import org.apache.commons.lang3.RandomStringUtils;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -71,7 +70,7 @@ public class Security {
      * @return a String password
      */
     public static String generateRandomPassword(UserAccount user) {
-        String tempPassword = RandomString.make(16); // Generate random String
+        String tempPassword = RandomStringUtils.random(16);
         user.setTempPassword(tempPassword); // Save temp PW
 
         return tempPassword; // Return PW as String for email

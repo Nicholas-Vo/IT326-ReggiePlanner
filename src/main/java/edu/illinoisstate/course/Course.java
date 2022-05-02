@@ -1,13 +1,8 @@
 package edu.illinoisstate.course;
 
 
-import com.sun.istack.NotNull;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,8 +12,7 @@ import java.util.regex.Pattern;
 @Entity
 public class Course {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String courseID;
     private String name;
