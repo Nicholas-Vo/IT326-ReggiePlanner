@@ -6,6 +6,7 @@ import edu.illinoisstate.RWindow;
 import edu.illinoisstate.utils.AccountValidator;
 import edu.illinoisstate.utils.HintPasswordTextBox;
 import edu.illinoisstate.utils.HintTextBox;
+import edu.illinoisstate.utils.Utils;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -18,6 +19,7 @@ public class CreateAccount {
     public CreateAccount() {
         window.setSize(500, 300);
         window.setLocationRelativeTo(null);
+        Utils.allowEscapeToClose(window, window.getPanel());
 
         createWindow();
     }
@@ -35,12 +37,12 @@ public class CreateAccount {
 
             AccountValidator validator = new AccountValidator();
 
-            if (!validator.check(username, email, password)) {
+            if (!validator.check(email, username, password)) {
                 JOptionPane.showMessageDialog(window, validator.getReason());
                 return;
             }
 
-            if (Controller.createAccount(username, email, password)) {
+            if (Controller.createAccount(email, username, password)) {
                 JOptionPane.showMessageDialog(window, "Account created: You may now log in.");
                 System.out.println("Created new user account \"" + username + "\".");
                 window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));

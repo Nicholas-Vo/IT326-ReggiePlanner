@@ -14,7 +14,7 @@ import java.security.NoSuchAlgorithmException;
 public class Security {
 
     public static boolean isValidEmail(String email) {
-        return !email.contains("@");
+        return email.contains("@");
     }
 
     public static boolean isValidPassword(String username, String input) {
@@ -40,9 +40,8 @@ public class Security {
             return false;
         }
 
-        Database db = Database.getInstance();
-        if (db.getUsernamesList().contains(username)) {
-            UserAccount user = db.getUserAccount(username);
+        if (DatabaseHandler.dbContainsUsername(username)) {
+            UserAccount user = DatabaseHandler.getUser(username);
             String currentPW = hash(user.getPasswordHash());
 
             if (user.getTemporaryPasswordHash() != null) {

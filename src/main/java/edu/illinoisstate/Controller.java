@@ -3,14 +3,14 @@ package edu.illinoisstate;
 import edu.illinoisstate.course.Course;
 import edu.illinoisstate.plan.UserPlan;
 import edu.illinoisstate.utils.AccountValidator;
-import edu.illinoisstate.utils.Security;
 
 import java.util.List;
 import java.util.UUID;
 
 public class Controller {
 
-    public static boolean createPlan(UUID userID, List<Course> fall, List<Course> spring, List<Course> summer) {
+    public static boolean modifyPlan(UUID userID, List<Course> fall, List<Course> spring,
+                                     List<Course> summer) {
         UserPlan plan = new UserPlan(userID);
         plan.setFallCourses(fall);
         plan.setSpringCourses(spring);
@@ -30,7 +30,7 @@ public class Controller {
         account.setUUID(UUID.randomUUID());
         account.setEmail(email);
         account.setUsername(username);
-        account.setPassword(Security.hash(password));
+        account.setPassword(password);
         account.save();
         return true;
     }

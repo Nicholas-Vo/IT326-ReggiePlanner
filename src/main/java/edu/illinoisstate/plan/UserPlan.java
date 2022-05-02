@@ -1,5 +1,6 @@
 package edu.illinoisstate.plan;
 
+import com.sun.istack.NotNull;
 import edu.illinoisstate.course.Course;
 import edu.illinoisstate.database.DatabaseHandler;
 
@@ -14,12 +15,16 @@ public class UserPlan {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column
     private Long databaseID;
+    @NotNull
     private UUID userAccountUUID;
-    @ManyToMany
+    @NotNull
+    @OneToMany
     private List<Course> fallCourses = new ArrayList<>();
-    @ManyToMany
+    @NotNull
+    @OneToMany
     private List<Course> springCourses = new ArrayList<>();
-    @ManyToMany
+    @NotNull
+    @OneToMany
     private List<Course> summerCourses = new ArrayList<>();
 
     public UserPlan(UUID userAccountUUID) {
@@ -50,4 +55,15 @@ public class UserPlan {
         DatabaseHandler.savePlan(this);
     }
 
+    public List<Course> getSummerCourses() {
+        return summerCourses;
+    }
+
+    public List<Course> getSpringCourses() {
+        return springCourses;
+    }
+
+    public List<Course> getFallCourses() {
+        return fallCourses;
+    }
 }

@@ -30,14 +30,13 @@ public class ForgotPassword {
     public void createWindow() {
         JTextField username = new HintTextBox("username", 15);
         RButton resetButton = new RButton("Recover", () -> {
-            Database database = Database.getInstance();
 
-            if (!database.getUsernamesList().contains(username.getText())) {
+            if (!DatabaseHandler.dbContainsUsername(username.getText())) {
                 JOptionPane.showMessageDialog(window, "Invalid username. Try again?");
                 return;
             }
 
-            UserAccount user = database.getUserAccount(username.getText());
+            UserAccount user = DatabaseHandler.getUser(username.getText());
             EmailHandler emailHandler = new EmailHandler();
 
             emailHandler.sendPasswordReset(user);

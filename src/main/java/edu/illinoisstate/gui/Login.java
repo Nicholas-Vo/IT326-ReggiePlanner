@@ -34,14 +34,13 @@ public class Login {
 
         RButton loginButton = new RButton("Login");
         loginButton.addActionListener(e -> {
-            Database database = Database.getInstance();
 
-            if (!database.getUsernamesList().contains(username.getText())) {
+            if (!DatabaseHandler.dbContainsUsername(username.getText())) {
                 JOptionPane.showMessageDialog(window, "Incorrect username or password.");
                 return;
             }
 
-            UserAccount user = database.getUserAccount(username.getText());
+            UserAccount user = DatabaseHandler.getUser(username.getText());
 
             if (user.getTemporaryPasswordHash() != null) {
                 if (user.getTemporaryPasswordHash().equalsIgnoreCase(Security.hash(password.getText()))) {

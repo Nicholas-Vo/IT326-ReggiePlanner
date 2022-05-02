@@ -11,6 +11,7 @@ public class PlanList extends JList<String> {
     public PlanList(List<Course> courses) {
         this.courses =  courses;
         super.setListData(toStringArray(this.courses));
+        super.setFont(super.getFont().deriveFont(16.0f));
     }
 
     public void setListData(List<Course> courses) {

@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.List;
+import java.util.UUID;
 
 public class DatabaseHandler {
     /**
@@ -26,10 +27,32 @@ public class DatabaseHandler {
         }
     }
 
-    public static List<Course> getCourseList() { return Database.getInstance().getCourseList(); }
+    public static UserAccount getUser(String username) {
+        return Database.getInstance().getUserAccount(username);
+    }
+
+    public static UserAccount getUser(UUID uuid) {
+        return Database.getInstance().getUserAccount(uuid);
+    }
+
+    public static Course getCourseByID(String id) {
+        return Database.getInstance().getCourseByID(id);
+    }
+
+    public static boolean isValidCourse(String courseID) {
+        return Database.getInstance().getCourseByID(courseID) != null;
+    }
+
+    public static List<Course> getCourseList() {
+        return Database.getInstance().getCourseList();
+    }
 
     public static void saveAccount(UserAccount account) {
         Database.getInstance().save(account);
+    }
+
+    public static void deleteAccount(UserAccount account) {
+        Database.getInstance().deleteUserAccount(account);
     }
 
     public static void savePlan(UserPlan plan) {
@@ -40,7 +63,7 @@ public class DatabaseHandler {
         return Database.getInstance().getPlanByID(user.uuid());
     }
 
-    public static boolean usernameAlreadyExists(String username) {
+    public static boolean dbContainsUsername(String username) {
         return Database.getInstance().getUsernamesList().contains(username);
     }
 
