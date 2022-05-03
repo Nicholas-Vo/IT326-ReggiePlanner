@@ -34,7 +34,7 @@ public class UserHomePage {
     private final JMenuBar menuBar = new JMenuBar();
 
     public UserHomePage(UserAccount user) {
-        window.setSize(600, 600);
+        window.setSize(650, 600);
         window.setLocationRelativeTo(null);
         WindowTracker.addToActiveWindows(window);
 
@@ -82,9 +82,6 @@ public class UserHomePage {
             window.pack();
         });
 
-
-
-
         JMenu settingsMenu = new JMenu("Settings");
         JMenuItem editProfile = new JMenuItem("Edit profile");
         editProfile.addActionListener(e -> {
@@ -95,9 +92,12 @@ public class UserHomePage {
         addUserNote.addActionListener(e-> new UserNoteUI(user));
         JMenuItem deleteAccount = new JMenuItem("Delete account");
         deleteAccount.addActionListener(e -> new DeleteAccountUI(user));
+        JMenuItem searchCourses = new JMenuItem("Search courses");
+        searchCourses.addActionListener(e -> new SearchPlanUI());
 
         settingsMenu.add(editProfile);
         settingsMenu.add(contactDevs);
+        settingsMenu.add(addUserNote);
         settingsMenu.add(deleteAccount);
 
         RMenu logout = new RMenu("Log out");
@@ -108,8 +108,8 @@ public class UserHomePage {
 
         menuBar.add(generatePlanMenu);
         menuBar.add(editPlan);
+        menuBar.add(searchCourses);
         menuBar.add(settingsMenu);
-        menuBar.add(addUserNote);
         menuBar.add(logout);
 
         homePanel.add(label);

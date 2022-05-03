@@ -3,6 +3,8 @@ package edu.illinoisstate;
 import edu.illinoisstate.course.Course;
 
 import javax.swing.JList;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
 public class PlanList extends JList<String> {
@@ -16,6 +18,18 @@ public class PlanList extends JList<String> {
 
     public void setListData(List<Course> courses) {
         super.setListData(toStringArray(courses));
+    }
+
+    public void setDeleteOnDoubleClick() {
+        super.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    courses.removeIf(course -> course.getCourseID().equals(getSelectedValue()));
+                    PlanList.super.setListData(toStringArray(courses));
+                }
+            }
+        });
     }
 
     private String[] toStringArray(List<Course> courses) {

@@ -34,7 +34,7 @@ public class UserNoteUI {
         JLabel label1 = new JLabel("Write a note to save later!");
 
         JTextArea textBox = new JTextArea();
-        textBox.setPreferredSize(new Dimension(250, 250));
+        textBox.setPreferredSize(new Dimension(200, 150));
         textBox.setLineWrap(true);
         textBox.setBorder(new LineBorder(Color.BLACK));
 
