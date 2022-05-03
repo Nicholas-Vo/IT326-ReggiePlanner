@@ -7,8 +7,9 @@ import edu.illinoisstate.database.DatabaseHandler;
 import edu.illinoisstate.email.EmailHandler;
 import edu.illinoisstate.plan.UserPlan;
 import edu.illinoisstate.settings.ContactDevelopersUI;
-import edu.illinoisstate.settings.UserNoteUI;
 import edu.illinoisstate.settings.DeleteAccountUI;
+import edu.illinoisstate.settings.UserNoteUI;
+import edu.illinoisstate.settings.EditUserProfileUI;
 import edu.illinoisstate.utils.WindowTracker;
 
 import javax.swing.JLabel;
@@ -83,31 +84,6 @@ public class UserHomePage {
             window.pack();
         });
 
-        JMenu settingsMenu = new JMenu("Settings");
-        JMenuItem editProfile = new JMenuItem("Edit profile");
-        editProfile.addActionListener(e -> {
-        });
-        JMenuItem contactDevs = new JMenuItem("Contact developers");
-        contactDevs.addActionListener(e -> new ContactDevelopersUI(user));
-        JMenuItem deleteAccount = new JMenuItem("Delete account");
-        deleteAccount.addActionListener(e -> new DeleteAccountUI(user));
-
-        settingsMenu.add(editProfile);
-        settingsMenu.add(contactDevs);
-        settingsMenu.add(deleteAccount);
-
-        RMenu searchCourses = new RMenu("Course search");
-        searchCourses.addActionListener(e -> new SearchCourseUI());
-
-        RMenu addUserNote = new RMenu("Add note");
-        addUserNote.addActionListener(e -> new UserNoteUI(user));
-
-        RMenu logout = new RMenu("Log out");
-        logout.addButtonClickAction(() -> {
-            WindowTracker.closeAllActiveWindows();
-            new MainProgramWindow(); // re-open main program window
-        });
-
         RMenu emailPlan = new RMenu("Email Plan");
         EmailHandler emailHandler = new EmailHandler();
         emailPlan.addButtonClickAction(() -> {
@@ -119,12 +95,46 @@ public class UserHomePage {
             JOptionPane.showMessageDialog(window, "Your plan was emailed to " + user.email() + ".");
         });
 
+
+        JMenu settingsMenu = new JMenu("Settings");
+        JMenuItem editProfile = new JMenuItem("Edit profile");
+        editProfile.addActionListener(e -> new EditUserProfileUI(){
+        });
+        JMenuItem contactDevs = new JMenuItem("Contact developers");
+        contactDevs.addActionListener(e -> new ContactDevelopersUI(user));
+        JMenuItem deleteAccount = new JMenuItem("Delete account");
+        deleteAccount.addActionListener(e -> new DeleteAccountUI(user));
+
+        settingsMenu.add(editProfile);
+        settingsMenu.add(contactDevs);
+        settingsMenu.add(deleteAccount);
+
+        RMenu addUserNote = new RMenu("Add note");
+        addUserNote.addButtonClickAction(()-> new UserNoteUI(user));
+
+        RMenu searchCourses = new RMenu("Course search");
+        searchCourses.addButtonClickAction(()-> {
+            new SearchCourseUI();
+        });
+
+        RMenu courseList = new RMenu("Course List");
+        courseList.addButtonClickAction(() -> {
+            new CourseList();
+        });
+
+        RMenu logout = new RMenu("Log out");
+        logout.addButtonClickAction(() -> {
+            WindowTracker.closeAllActiveWindows();
+            new MainProgramWindow(); // re-open main program window
+        });
+
         menuBar.add(generatePlanMenu);
         menuBar.add(editPlan);
         menuBar.add(searchCourses);
         menuBar.add(emailPlan);
-        menuBar.add(addUserNote);
+        menuBar.add(courseList);
         menuBar.add(settingsMenu);
+        menuBar.add(addUserNote);
         menuBar.add(logout);
 
         homePanel.add(label);

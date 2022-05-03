@@ -13,9 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * This window appears when the user selects the "Forgot password" button on the main window.
- */
 public class SearchCourseUI {
     private final RWindow window = new RWindow("Search for a course");
 
