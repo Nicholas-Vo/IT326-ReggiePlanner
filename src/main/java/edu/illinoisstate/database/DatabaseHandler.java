@@ -47,6 +47,8 @@ public class DatabaseHandler {
         return Database.getInstance().getCourseList();
     }
 
+    //public static List<Notes> getNotesList() { return Database.getInstance().getNotesList(); }
+
     public static void saveAccount(UserAccount account) {
         Database.getInstance().save(account);
     }

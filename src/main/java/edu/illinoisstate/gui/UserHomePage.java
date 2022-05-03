@@ -6,6 +6,7 @@ import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.database.DatabaseHandler;
 import edu.illinoisstate.plan.UserPlan;
 import edu.illinoisstate.settings.ContactDevelopersUI;
+import edu.illinoisstate.settings.UserNoteUI;
 import edu.illinoisstate.settings.DeleteAccountUI;
 import edu.illinoisstate.utils.WindowTracker;
 
@@ -81,10 +82,8 @@ public class UserHomePage {
             window.pack();
         });
 
-        RMenu addUserNote = new RMenu("Add note");
-        addUserNote.addButtonClickAction(() -> {
 
-        });
+
 
         JMenu settingsMenu = new JMenu("Settings");
         JMenuItem editProfile = new JMenuItem("Edit profile");
@@ -92,6 +91,8 @@ public class UserHomePage {
         });
         JMenuItem contactDevs = new JMenuItem("Contact developers");
         contactDevs.addActionListener(e -> new ContactDevelopersUI(user));
+        JMenuItem addUserNote = new JMenuItem("Add note");
+        addUserNote.addActionListener(e-> new UserNoteUI(user));
         JMenuItem deleteAccount = new JMenuItem("Delete account");
         deleteAccount.addActionListener(e -> new DeleteAccountUI(user));
 
@@ -107,8 +108,8 @@ public class UserHomePage {
 
         menuBar.add(generatePlanMenu);
         menuBar.add(editPlan);
-        menuBar.add(addUserNote);
         menuBar.add(settingsMenu);
+        menuBar.add(addUserNote);
         menuBar.add(logout);
         homePanel.add(label);
 

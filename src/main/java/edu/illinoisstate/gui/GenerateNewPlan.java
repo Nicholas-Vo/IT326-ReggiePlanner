@@ -139,6 +139,25 @@ public class GenerateNewPlan {
 
         });
 
+
+        //calculate price of the classes taken
+        RButton price = new RButton("Calculate Price of Plan");
+        price.addActionListener(e -> {
+            int counter = 0;
+            for (int i = 0; i < fallList.courses().size(); i ++)
+                if (fallList.courses().size() != 0)
+                    counter ++;
+            for (int j = 0; j < springList.courses().size(); j ++)
+                if (springList.courses().size() != 0)
+                    counter ++;
+            for (int k = 0; k < amountOfSummerCourse[0]; k ++)
+                if (amountOfSummerCourse[0] != 0)
+                    counter ++;
+
+            double totalPrice = counter*384.13; //price for in state student
+            JOptionPane.showMessageDialog(window, "The expected price for this year is: $" + totalPrice);
+                });
+
         mainPanel.add(listPanel, BorderLayout.NORTH);
 
         btnPanel.setLayout(new BoxLayout(btnPanel, BoxLayout.LINE_AXIS));
@@ -148,6 +167,8 @@ public class GenerateNewPlan {
         btnPanel.add(saveBtn);
         btnPanel.add(Box.createHorizontalStrut(5));
         btnPanel.add(summerCheckBox);
+        btnPanel.add(Box.createHorizontalStrut(5));
+        btnPanel.add(price);
         btnPanel.add(Box.createVerticalStrut(50));
         mainPanel.add(btnPanel);
 
