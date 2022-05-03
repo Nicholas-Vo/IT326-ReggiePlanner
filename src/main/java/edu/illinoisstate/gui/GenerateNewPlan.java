@@ -127,6 +127,7 @@ public class GenerateNewPlan {
         RButton priceBtn = new RButton("Calculate Price of Plan");
         priceBtn.addActionListener(e -> {
             double totalPrice = 0;
+
             for (PlanList list : List.of(fallList, springList)) {
                 if (summerCheckBox.isSelected()) {
                     totalPrice += summerList.getPrice();

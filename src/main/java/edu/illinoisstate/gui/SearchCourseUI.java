@@ -44,6 +44,7 @@ public class SearchCourseUI {
             }
 
             resultList.setListData(results);
+
         });
 
         window.getRootPane().setDefaultButton(searchBtn); // Allows Enter key to submit
