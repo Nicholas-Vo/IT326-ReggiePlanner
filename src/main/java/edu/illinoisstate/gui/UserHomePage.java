@@ -4,6 +4,7 @@ import edu.illinoisstate.RMenu;
 import edu.illinoisstate.RWindow;
 import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.database.DatabaseHandler;
+import edu.illinoisstate.email.EmailHandler;
 import edu.illinoisstate.plan.UserPlan;
 import edu.illinoisstate.settings.ContactDevelopersUI;
 import edu.illinoisstate.settings.UserNoteUI;
@@ -88,11 +89,11 @@ public class UserHomePage {
         });
         JMenuItem contactDevs = new JMenuItem("Contact developers");
         contactDevs.addActionListener(e -> new ContactDevelopersUI(user));
-        JMenuItem addUserNote = new JMenuItem("Add personal note");
-        addUserNote.addActionListener(e-> new UserNoteUI(user));
+        JMenuItem addUserNote = new JMenuItem("Add note");
+        addUserNote.addActionListener(e -> new UserNoteUI(user));
         JMenuItem deleteAccount = new JMenuItem("Delete account");
         deleteAccount.addActionListener(e -> new DeleteAccountUI(user));
-        JMenuItem searchCourses = new JMenuItem("Search for course");
+        JMenuItem searchCourses = new JMenuItem("Course search");
         searchCourses.addActionListener(e -> new SearchCourseUI());
 
         settingsMenu.add(editProfile);
@@ -105,9 +106,21 @@ public class UserHomePage {
             new MainProgramWindow(); // re-open main program window
         });
 
+        RMenu emailPlan = new RMenu("Email Plan");
+        EmailHandler emailHandler = new EmailHandler();
+        emailPlan.addButtonClickAction(() -> {
+            if (DatabaseHandler.getUserPlan(user) == null) {
+                JOptionPane.showMessageDialog(window, "You must generate a plan before doing that.");
+                return;
+            }
+            emailHandler.emailUserPlan(user);
+            JOptionPane.showMessageDialog(window, "Your plan was emailed to " + user.email() + ".");
+        });
+
         menuBar.add(generatePlanMenu);
         menuBar.add(editPlan);
         menuBar.add(searchCourses);
+        menuBar.add(emailPlan);
         menuBar.add(addUserNote);
         menuBar.add(settingsMenu);
         menuBar.add(logout);

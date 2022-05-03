@@ -1,6 +1,7 @@
 package edu.illinoisstate.email;
 
 import edu.illinoisstate.UserAccount;
+import edu.illinoisstate.database.DatabaseHandler;
 import edu.illinoisstate.plan.UserPlan;
 import edu.illinoisstate.utils.Security;
 
@@ -42,10 +43,10 @@ public class EmailHandler {
     /*
     Email a user plan
      */
-    public void emailUserPlan(UserAccount account, UserPlan plan) {
+    public void emailUserPlan(UserAccount account) {
         String body = """
                 Here is your generated user plan from ReggiePlanner:
-                """ + plan.toString();
+                """ + DatabaseHandler.getUserPlan(account).toString();
         EmailSender.send(account.email(), "Your generated plan from ReggiePlanner", body);
     }
 
