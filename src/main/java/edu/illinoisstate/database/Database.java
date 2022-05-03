@@ -1,12 +1,13 @@
 package edu.illinoisstate.database;
 
+import com.sun.istack.Nullable;
 import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.course.Course;
 import edu.illinoisstate.plan.UserPlan;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,6 +18,7 @@ import java.util.UUID;
 public class Database {
     private final EntityManager entityManager; // the database EntityManager
     private static Database instance;
+    private UserPlan thePlan = null;
 
     private Database() {
         var factory = Persistence.createEntityManagerFactory("default");
@@ -31,40 +33,20 @@ public class Database {
         return instance;
     }
 
-    public void save(UserAccount acc) {
-        entityManager.getTransaction().begin();
+    private List<UserAccount> accountList = new ArrayList<>();
 
-        if (containsUser(acc)) {
-            entityManager.merge(acc); // merge() updates existing record
-        } else {
-            entityManager.persist(acc); // add new record
-        }
-
-        entityManager.getTransaction().commit();
+    public void save(UserAccount account) {
+        accountList.add(account);
     }
 
-    public void save(UserPlan aPlan) {
-        entityManager.getTransaction().begin();
-
-        if (containsPlan(aPlan)) {
-            entityManager.merge(aPlan);
-        } else {
-            entityManager.persist(aPlan);
-        }
-
-        entityManager.getTransaction().commit();
+    public void save(UserPlan plan) {
+        thePlan = plan;
     }
+
+    private final List<Course> courses = new ArrayList<>();
 
     public void save(Course course) {
-        entityManager.getTransaction().begin();
-
-        if (containsCourse(course)) {
-            entityManager.merge(course);
-        } else {
-            entityManager.persist(course);
-        }
-
-        entityManager.getTransaction().commit();
+        courses.add(course);
     }
 
     /**
@@ -73,12 +55,7 @@ public class Database {
      * @param account the account to delete
      */
     public void deleteUserAccount(UserAccount account) {
-        entityManager.getTransaction().begin();
-
-        entityManager.remove(account);
-        System.out.println("Account " + account.getUsername() + " has been deleted.");
-
-        entityManager.getTransaction().commit();
+        account = null;
     }
 
     /**
@@ -88,15 +65,7 @@ public class Database {
      * @return boolean value
      */
     public boolean containsUser(UserAccount toSearch) {
-        Query query = query("FROM UserAccount");
-
-        for (UserAccount aUser : (List<UserAccount>) query.getResultList()) {
-            if (aUser.equals(toSearch)) {
-                return true;
-            }
-        }
-
-        return false;
+        return accountList.contains(toSearch);
     }
 
     /**
@@ -106,50 +75,21 @@ public class Database {
      * @return boolean value
      */
     public boolean containsCourse(Course course) {
-        Query query = query("FROM Course");
-        List<Course> courses = query.getResultList();
-
-        for (Course c : courses) {
-            if (c.getCourseID().equals(course.getCourseID())) {
-                return true;
-            }
-        }
-
-        return false;
+        return courses.contains(course);
     }
 
     public boolean containsPlan(UserPlan aPlan) {
-        Query query = query("FROM UserPlan");
-
-        for (UserPlan plan : (List<UserPlan>) query.getResultList()) {
-            if (plan.equals(aPlan)) {
-                return true;
-            }
-        }
-
-        return false;
+        return thePlan != null;
     }
 
     /**
      * Retrieve a UserAccount from the database; this may return null
      */
+    @Nullable
     public UserAccount getUserAccount(String username) {
-        Query query = query("FROM UserAccount");
-
-        for (UserAccount aUser : (List<UserAccount>) query.getResultList()) {
-            if (aUser.getUsername().equalsIgnoreCase(username)) {
-                return aUser;
-            }
-        }
-        return null;
-    }
-
-    public UserAccount getUserAccount(UUID uuid) {
-        Query query = query("FROM UserAccount");
-
-        for (UserAccount aUser : (List<UserAccount>) query.getResultList()) {
-            if (aUser.uuid().equals(uuid)) {
-                return aUser;
+        for (UserAccount acc : accountList) {
+            if (acc.getUsername().equals(username)) {
+                return acc;
             }
         }
         return null;
@@ -158,50 +98,55 @@ public class Database {
     /**
      * Retrieve a UserAccount from the database; this may return null
      */
-    public UserPlan getPlanByID(UUID uuid) {
-        Query query = query("FROM UserPlan");
-
-        for (UserPlan plan : (List<UserPlan>) query.getResultList()) {
-            if (plan.getUserAccountUUID().equals(uuid)) {
-                return plan;
+    @Nullable
+    public UserAccount getUserAccount(UUID uuid) {
+        for (UserAccount acc : accountList) {
+            if (acc.uuid().equals(uuid)) {
+                return acc;
             }
         }
+
         return null;
     }
 
-    /*
-    Query methods
+    /**
+     * Retrieve a UserAccount from the database; this may return null
      */
+    @Nullable
+    public UserPlan getPlanByID(UUID uuid) {
+        return thePlan;
+    }
 
     public List<String> getUsernamesList() {
-        return (List<String>) query("SELECT username FROM UserAccount").getResultList();
+        List<String> r = new ArrayList<>();
+
+        for (UserAccount acc : accountList) {
+            r.add(acc.getUsername());
+        }
+        return r;
     }
 
     public List<String> getExistingEmailList() {
-        return (List<String>) query("SELECT email FROM UserAccount").getResultList();
+        List<String> r = new ArrayList<>();
+
+        for (UserAccount acc : accountList) {
+            r.add(acc.email());
+        }
+        return r;
     }
 
     public List<Course> getCourseList() {
-        return (List<Course>) query("FROM Course").getResultList();
+        return courses;
     }
 
+    @Nullable
     public Course getCourseByID(String courseID) {
-        List<Course> courses = getCourseList();
-
         for (Course course : courses) {
             if (course.getCourseID().equalsIgnoreCase(courseID)) {
                 return course;
             }
         }
         return null;
-    }
-
-    //public Course getNotesByID(String notes){
-        //List<Notes> notes = getNotesList();
-    //}
-
-    private Query query(String query) {
-        return entityManager.createQuery(query);
     }
 
 }
