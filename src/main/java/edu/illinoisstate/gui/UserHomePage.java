@@ -82,9 +82,6 @@ public class UserHomePage {
             window.pack();
         });
 
-
-
-
         JMenu settingsMenu = new JMenu("Settings");
         JMenuItem editProfile = new JMenuItem("Edit profile");
         editProfile.addActionListener(e -> {
@@ -98,6 +95,7 @@ public class UserHomePage {
 
         settingsMenu.add(editProfile);
         settingsMenu.add(contactDevs);
+        settingsMenu.add(addUserNote);
         settingsMenu.add(deleteAccount);
 
         RMenu logout = new RMenu("Log out");
@@ -108,8 +106,8 @@ public class UserHomePage {
 
         menuBar.add(generatePlanMenu);
         menuBar.add(editPlan);
+        //menuBar.add(addUserNote);
         menuBar.add(settingsMenu);
-        menuBar.add(addUserNote);
         menuBar.add(logout);
 
         homePanel.add(label);
