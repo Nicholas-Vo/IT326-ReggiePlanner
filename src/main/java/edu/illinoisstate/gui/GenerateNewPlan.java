@@ -67,16 +67,16 @@ public class GenerateNewPlan {
         summerLabel.setVisible(false);
         summerList.setVisible(false);
 
-        final int[] amountOfSummerCourse = {0}; // int array needed because of following lambda
+        int[] amountOfSummerCourse = {0}; // int array needed because of following lambda
         JCheckBox summerCheckBox = new JCheckBox("Include summer");
         summerCheckBox.addActionListener(e -> {
             boolean selected = summerCheckBox.isSelected();
 
             if (selected) {
                 String question = "How many summer courses do you wish to take?";
-
                 try {
-                    amountOfSummerCourse[0] = Integer.parseInt(JOptionPane.showInputDialog(question));
+                    int userInput = Integer.parseInt(JOptionPane.showInputDialog(question));
+                    amountOfSummerCourse[0] = Math.min(userInput, 5);
                 } catch (NumberFormatException nfe) {
                     amountOfSummerCourse[0] = 1;
                     JOptionPane.showMessageDialog(window, "That's not a valid number.");

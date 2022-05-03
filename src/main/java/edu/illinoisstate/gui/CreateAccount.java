@@ -17,7 +17,7 @@ public class CreateAccount {
     private final RWindow window = new RWindow("Create a new account");
 
     public CreateAccount() {
-        window.setSize(500, 300);
+        window.setSize(500, 125);
         window.setLocationRelativeTo(null);
         Utils.allowEscapeToClose(window, window.getPanel());
 

@@ -3,7 +3,6 @@ package edu.illinoisstate.gui;
 import edu.illinoisstate.RButton;
 import edu.illinoisstate.RWindow;
 import edu.illinoisstate.UserAccount;
-import edu.illinoisstate.database.Database;
 import edu.illinoisstate.database.DatabaseHandler;
 import edu.illinoisstate.utils.HintPasswordTextBox;
 import edu.illinoisstate.utils.HintTextBox;
@@ -20,7 +19,7 @@ public class Login {
     private final JFrame mainProgramWindow;
 
     public Login(JFrame mainProgramWindow) {
-        window.setSize(400, 225);
+        window.setSize(400, 125);
         window.setLocationRelativeTo(null);
         Utils.allowEscapeToClose(window, window.getPanel());
         this.mainProgramWindow = mainProgramWindow;

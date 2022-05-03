@@ -88,16 +88,15 @@ public class UserHomePage {
         });
         JMenuItem contactDevs = new JMenuItem("Contact developers");
         contactDevs.addActionListener(e -> new ContactDevelopersUI(user));
-        JMenuItem addUserNote = new JMenuItem("Add note");
+        JMenuItem addUserNote = new JMenuItem("Add personal note");
         addUserNote.addActionListener(e-> new UserNoteUI(user));
         JMenuItem deleteAccount = new JMenuItem("Delete account");
         deleteAccount.addActionListener(e -> new DeleteAccountUI(user));
-        JMenuItem searchCourses = new JMenuItem("Search courses");
-        searchCourses.addActionListener(e -> new SearchPlanUI());
+        JMenuItem searchCourses = new JMenuItem("Search for course");
+        searchCourses.addActionListener(e -> new SearchCourseUI());
 
         settingsMenu.add(editProfile);
         settingsMenu.add(contactDevs);
-        settingsMenu.add(addUserNote);
         settingsMenu.add(deleteAccount);
 
         RMenu logout = new RMenu("Log out");
@@ -109,6 +108,7 @@ public class UserHomePage {
         menuBar.add(generatePlanMenu);
         menuBar.add(editPlan);
         menuBar.add(searchCourses);
+        menuBar.add(addUserNote);
         menuBar.add(settingsMenu);
         menuBar.add(logout);
 

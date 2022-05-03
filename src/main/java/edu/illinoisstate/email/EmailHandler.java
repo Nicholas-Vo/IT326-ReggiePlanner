@@ -1,6 +1,7 @@
 package edu.illinoisstate.email;
 
 import edu.illinoisstate.UserAccount;
+import edu.illinoisstate.plan.UserPlan;
 import edu.illinoisstate.utils.Security;
 
 import javax.mail.Message;
@@ -36,7 +37,16 @@ public class EmailHandler {
                 + "\n\nIf you didn't request this, you can safely ignore this email.";
 
         EmailSender.send(user.email(), "Password reset link from ReggiePlanner", body);
-        System.out.println("Sent password reset email to " + user.getUsername() + " .");
+    }
+
+    /*
+    Email a user plan
+     */
+    public void emailUserPlan(UserAccount account, UserPlan plan) {
+        String body = """
+                Here is your generated user plan from ReggiePlanner:
+                """ + plan.toString();
+        EmailSender.send(account.email(), "Your generated plan from ReggiePlanner", body);
     }
 
     /**
