@@ -33,7 +33,7 @@ public class Database {
         return instance;
     }
 
-    private List<UserAccount> accountList = new ArrayList<>();
+    private final List<UserAccount> accountList = new ArrayList<>();
 
     public void save(UserAccount account) {
         accountList.add(account);
