@@ -67,7 +67,7 @@ public class EditYourPlan {
             }
         });
 
-        springList.setDeleteOnDoubleClick();
+        fallList.setDeleteOnDoubleClick();
         springList.setDeleteOnDoubleClick();
         summerList.setDeleteOnDoubleClick();
 

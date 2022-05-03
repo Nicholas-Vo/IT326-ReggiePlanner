@@ -56,4 +56,12 @@ public class UserPlan {
     public List<Course> getFallCourses() {
         return fallCourses;
     }
+
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        fallCourses.forEach(c -> builder.append(c.getCourseID()).append(": ").append(c.getName()));
+        springCourses.forEach(c -> builder.append(c.getCourseID()).append(": ").append(c.getName()));
+        summerCourses.forEach(c -> builder.append(c.getCourseID()).append(": ").append(c.getName()));
+        return builder.toString();
+    }
 }
