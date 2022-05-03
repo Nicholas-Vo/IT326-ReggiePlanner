@@ -14,7 +14,13 @@ public class PlanList extends JList<String> {
         this.courses = courses;
         super.setListData(toStringArray(this.courses));
         super.setFont(super.getFont().deriveFont(16.0f));
+    }
 
+    public void setListData(List<Course> courses) {
+        super.setListData(toStringArray(courses));
+    }
+
+    public void setDeleteOnDoubleClick() {
         super.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -24,10 +30,6 @@ public class PlanList extends JList<String> {
                 }
             }
         });
-    }
-
-    public void setListData(List<Course> courses) {
-        super.setListData(toStringArray(courses));
     }
 
     private String[] toStringArray(List<Course> courses) {
