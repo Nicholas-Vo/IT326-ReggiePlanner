@@ -141,6 +141,7 @@ public class GenerateNewPlan {
             for (int k = 0; k < amountOfSummerCourse[0]; k ++)
                 if (amountOfSummerCourse[0] != 0)
                     counter ++;
+
             double totalPrice = counter*384.13; //price for in state student
             JOptionPane.showMessageDialog(window, "The expected price for this year is: $" + totalPrice);
                 });
