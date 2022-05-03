@@ -5,11 +5,11 @@ import edu.illinoisstate.PlanList;
 import edu.illinoisstate.RButton;
 import edu.illinoisstate.RWindow;
 import edu.illinoisstate.UserAccount;
-import edu.illinoisstate.course.Course;
 import edu.illinoisstate.course.CourseRandomizer;
 import edu.illinoisstate.database.DatabaseHandler;
 import edu.illinoisstate.plan.UserPlan;
 import edu.illinoisstate.utils.HintTextBox;
+import edu.illinoisstate.utils.Utils;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -19,7 +19,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Font;
-import java.util.ArrayList;
 import java.util.List;
 
 public class GenerateNewPlan {
@@ -35,14 +34,9 @@ public class GenerateNewPlan {
 
         homePanel.add(getPanel(), "Generate");
     }
-    public double calcPrice(int amount){
-        double price = 384.13*(amount*3);
-        return price;
-    }
 
     public JPanel getPanel() {
         JPanel mainPanel = new JPanel(new BorderLayout());
-
         JPanel listPanel = new JPanel();
         listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.LINE_AXIS));
 
@@ -57,21 +51,18 @@ public class GenerateNewPlan {
         listPanel.add(Box.createHorizontalStrut(5));
         listPanel.add(fallList);
         listPanel.add(Box.createHorizontalStrut(5));
-        calcPrice(fallList.getMaxSelectionIndex()+1);
 
         PlanList springList = new PlanList(randomizer.generate(5, 2));
         springLabel.setFont(new Font("Jumble", Font.BOLD, 12));
         listPanel.add(springLabel);
         listPanel.add(Box.createHorizontalStrut(5));
         listPanel.add(springList);
-        calcPrice(springList.getMaxSelectionIndex()+1);
 
         PlanList summerList = new PlanList(randomizer.generate(3, 2));
         summerLabel.setFont(new Font("Jumble", Font.BOLD, 12));
         listPanel.add(Box.createHorizontalStrut(5));
         listPanel.add(summerLabel);
         listPanel.add(Box.createHorizontalStrut(5));
-        calcPrice(summerList.getMaxSelectionIndex()+1);
 
         summerLabel.setVisible(false);
         summerList.setVisible(false);
@@ -128,6 +119,15 @@ public class GenerateNewPlan {
             excludeLabel.setVisible(true);
         });
 
+        RButton priceBtn = new RButton("Calculate Price of Plan");
+        priceBtn.addActionListener(e -> {
+            double totalPrice = 0;
+            for (PlanList list : List.of(fallList, springList, summerList)) {
+                totalPrice += list.getPrice();
+            }
+            JOptionPane.showMessageDialog(window, "The expected price is $" + Utils.formatNumber(totalPrice) + ".");
+        });
+
         RButton saveBtn = new RButton("Save plan");
         saveBtn.addActionListener(e -> {
             if (Controller.modifyPlan(user.uuid(), fallList.courses(), springList.courses(), summerList.courses())) {
@@ -135,28 +135,7 @@ public class GenerateNewPlan {
             } else {
                 JOptionPane.showMessageDialog(window, "We ran into an error! Please try again.");
             }
-            RButton Searchbtn = new RButton("Search Course List");
-
         });
-
-
-        //calculate price of the classes taken
-        RButton price = new RButton("Calculate Price of Plan");
-        price.addActionListener(e -> {
-            int counter = 0;
-            for (int i = 0; i < fallList.courses().size(); i ++)
-                if (fallList.courses().size() != 0)
-                    counter ++;
-            for (int j = 0; j < springList.courses().size(); j ++)
-                if (springList.courses().size() != 0)
-                    counter ++;
-            for (int k = 0; k < amountOfSummerCourse[0]; k ++)
-                if (amountOfSummerCourse[0] != 0)
-                    counter ++;
-
-            double totalPrice = counter*384.13; //price for in state student
-            JOptionPane.showMessageDialog(window, "The expected price for this year is: $" + totalPrice);
-                });
 
         mainPanel.add(listPanel, BorderLayout.NORTH);
 
@@ -168,7 +147,7 @@ public class GenerateNewPlan {
         btnPanel.add(Box.createHorizontalStrut(5));
         btnPanel.add(summerCheckBox);
         btnPanel.add(Box.createHorizontalStrut(5));
-        btnPanel.add(price);
+        btnPanel.add(priceBtn);
         btnPanel.add(Box.createVerticalStrut(50));
         mainPanel.add(btnPanel);
 
@@ -181,7 +160,6 @@ public class GenerateNewPlan {
 
         return mainPanel;
     }
-
 
 }
 

@@ -10,7 +10,7 @@ public class PlanList extends JList<String> {
     private final List<Course> courses;
 
     public PlanList(List<Course> courses) {
-        this.courses =  courses;
+        this.courses = courses;
         super.setListData(toStringArray(this.courses));
         super.setFont(super.getFont().deriveFont(16.0f));
     }
@@ -27,6 +27,15 @@ public class PlanList extends JList<String> {
         }
 
         return theArray;
+    }
+
+    public double getPrice() {
+        int total = 0;
+        double COST_PER_CREDIT = 384.13;
+        for (Course course : courses) {
+            total += course.getCredits() * COST_PER_CREDIT;
+        }
+        return total;
     }
 
     public List<Course> courses() {
