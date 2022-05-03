@@ -2,8 +2,8 @@ package edu.illinoisstate;
 
 import edu.illinoisstate.database.DatabaseHandler;
 import edu.illinoisstate.utils.Security;
-import javax.persistence.*;
 
+import javax.persistence.*;
 import java.util.UUID;
 
 /**
@@ -12,10 +12,10 @@ import java.util.UUID;
 @Entity
 public class UserAccount {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
     private Long databaseID;
     private UUID uuid;
-    private long planID;
     private String username;
     private String passwordHash;
     private String temporaryPasswordHash;
@@ -32,14 +32,6 @@ public class UserAccount {
 
     public UserAccount() {
         // Empty no-param constructor needed for HSQLDB
-    }
-
-    public void setPlanID(long id) {
-        this.planID = id;
-    }
-
-    public long getPlanID() {
-        return planID;
     }
 
     public void setUserNote(String note) {
