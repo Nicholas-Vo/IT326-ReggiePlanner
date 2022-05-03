@@ -93,7 +93,7 @@ public class UserHomePage {
         JMenuItem deleteAccount = new JMenuItem("Delete account");
         deleteAccount.addActionListener(e -> new DeleteAccountUI(user));
         JMenuItem searchCourses = new JMenuItem("Search courses");
-        searchCourses.addActionListener(e -> new SearchPlanUI());
+        searchCourses.addActionListener(e -> new SearchCourseUI());
 
         settingsMenu.add(editProfile);
         settingsMenu.add(contactDevs);
