@@ -4,14 +4,10 @@ import com.sun.istack.Nullable;
 import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.course.Course;
 import edu.illinoisstate.plan.UserPlan;
-import org.hibernate.Session;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
-import javax.transaction.Transactional;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -37,10 +33,10 @@ public class Database {
         return instance;
     }
 
-    private UserAccount account = null;
+    private List<UserAccount> accountList = new ArrayList<>();
 
     public void save(UserAccount account) {
-        this.account = account;
+        accountList.add(account);
     }
 
     public void save(UserPlan plan) {
@@ -69,7 +65,7 @@ public class Database {
      * @return boolean value
      */
     public boolean containsUser(UserAccount toSearch) {
-        return account.getUsername().equals(toSearch.getUsername());
+        return accountList.contains(toSearch);
     }
 
     /**
@@ -91,7 +87,12 @@ public class Database {
      */
     @Nullable
     public UserAccount getUserAccount(String username) {
-        return account;
+        for (UserAccount acc : accountList) {
+            if (acc.getUsername().equals(username)) {
+                return acc;
+            }
+        }
+        return null;
     }
 
     /**
@@ -99,7 +100,13 @@ public class Database {
      */
     @Nullable
     public UserAccount getUserAccount(UUID uuid) {
-        return account;
+        for (UserAccount acc : accountList) {
+            if (acc.uuid().equals(uuid)) {
+                return acc;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -110,16 +117,22 @@ public class Database {
         return thePlan;
     }
 
-    /*
-    Query methods
-     */
-
     public List<String> getUsernamesList() {
-        return List.of(account.getUsername());
+        List<String> r = new ArrayList<>();
+
+        for (UserAccount acc : accountList) {
+            r.add(acc.getUsername());
+        }
+        return r;
     }
 
     public List<String> getExistingEmailList() {
-        return List.of(account.email());
+        List<String> r = new ArrayList<>();
+
+        for (UserAccount acc : accountList) {
+            r.add(acc.email());
+        }
+        return r;
     }
 
     public List<Course> getCourseList() {
