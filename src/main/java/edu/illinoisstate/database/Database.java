@@ -4,12 +4,10 @@ import com.sun.istack.Nullable;
 import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.course.Course;
 import edu.illinoisstate.plan.UserPlan;
-import org.hibernate.Session;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
-import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,32 +33,20 @@ public class Database {
         return instance;
     }
 
-    @Transactional
+    private List<UserAccount> accountList = new ArrayList<>();
+
     public void save(UserAccount account) {
-        entityManager.getTransaction().begin();
-
-        if (!entityManager.contains(account)) {
-            entityManager.persist(account);
-            entityManager.flush();
-        }
-
-        entityManager.getTransaction().commit();
+        accountList.add(account);
     }
 
     public void save(UserPlan plan) {
         thePlan = plan;
     }
 
-    @Transactional
+    private final List<Course> courses = new ArrayList<>();
+
     public void save(Course course) {
-        entityManager.getTransaction().begin();
-
-        if (!entityManager.contains(course)) {
-            entityManager.persist(course);
-            entityManager.flush();
-        }
-
-        entityManager.getTransaction().commit();
+        courses.add(course);
     }
 
     /**
@@ -69,12 +55,7 @@ public class Database {
      * @param account the account to delete
      */
     public void deleteUserAccount(UserAccount account) {
-        entityManager.getTransaction().begin();
-
-        entityManager.remove(account);
-        System.out.println("Account " + account.getUsername() + " has been deleted.");
-
-        entityManager.getTransaction().commit();
+        account = null;
     }
 
     /**
@@ -84,15 +65,7 @@ public class Database {
      * @return boolean value
      */
     public boolean containsUser(UserAccount toSearch) {
-        Query query = query("FROM UserAccount");
-
-        for (UserAccount aUser : (List<UserAccount>) query.getResultList()) {
-            if (aUser.equals(toSearch)) {
-                return true;
-            }
-        }
-
-        return false;
+        return accountList.contains(toSearch);
     }
 
     /**
@@ -102,16 +75,7 @@ public class Database {
      * @return boolean value
      */
     public boolean containsCourse(Course course) {
-        Query query = query("FROM Course");
-        List<Course> courses = query.getResultList();
-
-        for (Course c : courses) {
-            if (c.getCourseID().equals(course.getCourseID())) {
-                return true;
-            }
-        }
-
-        return false;
+        return courses.contains(course);
     }
 
     public boolean containsPlan(UserPlan aPlan) {
@@ -123,11 +87,9 @@ public class Database {
      */
     @Nullable
     public UserAccount getUserAccount(String username) {
-        Query query = query("FROM UserAccount");
-
-        for (UserAccount aUser : (List<UserAccount>) query.getResultList()) {
-            if (aUser.getUsername().equalsIgnoreCase(username)) {
-                return aUser;
+        for (UserAccount acc : accountList) {
+            if (acc.getUsername().equals(username)) {
+                return acc;
             }
         }
         return null;
@@ -138,13 +100,12 @@ public class Database {
      */
     @Nullable
     public UserAccount getUserAccount(UUID uuid) {
-        Query query = query("FROM UserAccount");
-
-        for (UserAccount aUser : (List<UserAccount>) query.getResultList()) {
-            if (aUser.uuid().equals(uuid)) {
-                return aUser;
+        for (UserAccount acc : accountList) {
+            if (acc.uuid().equals(uuid)) {
+                return acc;
             }
         }
+
         return null;
     }
 
@@ -156,36 +117,36 @@ public class Database {
         return thePlan;
     }
 
-    /*
-    Query methods
-     */
-
     public List<String> getUsernamesList() {
-        return (List<String>) query("SELECT username FROM UserAccount").getResultList();
+        List<String> r = new ArrayList<>();
+
+        for (UserAccount acc : accountList) {
+            r.add(acc.getUsername());
+        }
+        return r;
     }
 
     public List<String> getExistingEmailList() {
-        return (List<String>) query("SELECT email FROM UserAccount").getResultList();
+        List<String> r = new ArrayList<>();
+
+        for (UserAccount acc : accountList) {
+            r.add(acc.email());
+        }
+        return r;
     }
 
     public List<Course> getCourseList() {
-        return (List<Course>) query("FROM Course").getResultList();
+        return courses;
     }
 
     @Nullable
     public Course getCourseByID(String courseID) {
-        List<Course> courses = getCourseList();
-
         for (Course course : courses) {
             if (course.getCourseID().equalsIgnoreCase(courseID)) {
                 return course;
             }
         }
         return null;
-    }
-
-    private Query query(String query) {
-        return entityManager.createQuery(query);
     }
 
 }
