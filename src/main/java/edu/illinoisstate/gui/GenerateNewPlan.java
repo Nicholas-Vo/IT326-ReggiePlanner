@@ -129,10 +129,10 @@ public class GenerateNewPlan {
             double totalPrice = 0;
 
             for (PlanList list : List.of(fallList, springList)) {
-                if (summerCheckBox.isSelected()) {
-                    totalPrice += summerList.getPrice();
-                }
                 totalPrice += list.getPrice();
+            }
+            if (summerCheckBox.isSelected()) {
+                totalPrice += summerList.getPrice();
             }
             JOptionPane.showMessageDialog(window, "The expected price is $" + Utils.formatNumber(totalPrice) + ".");
         });
