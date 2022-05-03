@@ -1,6 +1,7 @@
 package edu.illinoisstate.settings;
 
 import edu.illinoisstate.UserAccount;
+import edu.illinoisstate.email.EmailHandler;
 import edu.illinoisstate.utils.Utils;
 import edu.illinoisstate.utils.WindowTracker;
 
@@ -15,7 +16,7 @@ public class ContactDevelopersUI {
     private final UserAccount user;
 
     public ContactDevelopersUI(UserAccount user) {
-        window.setSize(600, 400);
+        window.setSize(500, 225);
         window.setLocationRelativeTo(null); // Center the window on the screen
         window.setTitle("Contact us");
         window.setModal(true); // this prevents use of other windows
@@ -29,11 +30,12 @@ public class ContactDevelopersUI {
     }
 
     public void createWindow() {
+        EmailHandler emailHandler = new EmailHandler();
         JLabel label1 = new JLabel("We'd love to hear from you!");
         JLabel label2 = new JLabel("Please keep an eye on your email address for a response.");
 
         JTextArea textBox = new JTextArea();
-        textBox.setPreferredSize(new Dimension(250, 250));
+        textBox.setPreferredSize(new Dimension(150, 150));
         textBox.setLineWrap(true);
         textBox.setBorder(new LineBorder(Color.BLACK));
 
@@ -43,7 +45,7 @@ public class ContactDevelopersUI {
         JButton confirmBtn = new JButton("Send message");
         confirmBtn.addActionListener(e -> {
             messageSent.setVisible(true);
-            // todo send email with message to admin account here
+            emailHandler.sendContactDevEmail(user, textBox.getText());
             textBox.setText("");
         });
 
