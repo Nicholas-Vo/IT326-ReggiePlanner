@@ -4,6 +4,7 @@ import edu.illinoisstate.RMenu;
 import edu.illinoisstate.RWindow;
 import edu.illinoisstate.UserAccount;
 import edu.illinoisstate.database.DatabaseHandler;
+import edu.illinoisstate.email.EmailHandler;
 import edu.illinoisstate.plan.UserPlan;
 import edu.illinoisstate.settings.ContactDevelopersUI;
 import edu.illinoisstate.settings.UserNoteUI;
@@ -105,11 +106,23 @@ public class UserHomePage {
             new MainProgramWindow(); // re-open main program window
         });
 
+        RMenu emailPlan = new RMenu("Email Plan");
+        EmailHandler emailHandler = new EmailHandler();
+        logout.addButtonClickAction(() -> {
+            if(DatabaseHandler.getUserPlan(user) == null)
+            {
+                return;
+            }
+            emailHandler.emailUserPlan(user);
+        });
+
+
         menuBar.add(generatePlanMenu);
         menuBar.add(editPlan);
         menuBar.add(searchCourses);
         menuBar.add(addUserNote);
         menuBar.add(settingsMenu);
+        menuBar.add(emailPlan);
         menuBar.add(logout);
 
         homePanel.add(label);
