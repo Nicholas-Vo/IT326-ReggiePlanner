@@ -105,10 +105,15 @@ public class UserHomePage {
             WindowTracker.closeAllActiveWindows();
             new MainProgramWindow(); // re-open main program window
         });
+        RMenu courseL = new RMenu("Course List");
+        courseL.addButtonClickAction(()-> {
+            new CourseList();
+        });
 
         menuBar.add(generatePlanMenu);
         menuBar.add(editPlan);
         menuBar.add(searchCourses);
+        menuBar.add(courseL);
         menuBar.add(settingsMenu);
         menuBar.add(logout);
         homePanel.add(label);
