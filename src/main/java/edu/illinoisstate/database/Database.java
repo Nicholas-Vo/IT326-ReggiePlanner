@@ -55,7 +55,7 @@ public class Database {
      * @param account the account to delete
      */
     public void deleteUserAccount(UserAccount account) {
-        account = null;
+        accountList.remove(account);
     }
 
     /**

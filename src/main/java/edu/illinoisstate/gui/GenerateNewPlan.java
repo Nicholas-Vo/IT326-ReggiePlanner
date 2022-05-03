@@ -9,6 +9,7 @@ import edu.illinoisstate.course.CourseRandomizer;
 import edu.illinoisstate.database.DatabaseHandler;
 import edu.illinoisstate.plan.UserPlan;
 import edu.illinoisstate.utils.HintTextBox;
+import edu.illinoisstate.utils.Utils;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -18,6 +19,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Font;
+import java.util.List;
 
 public class GenerateNewPlan {
     private final JLabel fallLabel = new JLabel("Fall  ");
@@ -35,7 +37,6 @@ public class GenerateNewPlan {
 
     public JPanel getPanel() {
         JPanel mainPanel = new JPanel(new BorderLayout());
-
         JPanel listPanel = new JPanel();
         listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.LINE_AXIS));
 
@@ -118,6 +119,15 @@ public class GenerateNewPlan {
             excludeLabel.setVisible(true);
         });
 
+        RButton priceBtn = new RButton("Calculate Price of Plan");
+        priceBtn.addActionListener(e -> {
+            double totalPrice = 0;
+            for (PlanList list : List.of(fallList, springList, summerList)) {
+                totalPrice += list.getPrice();
+            }
+            JOptionPane.showMessageDialog(window, "The expected price is $" + Utils.formatNumber(totalPrice) + ".");
+        });
+
         RButton saveBtn = new RButton("Save plan");
         saveBtn.addActionListener(e -> {
             if (Controller.modifyPlan(user.uuid(), fallList.courses(), springList.courses(), summerList.courses())) {
@@ -136,6 +146,8 @@ public class GenerateNewPlan {
         btnPanel.add(saveBtn);
         btnPanel.add(Box.createHorizontalStrut(5));
         btnPanel.add(summerCheckBox);
+        btnPanel.add(Box.createHorizontalStrut(5));
+        btnPanel.add(priceBtn);
         btnPanel.add(Box.createVerticalStrut(50));
         mainPanel.add(btnPanel);
 

@@ -14,6 +14,7 @@ import java.io.File;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DecimalFormat;
 import java.util.Objects;
 
 /**
@@ -65,6 +66,12 @@ public class Utils {
         String path = classloader.getResource(name).getPath().replaceFirst("/", "");
 
         return Paths.get(path);
+    }
+
+    private static final DecimalFormat numberFormat = new DecimalFormat("#,###");
+
+    public static String formatNumber(double num) {
+        return numberFormat.format(num);
     }
 
 }

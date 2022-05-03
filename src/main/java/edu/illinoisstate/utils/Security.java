@@ -69,7 +69,7 @@ public class Security {
      * @return a String password
      */
     public static String generateRandomPassword(UserAccount user) {
-        String tempPassword = RandomStringUtils.random(16);
+        String tempPassword = RandomStringUtils.randomAlphanumeric(16);
         user.setTempPassword(tempPassword); // Save temp PW
 
         return tempPassword; // Return PW as String for email
