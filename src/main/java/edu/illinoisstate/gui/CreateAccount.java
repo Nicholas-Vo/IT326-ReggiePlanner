@@ -7,6 +7,7 @@ import edu.illinoisstate.utils.AccountValidator;
 import edu.illinoisstate.utils.HintPasswordTextBox;
 import edu.illinoisstate.utils.HintTextBox;
 import edu.illinoisstate.utils.Utils;
+import edu.illinoisstate.email.EmailHandler;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -46,6 +47,9 @@ public class CreateAccount {
                 JOptionPane.showMessageDialog(window, "Account created: You may now log in.");
                 System.out.println("Created new user account \"" + username + "\".");
                 window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
+                EmailHandler emailHandler = new EmailHandler();
+                emailHandler.sendAccountConfirmation(username, email);
+
             } else {
                 JOptionPane.showMessageDialog(window, "Error creating account. Please contact support.");
             }

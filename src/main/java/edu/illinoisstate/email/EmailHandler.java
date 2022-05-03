@@ -61,7 +61,7 @@ public class EmailHandler {
                 """                          
                         Welcome to ReggiePlanner!
 
-                        Please click on the link below to verify your email with us.
+                         We are emailing you to welcome you to the family of ReggiePlanner users.
                                         
                         """
 
