@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * This window appears when the user selects the "Forgot password" button on the main window.
@@ -48,7 +49,7 @@ public class SearchPlanUI {
 
             List<Course> results = new ArrayList<>();
             courses.forEach(course -> {
-                if (course.getCourseID().equalsIgnoreCase(courseTextField.getText())) {
+                if (course.getCourseID().contains(courseTextField.getText().toUpperCase(Locale.ROOT))) {
                     results.add(course);
                 }
             });

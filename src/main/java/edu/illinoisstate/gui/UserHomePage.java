@@ -34,7 +34,7 @@ public class UserHomePage {
     private final JMenuBar menuBar = new JMenuBar();
 
     public UserHomePage(UserAccount user) {
-        window.setSize(600, 600);
+        window.setSize(650, 600);
         window.setLocationRelativeTo(null);
         WindowTracker.addToActiveWindows(window);
 
