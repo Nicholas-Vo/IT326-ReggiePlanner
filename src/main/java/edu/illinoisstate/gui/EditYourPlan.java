@@ -56,6 +56,7 @@ public class EditYourPlan {
         listPanel.add(Box.createHorizontalStrut(5));
         listPanel.add(summerLabel);
         listPanel.add(Box.createHorizontalStrut(5));
+        listPanel.add(summerList);
 
         RButton saveBtn = new RButton("Update plan");
         saveBtn.addActionListener(e -> {
@@ -65,6 +66,10 @@ public class EditYourPlan {
                 JOptionPane.showMessageDialog(window, "We ran into an error. Please try again.");
             }
         });
+
+        springList.setDeleteOnDoubleClick();
+        springList.setDeleteOnDoubleClick();
+        summerList.setDeleteOnDoubleClick();
 
         mainPanel.add(listPanel, BorderLayout.NORTH);
 
