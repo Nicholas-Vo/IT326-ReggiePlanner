@@ -3,6 +3,7 @@ package edu.illinoisstate.gui;
 import edu.illinoisstate.Controller;
 import edu.illinoisstate.RButton;
 import edu.illinoisstate.RWindow;
+import edu.illinoisstate.email.EmailHandler;
 import edu.illinoisstate.utils.AccountValidator;
 import edu.illinoisstate.utils.HintPasswordTextBox;
 import edu.illinoisstate.utils.HintTextBox;
@@ -46,6 +47,8 @@ public class CreateAccount {
                 JOptionPane.showMessageDialog(window, "Account created: You may now log in.");
                 System.out.println("Created new user account \"" + username + "\".");
                 window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
+                EmailHandler e = new EmailHandler();
+                e.sendAccountConfirmation(username, email);
             } else {
                 JOptionPane.showMessageDialog(window, "Error creating account. Please contact support.");
             }

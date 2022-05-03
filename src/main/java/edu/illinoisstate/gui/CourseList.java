@@ -10,6 +10,7 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.WindowEvent;
 
 public class CourseList {
     private final JDialog window = new JDialog();
@@ -32,11 +33,7 @@ public class CourseList {
         textBox.setFont(UIManager.getFont("TextField.font"));
         textBox.setBorder(new LineBorder(Color.BLACK));
         textBox.setText(String.valueOf(DatabaseHandler.getCourseList()));
-        JScrollPane scroll = new JScrollPane(textBox);
-        scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
-        panel.add(scroll);
 
     }
 }
-//java.util.List<Course> courses = DatabaseHandler.getCourseList();

@@ -1,6 +1,7 @@
 package edu.illinoisstate.settings;
 
 import edu.illinoisstate.UserAccount;
+import edu.illinoisstate.email.EmailHandler;
 import edu.illinoisstate.utils.Utils;
 import edu.illinoisstate.utils.WindowTracker;
 
@@ -29,6 +30,7 @@ public class ContactDevelopersUI {
     }
 
     public void createWindow() {
+        EmailHandler emailHandler = new EmailHandler();
         JLabel label1 = new JLabel("We'd love to hear from you!");
         JLabel label2 = new JLabel("Please keep an eye on your email address for a response.");
 
@@ -43,7 +45,7 @@ public class ContactDevelopersUI {
         JButton confirmBtn = new JButton("Send message");
         confirmBtn.addActionListener(e -> {
             messageSent.setVisible(true);
-            // todo send email with message to admin account here
+            emailHandler.sendContactDevEmail(user,textBox.getText());
             textBox.setText("");
         });
 
