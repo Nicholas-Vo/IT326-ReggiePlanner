@@ -196,6 +196,10 @@ public class Database {
         return null;
     }
 
+    //public Course getNotesByID(String notes){
+        //List<Notes> notes = getNotesList();
+    //}
+
     private Query query(String query) {
         return entityManager.createQuery(query);
     }
