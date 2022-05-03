@@ -1,8 +1,4 @@
 package edu.illinoisstate.settings;
 
-
-public class UserNoteUI {
-
-
-
+public class ChangeUsername {
 }

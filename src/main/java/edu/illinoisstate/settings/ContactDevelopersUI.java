@@ -6,8 +6,8 @@ import edu.illinoisstate.utils.WindowTracker;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
-import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.*;
+
 
 public class ContactDevelopersUI {
     private final JDialog window = new JDialog();
@@ -28,6 +28,7 @@ public class ContactDevelopersUI {
         createWindow();
     }
 
+
     public void createWindow() {
         JLabel label1 = new JLabel("We'd love to hear from you!");
         JLabel label2 = new JLabel("Please keep an eye on your email address for a response.");
@@ -44,8 +45,20 @@ public class ContactDevelopersUI {
         confirmBtn.addActionListener(e -> {
             messageSent.setVisible(true);
             // todo send email with message to admin account here
+
+
+            String message = textBox.getText();
+
+
+            //send pop up
+            JOptionPane.showMessageDialog(null, "We've notified the developers about the issue!");
+
+
             textBox.setText("");
+
+
         });
+
 
         panel.add(label1);
         panel.add(textBox);

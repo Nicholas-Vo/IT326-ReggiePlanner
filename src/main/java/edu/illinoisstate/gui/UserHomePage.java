@@ -7,19 +7,11 @@ import edu.illinoisstate.database.DatabaseHandler;
 import edu.illinoisstate.plan.UserPlan;
 import edu.illinoisstate.settings.ContactDevelopersUI;
 import edu.illinoisstate.settings.DeleteAccountUI;
+import edu.illinoisstate.settings.EditUserProfileUI;
 import edu.illinoisstate.utils.WindowTracker;
 
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import java.awt.CardLayout;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Font;
+import javax.swing.*;
+import java.awt.*;
 
 
 /**
@@ -27,6 +19,7 @@ import java.awt.Font;
  */
 public class UserHomePage {
     private final UserAccount user;
+
     private final RWindow window = new RWindow("ReggiePlanner v1.0.0");
     private final CardLayout cardLayout = new CardLayout();
     private final JPanel homePanel = new JPanel(cardLayout);
@@ -88,8 +81,7 @@ public class UserHomePage {
 
         JMenu settingsMenu = new JMenu("Settings");
         JMenuItem editProfile = new JMenuItem("Edit profile");
-        editProfile.addActionListener(e -> {
-        });
+        editProfile.addActionListener(e -> new EditUserProfileUI());
         JMenuItem contactDevs = new JMenuItem("Contact developers");
         contactDevs.addActionListener(e -> new ContactDevelopersUI(user));
         JMenuItem deleteAccount = new JMenuItem("Delete account");
