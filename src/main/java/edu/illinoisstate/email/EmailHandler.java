@@ -39,6 +39,9 @@ public class EmailHandler {
         EmailSender.send(user.email(), "Password reset link from ReggiePlanner", body);
     }
 
+    /*
+    Email a user plan
+     */
     public void emailUserPlan(UserAccount account, UserPlan plan) {
         String body = """
                 Here is your generated user plan from ReggiePlanner:
