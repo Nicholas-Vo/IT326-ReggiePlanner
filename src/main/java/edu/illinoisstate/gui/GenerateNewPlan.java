@@ -82,11 +82,16 @@ public class GenerateNewPlan {
                     JOptionPane.showMessageDialog(window, "That's not a valid number.");
                 }
             }
-
-            summerList.setListData(randomizer.generate(amountOfSummerCourse[0], 2));
-            listPanel.add(summerList);
-            summerLabel.setVisible(selected);
-            summerList.setVisible(selected);
+            if (amountOfSummerCourse[0] <= 3) {
+                summerList.setListData(randomizer.generate(amountOfSummerCourse[0], 2));
+                listPanel.add(summerList);
+                summerLabel.setVisible(selected);
+                summerList.setVisible(selected);
+            }
+            else {
+                JOptionPane.showMessageDialog(window, "Summer courses must be 3 or less.");
+                summerCheckBox.setSelected(false);
+            }
         });
 
         RButton refreshBtn = new RButton("Generate");
